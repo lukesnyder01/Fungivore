@@ -106,13 +106,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd97206a44a34149a8211f2c73b407d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSteps: 20
-  maxSteps: 50
+  minSteps: 50
+  maxSteps: 100
   waitTime: 0.05
   totalSteps: 0
   currentStep: 0
   multipleRespawns: 1
-  respawnCount: 5
+  respawnCount: 3
   antSideLength: 5
   verticalSpawnOffset: 3
   boxCenter: {x: 0, y: 0, z: 0}
@@ -140,7 +140,7 @@ MonoBehaviour:
   - {x: -1, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
   canOpenDeadEnds: 1
-  percentOpenDeadEnds: 10
+  percentOpenDeadEnds: 30
   maxTerminals: 50
   mazeBranchAll:
   - {fileID: 4604577894057734578, guid: 82a2b26afb53c054db2fcd5b16d0d517, type: 3}
