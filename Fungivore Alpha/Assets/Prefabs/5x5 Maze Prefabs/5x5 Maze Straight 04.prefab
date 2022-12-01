@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6505611964557061981}
   - component: {fileID: 8665290694730013608}
   m_Layer: 0
-  m_Name: CombinedMeshes_Maze Straight 04
+  m_Name: 5x5 Maze Straight 04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 2
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

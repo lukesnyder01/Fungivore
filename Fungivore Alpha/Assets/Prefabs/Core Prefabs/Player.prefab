@@ -641,6 +641,9 @@ MonoBehaviour:
   - {fileID: 2100000, guid: fc5a5225b44ef3740abb64cb46ba2ab6, type: 2}
   - {fileID: 2100000, guid: 90c785e89dd61b940b9217cdafc5e73b, type: 2}
   - {fileID: 2100000, guid: baefb2e7ba0387b4582aa9a46ef9fa04, type: 2}
+  - {fileID: 2100000, guid: 751872c94726fa04c9dd2544dddc9bb3, type: 2}
+  - {fileID: 2100000, guid: 3f217d64b5352cc4795de3d0344745ad, type: 2}
+  - {fileID: 2100000, guid: 4b4caf2efb24bfc49841852e265561de, type: 2}
   currentColor: {r: 1, g: 1, b: 1, a: 0}
   targetFogColor: {r: 0, g: 0, b: 0, a: 0}
   targetParticleColor: {r: 0, g: 0, b: 0, a: 0}
@@ -1233,6 +1236,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6112014097039587687}
     m_Modifications:
+    - target: {fileID: -5961152308181976658, guid: a791a65f6ddcbfa4bb0038b36aa47a24,
+        type: 3}
+      propertyPath: gunTransform
+      value: 
+      objectReference: {fileID: 8751653186502924951}
     - target: {fileID: 1462759176720756183, guid: a791a65f6ddcbfa4bb0038b36aa47a24,
         type: 3}
       propertyPath: m_Mesh
@@ -1243,10 +1251,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Reticle 00
       objectReference: {fileID: 0}
+    - target: {fileID: 4355782494536047829, guid: a791a65f6ddcbfa4bb0038b36aa47a24,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4650141384703008412, guid: a791a65f6ddcbfa4bb0038b36aa47a24,
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4824116155130522343, guid: a791a65f6ddcbfa4bb0038b36aa47a24,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7274431449824643770, guid: a791a65f6ddcbfa4bb0038b36aa47a24,
         type: 3}

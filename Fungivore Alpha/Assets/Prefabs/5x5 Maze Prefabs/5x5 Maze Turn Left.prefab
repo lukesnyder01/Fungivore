@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 811076132679898367}
   - component: {fileID: 4643355239511092540}
   m_Layer: 0
-  m_Name: CombinedMeshes_Maze Turn Left
+  m_Name: 5x5 Maze Turn Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,6 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6455040678711583376}
+  - {fileID: 7274446258275601297}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -95,6 +96,81 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: a9c06c685330dbb49a143c9e06b3400e, type: 2}
+--- !u!1001 &4734757556259849466
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1964187984363167156}
+    m_Modifications:
+    - target: {fileID: 2684491439875346282, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_Name
+      value: 5x5 Maze Interior Foliage
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 871795331767dea45bc669326738bcab, type: 3}
+--- !u!4 &7274446258275601297 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+    type: 3}
+  m_PrefabInstance: {fileID: 4734757556259849466}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9076147127396291036
 PrefabInstance:
   m_ObjectHideFlags: 0

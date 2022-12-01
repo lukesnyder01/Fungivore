@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8436172222281037354}
   - component: {fileID: 7281241537507959451}
   m_Layer: 0
-  m_Name: CombinedMeshes_Maze Branch All
+  m_Name: 5x5 Maze Branch All
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,6 +32,7 @@ Transform:
   m_Children:
   - {fileID: 584961700705328957}
   - {fileID: 3808254816746613434}
+  - {fileID: 5922933010203768327}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -266,4 +267,79 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2621124625264784204, guid: 179480251c80be746891fe3067073e61,
     type: 3}
   m_PrefabInstance: {fileID: 3206045497719549041}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8607300883198884204
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1208973185286772650}
+    m_Modifications:
+    - target: {fileID: 2684491439875346282, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_Name
+      value: 5x5 Maze Interior Foliage
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 871795331767dea45bc669326738bcab, type: 3}
+--- !u!4 &5922933010203768327 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2684491439875346283, guid: 871795331767dea45bc669326738bcab,
+    type: 3}
+  m_PrefabInstance: {fileID: 8607300883198884204}
   m_PrefabAsset: {fileID: 0}
