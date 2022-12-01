@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6385687563868456176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6385687563868456189}
+  - component: {fileID: 2081300395017317518}
+  - component: {fileID: 6385687563868456191}
+  - component: {fileID: 2171755184156920321}
+  - component: {fileID: 3203689399555289037}
+  m_Layer: 8
+  m_Name: Building Flat 7x7
+  m_TagString: Solid Block
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6385687563868456189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6385687563868456176}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &2081300395017317518
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6385687563868456176}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6385687563868456191
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6385687563868456176}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 5ca9e57ce771de749a306cbc51a947fa, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!65 &2171755184156920321
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6385687563868456176}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3203689399555289037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6385687563868456176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea9f8d77c2e743942854f605bef5cc15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSteps: 200
+  maxSteps: 250
+  waitTime: 0
+  totalSteps: 0
+  currentStep: 0
+  infiniteRespawn: 0
+  antSideLength: 7
+  customHeight: 0
+  antHeight: 1
+  verticalSpawnOffset: 0
+  boxCenter: {x: 0, y: 0, z: 0}
+  halfExtents: {x: 0, y: 0, z: 0}
+  boxRotation: {x: 0, y: 0, z: 0}
+  antMoveDistance: 0
+  minPlayerDistance: 0
+  playerDistance: 0
+  respawnPrefab: {fileID: 4899378156460765924, guid: 230fb6eae7e6fe340b26d55067269a67,
+    type: 3}
+  player: {fileID: 0}
+  spawnPrefabs:
+  - {fileID: 7073215055701983294, guid: 32982ab90d2fe834baa59734fab53a2d, type: 3}
+  - {fileID: 7073215055701983294, guid: 32982ab90d2fe834baa59734fab53a2d, type: 3}
+  - {fileID: 7073215055701983294, guid: 7cc5195ef17d5bd4abb63d9c42e9e451, type: 3}
+  - {fileID: 7073215055701983294, guid: af1d9c3a3069aee4db6b5877c75ed8e8, type: 3}
+  - {fileID: 7073215055701983294, guid: 1960f74ec0eb34a479512cb954a92e2d, type: 3}
+  availablePositions: []
+  availableRotations: 
+  noMovesLeft: 0
+  destroyChildren: 1
+  meshIsLarge: 1
+  antPos: {x: 0, y: 0, z: 0}
+  antDir: 0
+  directionArray:
+  - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
+  - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
+  moveFlat: 1
+  moveDown: 1

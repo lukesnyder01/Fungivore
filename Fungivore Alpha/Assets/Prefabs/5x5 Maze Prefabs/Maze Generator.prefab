@@ -1,0 +1,225 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1161764220848497034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1143525274343001807}
+  - component: {fileID: 5986310277442239761}
+  - component: {fileID: 7243118285726942122}
+  - component: {fileID: 3823248789172690236}
+  - component: {fileID: -6883801512533326440}
+  m_Layer: 0
+  m_Name: Maze Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1143525274343001807
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161764220848497034}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8227018098309645956}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &5986310277442239761
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161764220848497034}
+  m_Mesh: {fileID: 0}
+--- !u!23 &7243118285726942122
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161764220848497034}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 5ca9e57ce771de749a306cbc51a947fa, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!64 &3823248789172690236
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161764220848497034}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
+--- !u!114 &-6883801512533326440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161764220848497034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6607c3ef02f09de4d94a008dedb59042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSteps: 10
+  maxSteps: 10
+  timeBetweenSteps: 0.005
+  mazeStraight: {fileID: 6102336531310263127, guid: c97df328a50d74840b59709fe0a69317,
+    type: 3}
+  mazeTurnRight: {fileID: 7229232429311545351, guid: 4a11903b371692740bb90ace6cb82f68,
+    type: 3}
+  mazeTurnLeft: {fileID: 2287752343235434158, guid: 75f8a3d748bb75343ad3fd4408aab545,
+    type: 3}
+  mazeBranchRight: {fileID: 51467692554646219, guid: 84bf53a8f78f51a4e9c268c2a20b4a48,
+    type: 3}
+  mazeBranchLeft: {fileID: 8195849172897830511, guid: 10e5526e6984a4f4591d16526541fb75,
+    type: 3}
+  mazeBranchMid: {fileID: 7724322693806264572, guid: 48e0689c31ba66e438cb6523315208a3,
+    type: 3}
+  mazeBranchAll: {fileID: 4604577894057734578, guid: 82a2b26afb53c054db2fcd5b16d0d517,
+    type: 3}
+  mazeDeadEnd: {fileID: 9012375806241920368, guid: 2156d2304ed38804680152f43707e4dc,
+    type: 3}
+  mazeNewAnt: {fileID: 7073215055701983294, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+    type: 3}
+  mazeWalls: {fileID: 0}
+  castHalfExtents: {x: 2.4, y: 2.4, z: 2.4}
+  castDistance: 5
+  antMoveDistance: 5
+--- !u!1001 &7533279594857046453
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1143525274343001807}
+    m_Modifications:
+    - target: {fileID: 1920689307800299313, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920689307800299313, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920689307800299313, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920689307800299313, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920689307800299313, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920689307800299313, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920689307800299313, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920689307800299313, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920689307800299313, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920689307800299313, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920689307800299313, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920689307800299313, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920689307800299313, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920689307800299313, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7073215055701983294, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+        type: 3}
+      propertyPath: m_Name
+      value: Maze Ant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f44d93b8d73afc34c868dd942a6d4ee7, type: 3}
+--- !u!4 &8227018098309645956 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1920689307800299313, guid: f44d93b8d73afc34c868dd942a6d4ee7,
+    type: 3}
+  m_PrefabInstance: {fileID: 7533279594857046453}
+  m_PrefabAsset: {fileID: 0}

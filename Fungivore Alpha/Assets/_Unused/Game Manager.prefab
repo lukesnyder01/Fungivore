@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3730501459661379953
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3730501459661379952}
+  - component: {fileID: 3730501459661379955}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3730501459661379952
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730501459661379953}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3730501459661379955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730501459661379953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18610a0d91090024aa50623cedafdc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seed: 325nadsg
+  floorSize: 1001
+  spawnBuilding: {fileID: 284800791307385252, guid: 5381439ee51bb2049b679cc2fb69e6b2,
+    type: 3}
+  spawnRib: {fileID: 4899378156460765924, guid: 82782515fcb9dc24281ec3e0a49ba08f,
+    type: 3}
+  spawnerBuildings7x7: {fileID: 7660473033210257675, guid: a7830d9458e0da14fbdd5531e6450519,
+    type: 3}
+  spawnerMaze5x5: {fileID: 7660473033210257675, guid: 5668833a97e96604bbe7261d30673429,
+    type: 3}
+  spawnerBuildings3x3: {fileID: 7660473033210257675, guid: d283413435b9fe14eb19c795b76669bf,
+    type: 3}
+  mushroom: {fileID: 4344953998712860487, guid: 21bb84050868f8744b32feb38127ea3e,
+    type: 3}
+  block: {fileID: 2621124625264784193, guid: 179480251c80be746891fe3067073e61, type: 3}
+  baseWorld: {fileID: 0}

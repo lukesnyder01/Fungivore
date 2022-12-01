@@ -1,0 +1,209 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2527568325329511762
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2527568325329511763}
+  - component: {fileID: 2527568325329511760}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2527568325329511763
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2527568325329511762}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2527568325329511760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2527568325329511762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbd482d963b52c049b74196dc50dc357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixerGroup: {fileID: 24300002, guid: 4651ff6e28998f94887ba25c68bc8eae, type: 2}
+  sounds:
+  - name: PlayerStep
+    clip: {fileID: 8300000, guid: 4ac663f1304bb23458f99036bb6a6922, type: 3}
+    volume: 0.6
+    volumeVariance: 0.112
+    pitch: 0.23
+    pitchVariance: 0.02
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: PlayerJump
+    clip: {fileID: 8300000, guid: 4ac663f1304bb23458f99036bb6a6922, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 0.1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: PlayerDoubleJump
+    clip: {fileID: 8300000, guid: 4ac663f1304bb23458f99036bb6a6922, type: 3}
+    volume: 0.922
+    volumeVariance: 0
+    pitch: 0.05
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: MushroomScream
+    clip: {fileID: 8300000, guid: 31c08f29137a72e4d9e7ee5129014f5e, type: 3}
+    volume: 0.6
+    volumeVariance: 0.086
+    pitch: 0.99
+    pitchVariance: 0.04
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: JumpMushroomScream
+    clip: {fileID: 8300000, guid: 31c08f29137a72e4d9e7ee5129014f5e, type: 3}
+    volume: 0.935
+    volumeVariance: 0.065
+    pitch: 0.45
+    pitchVariance: 0.026
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Teleport
+    clip: {fileID: 8300000, guid: 8f243a0d0e726dd489fee7a2c175b03c, type: 3}
+    volume: 0.699
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: PlayerHurt
+    clip: {fileID: 8300000, guid: 0648e21a31dc9c4488627d4eb6e1c2c6, type: 3}
+    volume: 0.308
+    volumeVariance: 0.027
+    pitch: 1.156
+    pitchVariance: 0.022
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: PlayerLanding
+    clip: {fileID: 8300000, guid: 4ac663f1304bb23458f99036bb6a6922, type: 3}
+    volume: 0.361
+    volumeVariance: 0
+    pitch: 0.251
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: PlayerShoot
+    clip: {fileID: 8300000, guid: f962d0a950ef9da478257d3d5fe7364a, type: 3}
+    volume: 0.66
+    volumeVariance: 0.21
+    pitch: 0.6
+    pitchVariance: 0.402
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: SpineSwish
+    clip: {fileID: 8300000, guid: 7b0514cef6dee0e478f49d0647e1a08b, type: 3}
+    volume: 0.035
+    volumeVariance: 0.013
+    pitch: 0.43
+    pitchVariance: 0.051
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: SpineHit
+    clip: {fileID: 8300000, guid: c30b7c435d288f3419ff51899ba215ed, type: 3}
+    volume: 0.657
+    volumeVariance: 0
+    pitch: 1.56
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: WraithSmash
+    clip: {fileID: 8300000, guid: de1939672fe27bd46b0df722cbe973f0, type: 3}
+    volume: 0.105
+    volumeVariance: 0
+    pitch: 1.38
+    pitchVariance: 0.084
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: StoneBreak
+    clip: {fileID: 8300000, guid: 1120f1ec0ed4d8d4b83bc734eb38ec21, type: 3}
+    volume: 0.153
+    volumeVariance: 0
+    pitch: 0.273
+    pitchVariance: 0.102
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: DoorGrind
+    clip: {fileID: 8300000, guid: 7574afb3c4196aa408d1f2ae490e3f58, type: 3}
+    volume: 0.512
+    volumeVariance: 0
+    pitch: 0.48
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: DoorSlam
+    clip: {fileID: 8300000, guid: 7237a6359df7f12459fcf696ba31b1f2, type: 3}
+    volume: 0.388
+    volumeVariance: 0
+    pitch: 1.12
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: theme00
+    clip: {fileID: 8300000, guid: a67d7b3ad1444a147bb54d668a2f7a2b, type: 3}
+    volume: 0.4
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: theme01
+    clip: {fileID: 8300000, guid: 8c1264abab12a03448d4258473345392, type: 3}
+    volume: 0.4
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: theme02
+    clip: {fileID: 8300000, guid: f592f8dc1847a004fbe0d7f80861e614, type: 3}
+    volume: 0.4
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
