@@ -30,6 +30,8 @@ public class SpawnPillarField : MonoBehaviour
     public int spawnsPerWait = 10;
     private int spawnsSinceLastWait = 0;
 
+    private Vector3 overlapBoxPad = new Vector3(0.05f, 0.05f, 0.05f);
+
 
 
     // Start is called before the first frame update
@@ -74,7 +76,7 @@ public class SpawnPillarField : MonoBehaviour
                     Vector3 pillarScale = new Vector3(pillarWidth, pillarHeight, pillarWidth);
 
                     //check to see if there's anything where the pillar would spawn
-                    Collider[] hitColliders = Physics.OverlapBox(spawnPos, pillarScale / 2.1f, Quaternion.identity);
+                    Collider[] hitColliders = Physics.OverlapBox(spawnPos, pillarScale / 2f - overlapBoxPad, Quaternion.identity);
 
                     if (hitColliders.Length == 0)
                     {

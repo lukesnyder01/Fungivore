@@ -142,7 +142,7 @@ MonoBehaviour:
   pillarFieldMeshes: {fileID: 6835279807118665411}
   waitTime: 0.01
   pillarSpawnChance: 4
-  spawnsPerWait: 10
+  spawnsPerWait: 30
 --- !u!114 &8843891202122054881
 MonoBehaviour:
   m_ObjectHideFlags: 0
