@@ -56,34 +56,42 @@ public class SpawnPillarField : MonoBehaviour
         {
             for (int j = 0; j < zSize; j++)
             {
-                Vector3 spawnPos = new Vector3(xOffset + i, pos.y + 0.5f, zOffset + j);
+                Vector3 spawnPos = new Vector3(xOffset + i, pos.y, zOffset + j);
 
-                Random.InitState(spawnPos.GetHashCode() % 1000);
+                //Random.InitState(spawnPos.GetHashCode() % 100000);
+
+                //generates a random odd pillar height
+                int pillarHeight = Random.Range(2, 50) * 2 + 1;
+
+                spawnPos.y = 1 + spawnPos.y + Mathf.RoundToInt(pillarHeight / 2);
+
+                Random.InitState(spawnPos.GetHashCode() % 100000);
 
                 if (Random.Range(0f, 100f) < pillarSpawnChance)
                 {
-                    Random.InitState(spawnPos.GetHashCode() % 1000);
-                    int pillarHeight = Random.Range(10, 100);
-
-                    Random.InitState(spawnPos.GetHashCode() % 1000);
                     int pillarWidth = Random.Range(0, 2) * 2 + 1;
 
                     Vector3 pillarScale = new Vector3(pillarWidth, pillarHeight, pillarWidth);
 
-                    GameObject newPillar = Instantiate(pillar, spawnPos, Quaternion.identity);
+                    //check to see if there's anything where the pillar would spawn
+                    Collider[] hitColliders = Physics.OverlapBox(spawnPos, pillarScale / 2.1f, Quaternion.identity);
 
-                    newPillar.transform.localScale = pillarScale;
-
-                    newPillar.transform.parent = pillarFieldMeshes.transform;
-
-                    spawnsSinceLastWait++;
-
-                    if (spawnsSinceLastWait >= spawnsPerWait)
+                    if (hitColliders.Length == 0)
                     {
-                        spawnsSinceLastWait = 0;
-                        yield return new WaitForSeconds(waitTime);
-                    }
+                        GameObject newPillar = Instantiate(pillar, spawnPos, Quaternion.identity);
 
+                        newPillar.transform.localScale = pillarScale;
+
+                        newPillar.transform.parent = pillarFieldMeshes.transform;
+
+                        spawnsSinceLastWait++;
+
+                        if (spawnsSinceLastWait >= spawnsPerWait)
+                        {
+                            spawnsSinceLastWait = 0;
+                            yield return new WaitForSeconds(waitTime);
+                        }
+                    }
                     
                 }
 

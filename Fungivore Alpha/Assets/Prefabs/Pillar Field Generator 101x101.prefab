@@ -138,10 +138,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c2737cbe9c8374da286857412c6a52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pillar: {fileID: 7858380163127854480, guid: fefd9a563db844040880f5fbfc9497e3, type: 3}
+  pillar: {fileID: 2621124625264784193, guid: 179480251c80be746891fe3067073e61, type: 3}
   pillarFieldMeshes: {fileID: 6835279807118665411}
-  waitTime: 0
-  pillarSpawnChance: 7
+  waitTime: 0.01
+  pillarSpawnChance: 4
+  spawnsPerWait: 10
 --- !u!114 &8843891202122054881
 MonoBehaviour:
   m_ObjectHideFlags: 0

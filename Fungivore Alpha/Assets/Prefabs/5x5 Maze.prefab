@@ -106,9 +106,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd97206a44a34149a8211f2c73b407d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSteps: 30
-  maxSteps: 50
-  waitTime: 0.05
+  minSteps: 100
+  maxSteps: 150
+  waitTime: 0.01
   totalSteps: 0
   currentStep: 0
   multipleRespawns: 1
