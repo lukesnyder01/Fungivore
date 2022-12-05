@@ -108,19 +108,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSteps: 200
   maxSteps: 250
-  waitTime: 0
+  waitTime: 0.05
   totalSteps: 0
   currentStep: 0
-  infiniteRespawn: 0
+  multipleRespawns: 0
+  respawnCount: 0
   antSideLength: 7
-  customHeight: 0
-  antHeight: 1
   verticalSpawnOffset: 0
   boxCenter: {x: 0, y: 0, z: 0}
   halfExtents: {x: 0, y: 0, z: 0}
   boxRotation: {x: 0, y: 0, z: 0}
   antMoveDistance: 0
   minPlayerDistance: 0
+  minPlayerDistancePad: 1
   playerDistance: 0
   respawnPrefab: {fileID: 4899378156460765924, guid: 230fb6eae7e6fe340b26d55067269a67,
     type: 3}

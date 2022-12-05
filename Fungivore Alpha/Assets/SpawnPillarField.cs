@@ -13,6 +13,8 @@ public class SpawnPillarField : MonoBehaviour
 
     public float waitTime = 0.01f;
 
+    public int minHeight = 2;
+    public int maxHeight = 100;
 
 
     public float pillarSpawnChance;
@@ -63,7 +65,7 @@ public class SpawnPillarField : MonoBehaviour
                 //Random.InitState(spawnPos.GetHashCode() % 100000);
 
                 //generates a random odd pillar height
-                int pillarHeight = Random.Range(2, 50) * 2 + 1;
+                int pillarHeight = Random.Range(minHeight, maxHeight) * 2 + 1;
 
                 spawnPos.y = 1 + spawnPos.y + Mathf.RoundToInt(pillarHeight / 2);
 

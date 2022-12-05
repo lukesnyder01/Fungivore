@@ -108,13 +108,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSteps: 100
   maxSteps: 200
-  waitTime: 0
+  waitTime: 0.05
   totalSteps: 0
   currentStep: 0
-  infiniteRespawn: 1
+  multipleRespawns: 0
+  respawnCount: 0
   antSideLength: 1
-  customHeight: 0
-  antHeight: 1
   verticalSpawnOffset: 0
   boxCenter: {x: 0, y: 0, z: 0}
   halfExtents: {x: 0, y: 0, z: 0}
