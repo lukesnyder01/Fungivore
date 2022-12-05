@@ -124,7 +124,8 @@ public class RibAnt : Ant
         {
             if (SpaceIsEmpty(Vector3.up))
             {
-                Instantiate(climber, (antPos + Vector3.up * antMoveDistance), Quaternion.identity);
+                var newClimber = Instantiate(climber, (antPos + Vector3.up * antMoveDistance), Quaternion.identity);
+                newClimber.transform.parent = gameObject.transform;
             }
         }
     }
@@ -137,7 +138,8 @@ public class RibAnt : Ant
         {
             if (SpaceIsEmpty(-Vector3.up))
             {
-                Instantiate(dropper, (antPos + -Vector3.up * antMoveDistance), Quaternion.identity);
+                var newDropper = Instantiate(dropper, (antPos + -Vector3.up * antMoveDistance), Quaternion.identity);
+                newDropper.transform.parent = gameObject.transform;
             }
         }
     }

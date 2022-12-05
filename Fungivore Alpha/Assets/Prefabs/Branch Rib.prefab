@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6385687563868456191}
   - component: {fileID: 2171755184156920321}
   - component: {fileID: 3362281299030330825}
+  - component: {fileID: 4012636089812066254}
   m_Layer: 8
   m_Name: Branch Rib
   m_TagString: Solid Block
@@ -111,19 +112,24 @@ MonoBehaviour:
   waitTime: 0.05
   totalSteps: 0
   currentStep: 0
-  infiniteRespawn: 0
+  multipleRespawns: 0
+  respawnCount: 0
   antSideLength: 1
+  verticalSpawnOffset: 0
   boxCenter: {x: 0, y: 0, z: 0}
   halfExtents: {x: 0, y: 0, z: 0}
   boxRotation: {x: 0, y: 0, z: 0}
   antMoveDistance: 0
   minPlayerDistance: 6
+  minPlayerDistancePad: 1
   playerDistance: 0
   respawnPrefab: {fileID: 0}
+  player: {fileID: 0}
   spawnPrefabs:
   - {fileID: 2621124625264784193, guid: 179480251c80be746891fe3067073e61, type: 3}
   availablePositions: []
   availableRotations: 
+  noMovesLeft: 0
   destroyChildren: 1
   meshIsLarge: 0
   antPos: {x: 0, y: 0, z: 0}
@@ -139,3 +145,17 @@ MonoBehaviour:
   dropper: {fileID: 6385687563868456176, guid: cd32aec2643a5cd49a1e2d42c146ba12, type: 3}
   sphereCastRadius: 0.49
   sphereCastDistance: 1
+--- !u!114 &4012636089812066254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6385687563868456176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cf77f1c34ad24408f78e1214d1e38e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyChildren: 0
+  meshIsLarge: 0

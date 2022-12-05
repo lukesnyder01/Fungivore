@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 6385687563868456191}
   - component: {fileID: 2171755184156920321}
   - component: {fileID: 3581142193434319408}
+  - component: {fileID: 3625789096054870398}
   m_Layer: 8
-  m_Name: Eidetic Ant
+  m_Name: Eidetic Ant Small
   m_TagString: Solid Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,16 +112,16 @@ MonoBehaviour:
   waitTime: 0
   totalSteps: 0
   currentStep: 0
-  infiniteRespawn: 0
+  multipleRespawns: 0
+  respawnCount: 0
   antSideLength: 1
-  customHeight: 0
-  antHeight: 1
   verticalSpawnOffset: 0
   boxCenter: {x: 0, y: 0, z: 0}
   halfExtents: {x: 0, y: 0, z: 0}
   boxRotation: {x: 0, y: 0, z: 0}
   antMoveDistance: 0
   minPlayerDistance: 0
+  minPlayerDistancePad: 1
   playerDistance: 0
   respawnPrefab: {fileID: 0}
   player: {fileID: 0}
@@ -143,3 +144,17 @@ MonoBehaviour:
   totalLoops: 20
   currentLoop: 0
   halfExtentSizeMod: -0.2
+--- !u!114 &3625789096054870398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6385687563868456176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cf77f1c34ad24408f78e1214d1e38e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyChildren: 0
+  meshIsLarge: 0

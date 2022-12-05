@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CombineMesh))]
 public class Ant : MonoBehaviour
 {
+    [HideInInspector]
+    public CombineMesh combineMesh;
+
     [Header("Ant Settings")]
     public int minSteps = 20;
     public int maxSteps = 25;
@@ -87,6 +91,8 @@ public class Ant : MonoBehaviour
 
     public virtual void InitializeParameters()
     {
+        combineMesh = GetComponent<CombineMesh>();
+
         antPos = transform.position + new Vector3(0, verticalSpawnOffset, 0);
 
         //set antDir to object direction
@@ -226,7 +232,8 @@ public class Ant : MonoBehaviour
 
     public void EndAnt()
     {
-        CombineMesh(gameObject);
+        combineMesh.Combine(gameObject);
+        //CombineMesh(gameObject);
     }
 
 

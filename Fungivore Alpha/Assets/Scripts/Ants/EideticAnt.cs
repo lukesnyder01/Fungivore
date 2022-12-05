@@ -15,7 +15,8 @@ public class EideticAnt : Ant
 
     public override void InitializeParameters()
     {
-        
+        combineMesh = GetComponent<CombineMesh>();
+
         antPos = transform.position + new Vector3(0, verticalSpawnOffset, 0);
 
         player = GameObject.Find("Player");

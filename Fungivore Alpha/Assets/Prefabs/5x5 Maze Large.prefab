@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 628923306153202585}
   - component: {fileID: 930643676297261998}
   - component: {fileID: 8168383702508653850}
+  - component: {fileID: 4543879611779304648}
   m_Layer: 8
   m_Name: 5x5 Maze
   m_TagString: Solid Block
@@ -167,6 +168,20 @@ MonoBehaviour:
   - {fileID: 2287752343235434158, guid: 75f8a3d748bb75343ad3fd4408aab545, type: 3}
   mazeTurnRight:
   - {fileID: 7229232429311545351, guid: 4a11903b371692740bb90ace6cb82f68, type: 3}
+--- !u!114 &4543879611779304648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417318297062935456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cf77f1c34ad24408f78e1214d1e38e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyChildren: 1
+  meshIsLarge: 1
 --- !u!1 &6385687563868456176
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,7 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6385687563868456189}
   m_Layer: 8
-  m_Name: 5x5 Maze
+  m_Name: 5x5 Maze Large
   m_TagString: Solid Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

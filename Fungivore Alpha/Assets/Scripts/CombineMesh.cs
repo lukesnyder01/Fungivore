@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshRenderer))]
 public class CombineMesh : MonoBehaviour
 {
     [Header("Mesh Combine Settings")]
@@ -9,41 +12,50 @@ public class CombineMesh : MonoBehaviour
     public bool meshIsLarge = true;
 
 
+    public void MultiMaterialCombine(GameObject meshesToCombine)
+    {
+        //get array of all child meshes excluding inactive ones
+        MeshFilter[] meshFilters = meshesToCombine.GetComponentsInChildren<MeshFilter>(false);
+
+        //
+
+
+    }
+
+
+
     public void Combine(GameObject meshesToCombine)
     {
+        //keep track of the transform information of the parent of the mesh to combine
         Quaternion oldRotation = transform.rotation;
         Vector3 oldPosition = transform.position;
         Vector3 oldScale = transform.localScale;
 
+        //move the parent to the origin and zero its rotation and scale
         transform.rotation = Quaternion.identity;
         transform.position = Vector3.zero;
         transform.localScale = Vector3.one;
 
+        //get array of all child meshes excluding inactive ones
+        MeshFilter[] meshFilters = meshesToCombine.GetComponentsInChildren<MeshFilter>(false);
 
-        MeshFilter[] meshFilters = meshesToCombine.GetComponentsInChildren<MeshFilter>();
-        CombineInstance[] combine = new CombineInstance[meshFilters.Length];
+        CombineInstance[] combineInstances = new CombineInstance[meshFilters.Length];
 
         Destroy(meshesToCombine.gameObject.GetComponent<MeshCollider>());
 
-        //Matrix4x4 myTransform = meshesToCombine.transform.worldToLocalMatrix;
-
         for (int m = 0; m < meshFilters.Length; m++)
         {
+            //ignore empty mesh filters
             if (meshFilters[m].sharedMesh == null) continue;
 
-            combine[m].mesh = meshFilters[m].sharedMesh;
-
-            //combine[m].transform = myTransform * meshFilters[m].transform.localToWorldMatrix;
-
-            combine[m].transform = meshFilters[m].transform.localToWorldMatrix;
+            combineInstances[m].mesh = meshFilters[m].sharedMesh;
+            combineInstances[m].transform = meshFilters[m].transform.localToWorldMatrix;
             meshFilters[m].gameObject.SetActive(false);
         }
 
 
+
         var meshFilter = meshesToCombine.GetComponent<MeshFilter>();
-
-
-
 
         meshFilter.mesh = new Mesh();
 
@@ -52,9 +64,13 @@ public class CombineMesh : MonoBehaviour
             meshFilter.mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         }
 
-        meshFilter.mesh.CombineMeshes(combine, true);
-        meshFilter.mesh.RecalculateBounds();
-        meshFilter.mesh.RecalculateNormals();
+        meshFilter.mesh.CombineMeshes(combineInstances, true);
+
+
+        //these might not be necessary
+
+        //meshFilter.mesh.RecalculateBounds();
+        //meshFilter.mesh.RecalculateNormals();
         meshFilter.mesh.Optimize();
 
         Mesh newMeshCollider = new Mesh();
@@ -79,15 +95,12 @@ public class CombineMesh : MonoBehaviour
             }
         }
 
-
-
         meshesToCombine.gameObject.SetActive(true);
 
+        //move combined mesh back to original position
         transform.rotation = oldRotation;
         transform.position = oldPosition;
         transform.localScale = oldScale;
-
     }
-
 
 }

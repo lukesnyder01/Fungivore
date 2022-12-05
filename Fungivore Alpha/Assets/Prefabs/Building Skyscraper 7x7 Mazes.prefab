@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6385687563868456191}
   - component: {fileID: 2171755184156920321}
   - component: {fileID: 3203689399555289037}
+  - component: {fileID: -8867497960812662970}
   m_Layer: 8
   m_Name: Building Skyscraper 7x7 Mazes
   m_TagString: Solid Block
@@ -111,16 +112,16 @@ MonoBehaviour:
   waitTime: 0
   totalSteps: 0
   currentStep: 0
-  infiniteRespawn: 0
+  multipleRespawns: 0
+  respawnCount: 0
   antSideLength: 7
-  customHeight: 0
-  antHeight: 1
   verticalSpawnOffset: 3
   boxCenter: {x: 0, y: 0, z: 0}
   halfExtents: {x: 0, y: 0, z: 0}
   boxRotation: {x: 0, y: 0, z: 0}
   antMoveDistance: 0
   minPlayerDistance: 0
+  minPlayerDistancePad: 1
   playerDistance: 0
   respawnPrefab: {fileID: 4899378156460765924, guid: 230fb6eae7e6fe340b26d55067269a67,
     type: 3}
@@ -141,3 +142,17 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 1}
   moveFlat: 0
   moveDown: 0
+--- !u!114 &-8867497960812662970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6385687563868456176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cf77f1c34ad24408f78e1214d1e38e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyChildren: 1
+  meshIsLarge: 1

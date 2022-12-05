@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6385687563868456191}
   - component: {fileID: 2171755184156920321}
   - component: {fileID: -8305189970771775155}
+  - component: {fileID: 293799099589699648}
   m_Layer: 8
   m_Name: Building 3x3
   m_TagString: Solid Block
@@ -111,22 +112,27 @@ MonoBehaviour:
   waitTime: 0
   totalSteps: 0
   currentStep: 0
-  infiniteRespawn: 0
+  multipleRespawns: 0
+  respawnCount: 0
   antSideLength: 3
+  verticalSpawnOffset: 0
   boxCenter: {x: 0, y: 0, z: 0}
   halfExtents: {x: 0, y: 0, z: 0}
   boxRotation: {x: 0, y: 0, z: 0}
   antMoveDistance: 0
   minPlayerDistance: 0
+  minPlayerDistancePad: 1
   playerDistance: 0
   respawnPrefab: {fileID: 4899378156460765924, guid: 99d42ffc1485d164aaefeba26494f461,
     type: 3}
+  player: {fileID: 0}
   spawnPrefabs:
   - {fileID: 5749249440059369904, guid: 114e6f4a95d23e043a278725af4d8584, type: 3}
   - {fileID: 5749249440059369904, guid: ca8500d8b5f3f9448b41887b036c92f8, type: 3}
   - {fileID: 5749249440059369904, guid: a13c520f6ed875d43b109c79aace9b5a, type: 3}
   availablePositions: []
   availableRotations: 
+  noMovesLeft: 0
   destroyChildren: 1
   meshIsLarge: 0
   antPos: {x: 0, y: 0, z: 0}
@@ -138,3 +144,17 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 1}
   moveFlat: 1
   moveDown: 1
+--- !u!114 &293799099589699648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6385687563868456176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cf77f1c34ad24408f78e1214d1e38e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyChildren: 1
+  meshIsLarge: 0
