@@ -13,9 +13,9 @@ public class DistanceSpawnSimple : MonoBehaviour
     public float minPlayerDistance = 30;
     public float timeBetweenSteps = 1f;
 
-    public float destroyDistance = 200;
-    public bool destroyWhenFarAway;
 
+    public bool destroyWhenFarAway;
+    public float destroyDistance = 200;
 
 
     // Start is called before the first frame update

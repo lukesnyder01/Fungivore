@@ -11,6 +11,16 @@ public class RandomSpawn : MonoBehaviour
     [Range(0, 100)]
     public float spawnChance;
 
+    public bool randomizeRotation = false;
+
+    [HideInInspector]
+    public Vector3[] directionArray = new[] {
+        new Vector3(1f, 0f, 0f),
+        new Vector3(0f, 0f, -1f),
+        new Vector3(-1f, 0f, 0f),
+        new Vector3(0f, 0f, 1f)
+    };
+
     void Start()
     {
         Random.InitState(transform.position.GetHashCode() % 100000);
@@ -19,6 +29,11 @@ public class RandomSpawn : MonoBehaviour
         {
             
             GameObject newSpawnedObject = Instantiate(spawnPrefab, transform.position, transform.rotation);
+
+            if (randomizeRotation)
+            {
+                newSpawnedObject.transform.forward = directionArray[Random.Range(0, 4)];
+            }
 
             if (!makePrefabChild)
             {
