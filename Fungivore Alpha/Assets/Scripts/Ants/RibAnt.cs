@@ -101,7 +101,8 @@ public class RibAnt : Ant
         }
         else
         {
-            EndAnt();
+            combineMesh.MultiMaterialCombine(gameObject);
+            //EndAnt();
         }
 
         if (spawnClimbers) {
@@ -143,6 +144,5 @@ public class RibAnt : Ant
             }
         }
     }
-
 
 }

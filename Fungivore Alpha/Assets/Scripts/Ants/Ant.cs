@@ -230,7 +230,7 @@ public class Ant : MonoBehaviour
     }
 
 
-    public void EndAnt()
+    public virtual void EndAnt()
     {
         combineMesh.Combine(gameObject);
         //CombineMesh(gameObject);
