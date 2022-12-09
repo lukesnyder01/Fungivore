@@ -12,19 +12,17 @@ public class CombineMesh : MonoBehaviour
     public bool meshIsLarge = true;
 
 
-    public void MultiMaterialCombine(GameObject meshesToCombine)
+    public void MultiMaterialCombine(GameObject combineParent)
     {
 
-        //get all child meshes
-        MeshFilter[] meshFilters = meshesToCombine.GetComponentsInChildren<MeshFilter>(false);
-
+        //make a list of materials, we'll make a combine instance for each one
         List<Material> materials = new List<Material>();
 
-        MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>(false);
-
-
         //make a list of meshes, one for each material
-        List<GameObject> perMaterialMeshes = new List<GameObject>();
+        List<GameObject> perMatCombineParents = new List<GameObject>();
+
+
+        MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>(false);
 
         //parent each mesh to combine to their corresponding perMaterialMeshes
         for (int i = 0; i < renderers.Length; i++)
@@ -32,50 +30,59 @@ public class CombineMesh : MonoBehaviour
             //get the first material of this renderer
             Material localMat = renderers[i].sharedMaterials[0];
 
-            //if the material is on the materials list, add the gameObject to the appropriate perMaterialMesh
-            if (materials.Contains(localMat))
+            if (localMat)
             {
-                var matIndex = materials.IndexOf(localMat);
-                renderers[i].gameObject.transform.parent = perMaterialMeshes[matIndex].transform;
+                //if the material is on the materials list, add the gameObject to the appropriate perMaterialMesh
+                if (materials.Contains(localMat))
+                {
+                    var matIndex = materials.IndexOf(localMat);
+                    renderers[i].gameObject.transform.parent = perMatCombineParents[matIndex].transform;
+                }
+                else //create a new perMaterialMesh and add the gameObject
+                {
+                    materials.Add(localMat);
+                    perMatCombineParents.Add(renderers[i].gameObject);
+                }
             }
-            else //create a new perMaterialMesh and add the gameObject
-            {
-                materials.Add(localMat);
-                perMaterialMeshes.Add(renderers[i].gameObject);
-            }
+
         }
 
-        foreach (GameObject perMaterialMesh in perMaterialMeshes)
+        for (int i = 0; i < perMatCombineParents.Count; i++)
         {
-            Debug.Log(perMaterialMesh.transform.parent);
-            perMaterialMesh.transform.parent = null;
+            
+            Combine(perMatCombineParents[i]);
+            if (i > 0)
+            {
+                perMatCombineParents[i].transform.parent = perMatCombineParents[i - 1].transform;
+            }
 
-            Combine(perMaterialMesh);
-            Debug.Log(perMaterialMesh.GetComponent<MeshRenderer>().sharedMaterials[0]);
+            Debug.Log("mesh material is: " + perMatCombineParents[i].GetComponent<MeshRenderer>().sharedMaterials[0]);
         }
+
 
     }
 
-    public void Combine(GameObject meshesToCombine)
+    public void Combine(GameObject combineParent)
     {
-        //temporarily reset object transform to make math easier
+        //store parent object transform
         Quaternion oldRotation = transform.rotation;
         Vector3 oldPosition = transform.position;
         Vector3 oldScale = transform.localScale;
 
+
+        //temporarily reset object transform to make math easier
         transform.rotation = Quaternion.identity;
         transform.position = Vector3.zero;
         transform.localScale = Vector3.one;
 
 
         //get all mesh filters
-        MeshFilter[] meshFilters = meshesToCombine.GetComponentsInChildren<MeshFilter>(false);
+        MeshFilter[] meshFilters = combineParent.GetComponentsInChildren<MeshFilter>(false);
         CombineInstance[] combineInstances = new CombineInstance[meshFilters.Length];
 
 
-        //remove parent object collider, we'll rebuild it later once the meshes are combined
-        Destroy(meshesToCombine.gameObject.GetComponent<MeshCollider>());
-
+        //get a reference to the combine parent collider
+        Collider collider = combineParent.gameObject.GetComponent<Collider>();
 
         int i = 0;
         while (i < meshFilters.Length)
@@ -90,9 +97,7 @@ public class CombineMesh : MonoBehaviour
             i++;
         }
 
-
-
-        var meshFilter = meshesToCombine.GetComponent<MeshFilter>();
+        var meshFilter = combineParent.GetComponent<MeshFilter>();
 
         meshFilter.mesh = new Mesh();
 
@@ -102,10 +107,8 @@ public class CombineMesh : MonoBehaviour
             meshFilter.mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         }
 
-
-
+        //combine the meshes
         meshFilter.mesh.CombineMeshes(combineInstances, true, true);
-
 
 
         //these might not be necessary
@@ -113,33 +116,39 @@ public class CombineMesh : MonoBehaviour
         meshFilter.mesh.RecalculateNormals();
         meshFilter.mesh.Optimize();
 
+        //if the combine parent had a collider, update it to the new mesh
+        if (collider)
+        {
+            //remove parent mesh collider, we'll rebuild it later once the meshes are combined
+            Destroy(combineParent.gameObject.GetComponent<Collider>());
 
-        //add new mesh collider and give it the new combined mesh
-        Mesh newMeshCollider = new Mesh();
+            //create new mesh collider and give it the new combined mesh
+            Mesh newMeshCollider = new Mesh();
 
-        newMeshCollider.indexFormat = meshFilter.mesh.indexFormat;
-        newMeshCollider.vertices = meshFilter.mesh.vertices;
-        newMeshCollider.triangles = meshFilter.mesh.triangles;
+            newMeshCollider.indexFormat = meshFilter.mesh.indexFormat;
+            newMeshCollider.vertices = meshFilter.mesh.vertices;
+            newMeshCollider.triangles = meshFilter.mesh.triangles;
 
-        MeshCollider meshCollider = meshesToCombine.gameObject.AddComponent<MeshCollider>();
+            MeshCollider meshCollider = combineParent.gameObject.AddComponent<MeshCollider>();
 
-        meshCollider.sharedMesh = newMeshCollider;
-
+            meshCollider.sharedMesh = newMeshCollider;
+            Debug.Log("added a mesh collider to " + combineParent);
+        }
 
 
         if (!destroyChildren)
         {
-            meshesToCombine.gameObject.transform.DetachChildren();
+            combineParent.gameObject.transform.DetachChildren();
         }
         else
         {
-            foreach (Transform child in meshesToCombine.transform)
+            foreach (Transform child in combineParent.transform)
             {
                 GameObject.Destroy(child.gameObject);
             }
         }
 
-        meshesToCombine.gameObject.SetActive(true);
+        combineParent.gameObject.SetActive(true);
 
         //reset combined mesh transform
         transform.rotation = oldRotation;

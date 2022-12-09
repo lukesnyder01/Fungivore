@@ -20,7 +20,6 @@ public class RibAnt : Ant
     }
 
 
-
     public override void AddNewBlock()
     {
         int selectedMove = 0;
@@ -76,7 +75,7 @@ public class RibAnt : Ant
         }
 
 
-        if (availablePositions.Count != 0)
+        if (availablePositions.Count > 0)
         {
             Random.InitState(antPos.GetHashCode() % 100000);
             selectedMove = Random.Range(0, availablePositions.Count);
@@ -101,8 +100,8 @@ public class RibAnt : Ant
         }
         else
         {
-            combineMesh.MultiMaterialCombine(gameObject);
-            //EndAnt();
+            EndAnt();
+            return;
         }
 
         if (spawnClimbers) {

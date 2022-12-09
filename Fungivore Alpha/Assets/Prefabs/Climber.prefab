@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2171755184156920321}
   - component: {fileID: 2792135682705588691}
   - component: {fileID: 4436332995339970430}
-  - component: {fileID: 7970648242772464676}
   m_Layer: 8
   m_Name: Climber
   m_TagString: Solid Block
@@ -155,47 +154,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyChildren: 0
   meshIsLarge: 0
---- !u!114 &7970648242772464676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6385687563868456176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 961346d871d415542b90a81acd83995a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  combineMesh: {fileID: 0}
-  minSteps: 20
-  maxSteps: 25
-  waitTime: 0
-  totalSteps: 0
-  currentStep: 0
-  multipleRespawns: 0
-  respawnCount: 0
-  antSideLength: 1
-  verticalSpawnOffset: 0
-  boxCenter: {x: 0, y: 0, z: 0}
-  halfExtents: {x: 0, y: 0, z: 0}
-  boxRotation: {x: 0, y: 0, z: 0}
-  antMoveDistance: 0
-  minPlayerDistance: 0
-  minPlayerDistancePad: 1
-  playerDistance: 0
-  respawnPrefab: {fileID: 0}
-  player: {fileID: 0}
-  spawnPrefabs: []
-  availablePositions: []
-  availableRotations: 
-  noMovesLeft: 0
-  destroyChildren: 1
-  meshIsLarge: 0
-  antPos: {x: 0, y: 0, z: 0}
-  antDir: 0
-  directionArray:
-  - {x: 1, y: 0, z: 0}
-  - {x: 0, y: 0, z: -1}
-  - {x: -1, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}

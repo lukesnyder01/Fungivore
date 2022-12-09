@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4b4caf2efb24bfc49841852e265561de, type: 2}
+  - {fileID: 2100000, guid: 5ca9e57ce771de749a306cbc51a947fa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   respawnPrefab: {fileID: 0}
   player: {fileID: 0}
   spawnPrefabs:
-  - {fileID: 2621124625264784193, guid: dd6eeebb3b404084586d05cc106ff99d, type: 3}
+  - {fileID: 0}
   availablePositions: []
   availableRotations: 
   noMovesLeft: 0

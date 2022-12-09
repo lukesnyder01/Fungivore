@@ -107,13 +107,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c4c0bacafbace142af9c75487381c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSteps: 100
-  maxSteps: 200
+  combineMesh: {fileID: 0}
+  minSteps: 50
+  maxSteps: 100
   waitTime: 0.05
   totalSteps: 0
   currentStep: 0
-  multipleRespawns: 0
-  respawnCount: 0
+  multipleRespawns: 1
+  respawnCount: 10
   antSideLength: 1
   verticalSpawnOffset: 0
   boxCenter: {x: 0, y: 0, z: 0}
