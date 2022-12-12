@@ -16,15 +16,12 @@ public class SporeShrine : MonoBehaviour, IDamageable
     void Start()
     {
         Health = _health;
-        Debug.Log(Health);
     }
 
 
     public void Damage(float damage)
     {
         Health -= damage;
-
-        Debug.Log(Health);
 
         if (Health <= 0)
         {

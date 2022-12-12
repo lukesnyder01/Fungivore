@@ -44,7 +44,7 @@ CapsuleCollider:
   m_Radius: 0.1
   m_Height: 1.63
   m_Direction: 1
-  m_Center: {x: -0.05, y: 2.71, z: -0.05}
+  m_Center: {x: -0.05, y: 0.96, z: -0.05}
 --- !u!137 &2929472251640984803
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -93,8 +93,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: -0.037446573, y: 1.7660987, z: -0.025276452}
-    m_Extent: {x: 0.18332869, y: 1.7660987, z: 0.18527645}
+    m_Center: {x: 0, y: 1.7689154, z: 0}
+    m_Extent: {x: 0.14588213, y: 1.7689154, z: 0.16}
   m_DirtyAABB: 0
 --- !u!183 &8658302430120227984
 Cloth:

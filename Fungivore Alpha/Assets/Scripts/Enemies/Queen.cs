@@ -8,8 +8,10 @@ public class Queen : Enemy
 
     public GameObject projectile;
 
+    float shotTimer = 1f;
 
-    public override void ShootAtPlayer()
+
+    public void ShootAtPlayer()
     {
 
         if (shotTimer <= 0)

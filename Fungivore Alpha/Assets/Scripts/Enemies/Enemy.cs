@@ -2,78 +2,80 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamageable
 {
-    private enum State { 
+    [SerializeField] public float maxHealth = 1f;
+
+    public float Health { get; set; }
+
+    [HideInInspector]
+    public enum State { 
         Idle,
-        HuntForPlayer,
-        FloatNearPlayer,
-        ChargeAtPlayer,
+        Hunt,
+        MaintainDistance,
+        Charge,
     }
 
 
-    public float thrust;
-    public float turnSpeed = 1f;
+    public float thrust = 2f;
+    public float turnSpeed = 2f;
 
-    public float followDistance;
 
-    public float detectionRange;
-    public float detectionRadius = 0.7f;
+    public float followDistance = 1f;
+
+    public float detectionRange = 40f;
+    public float detectionRadius = 0.01f;
 
     public float raycastDistToFindEmpty = 4f;
-
 
     public float despawnRange = 100f;
 
     public GameObject deathEffect;
-    public GameObject hitEffect;
 
-    public float wanderSpeed = 2f;
-    public float chargeSpeed = 3f;
+    public float wanderSpeed = 1.5f;
+    public float chargeSpeed = 2f;
     public float rapidEvasionSpeed = 5f;
 
-    public int maxHitPoints;
-    public int currentHitPoints;
+    public float collisionDamageDealt = 10f;
 
-    public float collisionDamageDealt = 30f;
+    public float rotationSpeed = 0.2f;
+
+
+    [HideInInspector]
+    public GameObject playerCamera;
+    [HideInInspector]
+    public Transform cameraTransform;
+
+
+    [HideInInspector]
+    public GameObject player;
+    [HideInInspector]
+    public Transform playerTransform;
+    [HideInInspector]
+    public Vector3 playerPosition;
+
+    [HideInInspector]
+    public float distanceFromPlayer;
+    [HideInInspector]
+    public Vector3 directionToPlayer;
+    [HideInInspector]
+    public bool canSeePlayer;
+
     private bool collidedWithPlayer = false;
-
-    private GameObject playerCamera;
-    private Transform cameraTransform;
-   
-    private GameObject player;
-    private Transform playerTransform;
-    private Vector3 playerPosition;
-
-    private float distanceFromPlayer;
-    private Vector3 directionToPlayer;
-    private bool canSeePlayer;
-
 
     [HideInInspector]
     public Rigidbody rb;
 
-
     [HideInInspector]
     public List<Vector3> openDirection = new List<Vector3>();
 
-
-    public float shotTimer;
-
-    public float timeBeforeChargeAttack = 30f;
-
-    public bool continuousRotation;
-    public float rotationSpeed;
-
-    private State state;
-
-
-
+    [HideInInspector]
+    public State state;
 
 
     void Start()
     {
-        currentHitPoints = maxHitPoints;
+        Health = maxHealth;
 
         rb = GetComponent<Rigidbody>();
 
@@ -90,40 +92,24 @@ public class Enemy : MonoBehaviour
 
     public virtual void FixedUpdate()
     {
-        shotTimer -= Time.deltaTime;
-
-
-        if (currentHitPoints <= 0)
-        {
-            HitPointsAtZero();
-        }
-
-
-        if (currentHitPoints < maxHitPoints)
-        {
-            timeBeforeChargeAttack = 0f;
-        }
-
-
-        if (timeBeforeChargeAttack <= 0f)
-        {
-            followDistance = 0f;
-        }
-
-
         playerPosition = playerTransform.position;
 
         distanceFromPlayer = Vector3.Distance(transform.position, playerPosition);
 
         directionToPlayer = (playerPosition - transform.position).normalized;
 
-
         if (distanceFromPlayer > despawnRange)
         {
             Destroy(gameObject);
         }
 
-        if (continuousRotation)
+        UpdateStateMachine();
+
+    }
+
+    public virtual void UpdateStateMachine()
+    {
+        if (rotationSpeed > 0f)
         {
             Spin();
         }
@@ -142,12 +128,12 @@ public class Enemy : MonoBehaviour
 
                 if (distanceFromPlayer < detectionRange)
                 {
-                    state = State.HuntForPlayer;
+                    state = State.Hunt;
                 }
-                
+
                 break;
 
-            case State.HuntForPlayer:
+            case State.Hunt:
 
                 if (distanceFromPlayer > detectionRange)
                 {
@@ -156,7 +142,7 @@ public class Enemy : MonoBehaviour
 
                 if (CanSeePlayer())
                 {
-                    state = State.FloatNearPlayer;
+                    state = State.MaintainDistance;
                 }
                 else
                 {
@@ -169,25 +155,22 @@ public class Enemy : MonoBehaviour
                     }
                     if (distanceFromPlayer < followDistance)
                     {
-                        timeBeforeChargeAttack -= Time.deltaTime;
-                        MoveAwayFromPlayer();
+                        EvadePlayer();
                     }
-
                 }
 
                 break;
 
-            case State.FloatNearPlayer:
+            case State.MaintainDistance:
 
-                if (currentHitPoints < maxHitPoints || timeBeforeChargeAttack <= 0f)
+                if (Health < maxHealth)
                 {
-                    state = State.ChargeAtPlayer;
+                    state = State.Charge;
                 }
 
                 if (distanceFromPlayer < followDistance)
                 {
-                    timeBeforeChargeAttack -= Time.deltaTime;
-                    MoveAwayFromPlayer();
+                    EvadePlayer();
                 }
                 else
                 {
@@ -196,12 +179,12 @@ public class Enemy : MonoBehaviour
 
                 if (!CanSeePlayer())
                 {
-                    state = State.HuntForPlayer;
+                    state = State.Hunt;
                 }
 
                 break;
 
-            case State.ChargeAtPlayer:
+            case State.Charge:
 
                 if (CanSeePlayer())
                 {
@@ -209,15 +192,15 @@ public class Enemy : MonoBehaviour
                 }
                 else
                 {
-                    state = State.HuntForPlayer;
+                    state = State.Hunt;
                 }
                 break;
         }
-
     }
 
 
-    void PointAtPlayer()
+
+    public void PointAtPlayer()
     {
         transform.forward = Vector3.Slerp(transform.forward, directionToPlayer, Time.deltaTime * turnSpeed);
 
@@ -225,13 +208,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public virtual void ShootAtPlayer()
-    { 
-        //override later
-    }
-
-
-    bool CanSeePlayer()
+    public bool CanSeePlayer()
     {
         RaycastHit hit;
 
@@ -253,13 +230,13 @@ public class Enemy : MonoBehaviour
     }
 
 
-    void MoveForward(float thrustMultiplier)
+    public void MoveForward(float thrustMultiplier)
     {
         rb.AddForce(transform.forward * thrust * thrustMultiplier);
     }
 
 
-    void FindOpenDirection()
+    public void FindOpenDirection()
     {
         RaycastHit hit;
 
@@ -284,7 +261,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    void EvasiveMove(float thrustMultiplier)
+    public void EvasiveMove(float thrustMultiplier)
     {
         if (openDirection.Count != 0)
         { 
@@ -302,10 +279,10 @@ public class Enemy : MonoBehaviour
     }
 
 
-    void MoveAwayFromPlayer()
+    public void EvadePlayer()
     {
         rb.AddForce(Vector3.up * thrust / 2.0f);
-        rb.AddForce(-directionToPlayer * (rapidEvasionSpeed * thrust - distanceFromPlayer));
+        rb.AddForce(-directionToPlayer * rapidEvasionSpeed * (1 / (distanceFromPlayer * distanceFromPlayer)));
     }
 
 
@@ -325,42 +302,39 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            if (collidedWithPlayer == false)
+            if (!collidedWithPlayer)
             {
                 collidedWithPlayer = true;
+
+                Die();
+
                 FindObjectOfType<AudioManager>().Play("WraithSmash");
-
-                HitPointsAtZero();
-
-                //Destroy(gameObject);
-                //Instantiate(deathEffect, transform.position, other.transform.rotation);
-
                 var playerStats = other.gameObject.GetComponent<PlayerStats>();
                 playerStats.ApplyDamage(collisionDamageDealt);
             }
-        }
-        else if (other.gameObject.tag == "PlayerBullet")
-        {
-            //Destroy(other.gameObject);
-
-            currentHitPoints--;
-
-            Instantiate(hitEffect, transform.position, other.transform.rotation);
-
-            FindObjectOfType<AudioManager>().Play("SpineHit");
 
         }
     }
 
 
-    public virtual void HitPointsAtZero()
+    public void Damage(float damage)
+    {
+        Health -= damage;
+
+        FindObjectOfType<AudioManager>().Play("SpineHit");
+
+        if (Health <= 0)
+        {
+            Die();
+        }
+    }
+
+
+    public virtual void Die()
     {
         Destroy(gameObject);
-
         Instantiate(deathEffect, transform.position, transform.rotation);
-
         FindObjectOfType<AudioManager>().Play("PlayerHurt");
-
     }
 
 

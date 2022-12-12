@@ -19,12 +19,6 @@ public class ViperWraithBodySegment : Enemy
     {
         Spin();
 
-        if (currentHitPoints <= 0)
-        {
-            HitPointsAtZero();
-        }
-
-
         if (followTransform != null)
         {
             followPosition = followTransform.position;
@@ -53,7 +47,7 @@ public class ViperWraithBodySegment : Enemy
 
     }
 
-    public override void HitPointsAtZero()
+    public override void Die()
     {
         tailManager.RemoveFromList(listPosition);
 

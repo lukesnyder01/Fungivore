@@ -82,7 +82,6 @@ public class PlayerController : MonoBehaviour
 
         GetPlayerStats();
 
-
         KillPlayerBelowWorldLimit();
 
 
@@ -113,13 +112,9 @@ public class PlayerController : MonoBehaviour
         
         }
         
-
-
         moveDirection = transform.right * xMove * moveSpeed * lateralSprintSpeedPenalty + transform.forward * zMove * moveSpeed;
 
         
-
-
         if (hitHead && velocity.y > 0)
         {
             velocity.y = -0.1f;
@@ -161,15 +156,9 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        
-
-
-
         characterController.Move(moveDirection * Time.deltaTime + velocity * Time.deltaTime);
 
         //characterController.Move(velocity * Time.deltaTime);
-
-
 
     }
 
@@ -181,9 +170,6 @@ public class PlayerController : MonoBehaviour
         minSafeFallSpeed = PlayerStats.baseSafeFallSpeed;
         jumpForce = PlayerStats.baseJumpForce;
     }
-
-
-
 
 
     void PlayerHitsGround()
@@ -241,8 +227,6 @@ public class PlayerController : MonoBehaviour
     }
 
 
-
-
     void PlayFootsteps()
     {
         if (moveDirection != new Vector3(0f, 0f, 0f) && Mathf.Abs(velocity.y) < 0.52)
@@ -256,6 +240,5 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
 
 }

@@ -13,6 +13,8 @@ public class BulletController : MonoBehaviour
     public PlayerStats playerStats;
     public float bulletDamage = 1f;
 
+    private bool hasCollided;
+
 
     void Awake()
     {
@@ -41,19 +43,22 @@ public class BulletController : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.TryGetComponent(out IDamageable hit))
+        if (!hasCollided) //make sure the bullet can't double collide
         {
-            hit.Damage(bulletDamage);
+            hasCollided = true;
+
+            if (other.gameObject.TryGetComponent(out IDamageable hit))
+            {
+                hit.Damage(bulletDamage);
+            }
+
+            if (other.gameObject.tag != "Player" && other.gameObject.tag != "NearDistanceTrigger")
+            {
+                Instantiate(bulletImpact, transform.position, Quaternion.identity);
+
+                Deactivate();
+            }
         }
-
-        
-        if (other.gameObject.tag != "Player" && other.gameObject.tag != "NearDistanceTrigger")
-        {
-            Instantiate(bulletImpact, transform.position, Quaternion.identity);
-
-            Deactivate();
-        }
-
     }
 
 

@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4412cf5c673c94d49a63c7250fdd2adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 5
   thrust: 4
   turnSpeed: 2
   followDistance: 2
@@ -90,11 +91,9 @@ MonoBehaviour:
   wanderSpeed: 1.5
   chargeSpeed: 2
   rapidEvasionSpeed: 5
-  maxHitPoints: 1
   collisionDamageDealt: 30
+  rb: {fileID: 0}
   openDirection: []
-  shotTimer: 0
-  timeBeforeChargeAttack: 15
   continuousRotation: 1
   rotationSpeed: 0.2
 --- !u!1 &8410483651262193081
