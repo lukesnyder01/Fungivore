@@ -131,6 +131,9 @@ MonoBehaviour:
     type: 3}
   bulletLifespan: 2
   playerStats: {fileID: 0}
+  bulletDamage: 1
+  dummySpine: {fileID: 4344953998712860487, guid: 48d8aecec8879144c977580aba34e389,
+    type: 3}
 --- !u!135 &2882202414493796476
 SphereCollider:
   m_ObjectHideFlags: 0

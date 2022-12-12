@@ -175,6 +175,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4809749631944921511, guid: 1034057fd2a0e5345a726ebd1f7065e1,
         type: 3}
+    - target: {fileID: 2684491439875346284, guid: 60c9ef0ecd1d04640b830aa4856c21ef,
+        type: 3}
+      propertyPath: randomizeRotation
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c9ef0ecd1d04640b830aa4856c21ef, type: 3}
 --- !u!4 &3808254816746613434 stripped

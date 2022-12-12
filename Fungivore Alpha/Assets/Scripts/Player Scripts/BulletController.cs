@@ -11,10 +11,15 @@ public class BulletController : MonoBehaviour
     public float bulletLifespan = 2f;
     float currentLifespan;
     public PlayerStats playerStats;
+
     public float bulletDamage = 1f;
 
-    private bool hasCollided;
+    [HideInInspector]
+    public bool hasCollided = false;
 
+    public GameObject dummySpine;
+
+    private Transform dummySpineParent;
 
     void Awake()
     {
@@ -45,6 +50,8 @@ public class BulletController : MonoBehaviour
     {
         if (!hasCollided) //make sure the bullet can't double collide
         {
+            dummySpineParent = other.gameObject.transform;
+
             hasCollided = true;
 
             if (other.gameObject.TryGetComponent(out IDamageable hit))
@@ -52,19 +59,22 @@ public class BulletController : MonoBehaviour
                 hit.Damage(bulletDamage);
             }
 
-            if (other.gameObject.tag != "Player" && other.gameObject.tag != "NearDistanceTrigger")
-            {
-                Instantiate(bulletImpact, transform.position, Quaternion.identity);
+            Instantiate(bulletImpact, transform.position, Quaternion.identity);
 
-                Deactivate();
-            }
+            Deactivate();
         }
     }
+
+
 
 
     void Deactivate()
     {
         currentLifespan = bulletLifespan;
+        
+        var newDummySpine = Instantiate(dummySpine, transform.position, transform.rotation);
+        newDummySpine.transform.parent = dummySpineParent;
+
         this.gameObject.SetActive(false);
     }
 

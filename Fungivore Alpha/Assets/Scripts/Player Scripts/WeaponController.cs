@@ -15,16 +15,13 @@ public class WeaponController : MonoBehaviour
     private float shotTimer;
     private float timeUntilNextShot;
 
-    //public PlayerStats playerStats;
     private Recoil recoilScript;
 
 
     void Start()
     {
         playerChar = GameObject.Find("Player").GetComponent<CharacterController>();
-        //playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
         recoilScript = transform.Find("CameraRotation/CameraRecoil").GetComponent<Recoil>();
-
     }
 
 
@@ -65,7 +62,6 @@ public class WeaponController : MonoBehaviour
             {
                 ShootBullet();
                 PlayerStats.currentSpines--;
-                
             }
 
             FindObjectOfType<AudioManager>().Play("PlayerShoot");
@@ -87,31 +83,16 @@ public class WeaponController : MonoBehaviour
 
         Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, y, z);
 
-
-        /*
-        var particles = Instantiate(shotParticleEffect, bulletSpawn.transform.position, bulletSpawn.transform.rotation);
-        particles.transform.parent = transform;
-        */
-
-
         var bullet = ObjectPooler.current.GetPooledObject(0);
 
         bullet.SetActive(true);
-
         bullet.transform.rotation = bulletSpawn.transform.rotation;
         bullet.transform.position = bulletSpawn.transform.position;
 
         var rb = bullet.GetComponent<Rigidbody>();
+        bullet.GetComponent<BulletController>().hasCollided = false;
 
         rb.velocity = (playerChar.velocity + directionWithSpread * PlayerStats.spineSpeed.GetValue());
-
-        //bullet.GetComponent<Rigidbody>().velocity = playerVelocity;
-
-        //rb.AddForce(directionWithSpread * playerStats.spineSpeed.GetValue(), ForceMode.Impulse);
-
-        
-
-
 
     }
 
