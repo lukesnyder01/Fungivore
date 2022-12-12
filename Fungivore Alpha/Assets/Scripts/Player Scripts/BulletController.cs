@@ -4,20 +4,15 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-
     public float gravity;
-
     private Rigidbody rb;
-
     public GameObject bulletImpact;
-
     float shotTimer;
-
     public float bulletLifespan = 2f;
-
     float currentLifespan;
-
     public PlayerStats playerStats;
+    public float bulletDamage = 1f;
+
 
     void Awake()
     {
@@ -27,36 +22,42 @@ public class BulletController : MonoBehaviour
     }
 
 
-
     void FixedUpdate()
     {
         currentLifespan -= Time.deltaTime;
 
         if (currentLifespan <= 0)
         {
-            DestroyBullet();
+            Deactivate();
         }
 
         shotTimer += Time.deltaTime;
 
-
         rb.AddForce(-Vector3.up * gravity);
         transform.forward = rb.velocity;
 
-
     }
+
 
     void OnCollisionEnter(Collision other)
     {
+        if (other.gameObject.TryGetComponent(out IDamageable hit))
+        {
+            hit.Damage(bulletDamage);
+        }
+
+        
         if (other.gameObject.tag != "Player" && other.gameObject.tag != "NearDistanceTrigger")
         {
             Instantiate(bulletImpact, transform.position, Quaternion.identity);
 
-            DestroyBullet();
+            Deactivate();
         }
+
     }
 
-    void DestroyBullet()
+
+    void Deactivate()
     {
         currentLifespan = bulletLifespan;
         this.gameObject.SetActive(false);

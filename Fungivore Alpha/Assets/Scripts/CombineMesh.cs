@@ -132,7 +132,7 @@ public class CombineMesh : MonoBehaviour
             MeshCollider meshCollider = combineParent.gameObject.AddComponent<MeshCollider>();
 
             meshCollider.sharedMesh = newMeshCollider;
-            Debug.Log("added a mesh collider to " + combineParent);
+            //Debug.Log("added a mesh collider to " + combineParent);
         }
 
 
