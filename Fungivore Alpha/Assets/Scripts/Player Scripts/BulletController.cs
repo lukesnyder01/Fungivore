@@ -50,6 +50,8 @@ public class BulletController : MonoBehaviour
     {
         if (!hasCollided) //make sure the bullet can't double collide
         {
+            var hitPos = other.contacts[0].point;
+
             dummySpineParent = other.gameObject.transform;
 
             hasCollided = true;
@@ -58,6 +60,18 @@ public class BulletController : MonoBehaviour
             {
                 hit.Damage(bulletDamage);
             }
+
+
+            var newDummySpine = Instantiate(dummySpine, hitPos, transform.rotation);
+            if (other.collider.attachedRigidbody)
+            {
+                
+                newDummySpine.transform.SetParent(dummySpineParent, true);
+            }
+    
+           
+
+
 
             Instantiate(bulletImpact, transform.position, Quaternion.identity);
 
@@ -71,9 +85,9 @@ public class BulletController : MonoBehaviour
     void Deactivate()
     {
         currentLifespan = bulletLifespan;
-        
-        var newDummySpine = Instantiate(dummySpine, transform.position, transform.rotation);
-        newDummySpine.transform.parent = dummySpineParent;
+
+
+
 
         this.gameObject.SetActive(false);
     }

@@ -5,11 +5,13 @@ using UnityEngine;
 public class CuriousSpore : Enemy
 {
     private Vector3 targetPosition;
-    private Vector3 directionToTarget; 
+    private Vector3 directionToTarget;
+
+    public float targetDistance = 2;
 
     public override void UpdateStateMachine()
     {
-        targetPosition = cameraTransform.forward * 1.1f + cameraTransform.position;
+        targetPosition = cameraTransform.forward * targetDistance + cameraTransform.position;
         directionToTarget = (targetPosition - transform.position).normalized;
 
         Spin();
@@ -49,7 +51,7 @@ public class CuriousSpore : Enemy
                     FindOpenDirection();
                     EvasiveMove(rapidEvasionSpeed);
 
-                    if (distanceFromPlayer < followDistance)
+                    if (distanceFromPlayer < minimumDistance)
                     {
                         EvadePlayer();
                     }
@@ -63,12 +65,17 @@ public class CuriousSpore : Enemy
 
             case State.MaintainDistance:
 
-                if (distanceFromPlayer < followDistance)
+                if (distanceFromPlayer < minimumDistance)
                 {
                     EvadePlayer();
                 }
                 else
                 {
+                    if (distanceFromPlayer > detectionRange)
+                    {
+                        state = State.Idle;
+                    }
+
                     MoveTowardsTarget(chargeSpeed);
                 }
 

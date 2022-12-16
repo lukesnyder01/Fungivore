@@ -132,6 +132,7 @@ MonoBehaviour:
   bulletLifespan: 2
   playerStats: {fileID: 0}
   bulletDamage: 1
+  hasCollided: 0
   dummySpine: {fileID: 4344953998712860487, guid: 48d8aecec8879144c977580aba34e389,
     type: 3}
 --- !u!135 &2882202414493796476
@@ -145,8 +146,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.03
-  m_Center: {x: 0, y: 0, z: 0.1}
+  m_Radius: 0.05
+  m_Center: {x: 0, y: 0, z: 0.11}
 --- !u!54 &-6030175710159368940
 Rigidbody:
   m_ObjectHideFlags: 0

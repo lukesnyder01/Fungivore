@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public float turnSpeed = 2f;
 
 
-    public float followDistance = 1f;
+    public float minimumDistance = 1f;
 
     public float detectionRange = 40f;
     public float detectionRadius = 0.01f;
@@ -149,11 +149,11 @@ public class Enemy : MonoBehaviour, IDamageable
                     FindOpenDirection();
                     EvasiveMove(rapidEvasionSpeed);
 
-                    if (distanceFromPlayer > followDistance)
+                    if (distanceFromPlayer > minimumDistance)
                     {
                         MoveTowardsPlayer(wanderSpeed);
                     }
-                    if (distanceFromPlayer < followDistance)
+                    if (distanceFromPlayer < minimumDistance)
                     {
                         EvadePlayer();
                     }
@@ -168,7 +168,7 @@ public class Enemy : MonoBehaviour, IDamageable
                     state = State.Charge;
                 }
 
-                if (distanceFromPlayer < followDistance)
+                if (distanceFromPlayer < minimumDistance)
                 {
                     EvadePlayer();
                 }
@@ -282,7 +282,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public void EvadePlayer()
     {
         rb.AddForce(Vector3.up * thrust / 2.0f);
-        rb.AddForce(-directionToPlayer * rapidEvasionSpeed * (1 / (distanceFromPlayer * distanceFromPlayer)));
+        rb.AddForce(-directionToPlayer * rapidEvasionSpeed * rapidEvasionSpeed);
     }
 
 
@@ -312,7 +312,6 @@ public class Enemy : MonoBehaviour, IDamageable
                 var playerStats = other.gameObject.GetComponent<PlayerStats>();
                 playerStats.ApplyDamage(collisionDamageDealt);
             }
-
         }
     }
 
