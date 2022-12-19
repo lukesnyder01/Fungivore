@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9168879171765496909}
   - component: {fileID: 5768020153228522171}
   - component: {fileID: 8501262931200878090}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Statue
   m_TagString: Solid Block
   m_Icon: {fileID: 0}
@@ -91053,7 +91053,7 @@ GameObject:
   - component: {fileID: 4968561379283638517}
   - component: {fileID: 3634346071510470186}
   - component: {fileID: 1779442877277887472}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Spore Shrine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91087,6 +91087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d93a34abdf11224ea78024c8848eb74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  promptText: '[E] Smash'
   _health: 1
   spawnPrefab: {fileID: 4468911112632693745, guid: 8e2befb44894b66479ced980f0623340,
     type: 3}

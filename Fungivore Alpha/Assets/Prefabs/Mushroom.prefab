@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3349345120150330709}
   - component: {fileID: 2882202414493796476}
   - component: {fileID: -6030175710159368940}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Mushroom
   m_TagString: Mushroom
   m_Icon: {fileID: 0}
@@ -46,12 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43aedd8e332d0042b85907efb0deafd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  promptText: '[E] Harvest'
   mushroomDeathEffect: {fileID: 8160540889385062186, guid: a64c5b52495146c47943367f0ed92b6d,
     type: 3}
-  jumpMushroomDeathEffect: {fileID: 0}
-  audioFadeTime: 2
-  pickupDistance: 0.4
-  isJumpMushroom: 0
 --- !u!135 &2882202414493796476
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -147,6 +144,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Mushroom Mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 4338026517087961602, guid: eb01fbeab31471d4f896c5a8290cac7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb01fbeab31471d4f896c5a8290cac7c, type: 3}

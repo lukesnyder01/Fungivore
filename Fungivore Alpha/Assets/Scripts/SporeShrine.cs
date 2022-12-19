@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SporeShrine : MonoBehaviour, IDamageable
+public class SporeShrine : InteractableObject, IDamageable
 {
     [SerializeField] private float _health = 5f;
 
@@ -16,6 +16,11 @@ public class SporeShrine : MonoBehaviour, IDamageable
     void Start()
     {
         Health = _health;
+    }
+
+    public override void Interact()
+    {
+        Damage(1f);
     }
 
 
