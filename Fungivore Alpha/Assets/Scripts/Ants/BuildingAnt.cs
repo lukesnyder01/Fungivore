@@ -62,7 +62,7 @@ public class BuildingAnt : Ant
         }
 
 
-        if (availablePositions.Count <= 1)
+        if (availablePositions.Count <= 3)
         {
             if (SpaceIsEmpty(Vector3.up))
             {

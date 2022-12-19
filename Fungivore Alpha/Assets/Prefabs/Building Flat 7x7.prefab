@@ -132,7 +132,6 @@ MonoBehaviour:
   - {fileID: 7073215055701983294, guid: 32982ab90d2fe834baa59734fab53a2d, type: 3}
   - {fileID: 7073215055701983294, guid: 7cc5195ef17d5bd4abb63d9c42e9e451, type: 3}
   - {fileID: 7073215055701983294, guid: af1d9c3a3069aee4db6b5877c75ed8e8, type: 3}
-  - {fileID: 7073215055701983294, guid: 1960f74ec0eb34a479512cb954a92e2d, type: 3}
   availablePositions: []
   availableRotations: 
   noMovesLeft: 0

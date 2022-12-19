@@ -140,11 +140,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pillar: {fileID: 2621124625264784193, guid: 179480251c80be746891fe3067073e61, type: 3}
   pillarFieldMeshes: {fileID: 6835279807118665411}
-  waitTime: 0.01
+  waitTime: 0
   minHeight: 2
   maxHeight: 100
   pillarSpawnChance: 6
-  spawnsPerWait: 30
+  spawnsPerWait: 20
 --- !u!114 &8843891202122054881
 MonoBehaviour:
   m_ObjectHideFlags: 0

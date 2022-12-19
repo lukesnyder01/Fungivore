@@ -70,7 +70,7 @@ public class EideticAnt : Ant
         }
         else
         {
-            if (multipleRespawns && noMovesLeft == false)
+            if (multipleRespawns && !noMovesLeft)
             {
                 Respawn();
                 EndAnt();

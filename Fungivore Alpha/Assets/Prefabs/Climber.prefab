@@ -110,7 +110,7 @@ MonoBehaviour:
   combineMesh: {fileID: 0}
   minSteps: 60
   maxSteps: 65
-  waitTime: 0.05
+  waitTime: 0
   totalSteps: 0
   currentStep: 0
   multipleRespawns: 0

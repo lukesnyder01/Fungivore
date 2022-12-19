@@ -107,9 +107,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c4c0bacafbace142af9c75487381c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combineMesh: {fileID: 0}
   minSteps: 30
   maxSteps: 55
-  waitTime: 0.05
+  waitTime: 0
   totalSteps: 0
   currentStep: 0
   multipleRespawns: 0
