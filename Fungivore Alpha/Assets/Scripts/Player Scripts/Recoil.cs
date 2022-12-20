@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Recoil : MonoBehaviour
 {
+    public Transform recoilTarget;
+
     private Vector3 currentRotation;
     private Vector3 targetRotation;
 
@@ -22,7 +24,7 @@ public class Recoil : MonoBehaviour
             targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
             currentRotation = Vector3.Lerp(currentRotation, targetRotation, snappiness * Time.fixedDeltaTime);
 
-            transform.localRotation = Quaternion.Euler(currentRotation);
+           recoilTarget.localRotation = Quaternion.Euler(currentRotation);
         }
 
     }
@@ -39,6 +41,7 @@ public class Recoil : MonoBehaviour
         x = Mathf.Clamp(x, -45f, 45f);
         targetRotation += new Vector3(x, 0f, 0f);
     }
+
 
     public void RecoilStrafe(float y)
     {

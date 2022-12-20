@@ -18,10 +18,13 @@ public class WeaponController : MonoBehaviour
     private Recoil recoilScript;
 
 
+
+
     void Start()
     {
         playerChar = GameObject.Find("Player").GetComponent<CharacterController>();
-        recoilScript = transform.Find("CameraRotation/CameraRecoil").GetComponent<Recoil>();
+        recoilScript = transform.GetComponent<Recoil>();
+        //recoilScript = transform.Find("CameraRotation/CameraRecoil").GetComponent<Recoil>();
     }
 
 

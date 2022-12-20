@@ -18,7 +18,6 @@ public class Ant : MonoBehaviour
     [HideInInspector]
     public int currentStep;
 
-    public bool multipleRespawns;
     public int respawnCount;
 
     public int antSideLength = 1;
@@ -140,7 +139,7 @@ public class Ant : MonoBehaviour
         }
         else
         {
-            if (multipleRespawns && noMovesLeft == false)
+            if (noMovesLeft == false)
             {
                 Respawn();
             }
@@ -222,11 +221,16 @@ public class Ant : MonoBehaviour
     }
 
 
-
-
     public virtual void Respawn()
     {
-        Instantiate(respawnPrefab, antPos, transform.rotation);
+        if (respawnCount > 0)
+        {
+            var newAnt = Instantiate(respawnPrefab, antPos, transform.rotation);
+            if (newAnt.TryGetComponent(out AntRespawner respawner))
+            {
+                respawner.respawnsLeft = respawnCount - 1;
+            }
+        }
     }
 
 
@@ -235,6 +239,5 @@ public class Ant : MonoBehaviour
         combineMesh.Combine(gameObject);
         //combineMesh.MultiMaterialCombine(gameObject);
     }
-
 
 }

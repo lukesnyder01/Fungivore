@@ -91091,7 +91091,7 @@ MonoBehaviour:
   _health: 1
   spawnPrefab: {fileID: 4468911112632693745, guid: 8e2befb44894b66479ced980f0623340,
     type: 3}
-  spawnParticleEffect: {fileID: 8160540889385062186, guid: 0b4fdd50e739de94298ee3138493e4ab,
+  spawnParticleEffect: {fileID: 8160540889385062186, guid: a64c5b52495146c47943367f0ed92b6d,
     type: 3}
   spawnSound: WraithSmash
 --- !u!65 &4968561379283638517

@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978403821cb989f41bf410665e3d5ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 3
   thrust: 3
   turnSpeed: 3
   minimumDistance: 1.5

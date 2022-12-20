@@ -33,7 +33,7 @@ TagManager:
   - PlayerBullet
   - NearDistanceTrigger
   - Interactable
-  - 
+  - AntRespawner
   - 
   - 
   - 

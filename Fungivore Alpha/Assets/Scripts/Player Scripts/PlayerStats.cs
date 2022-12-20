@@ -113,7 +113,7 @@ public class PlayerStats : MonoBehaviour
 
         DefineSkill(_index: 4, _skillName: "Spine Speed",
             _skillDescription: "",
-            _baseValue: 20, _valueChangePerLevel: 5f, _baseUpgradeCost: 2, _maxLevel: 5);
+            _baseValue: 10, _valueChangePerLevel: 2f, _baseUpgradeCost: 2, _maxLevel: 5);
 
         DefineSkill(_index: 5, _skillName: "Incubator Efficiency",
             _skillDescription: "Your spore incubation gland can perform more efficiently, yielding greater mutagen harvests.",

@@ -61,19 +61,14 @@ public class BulletController : MonoBehaviour
                 hit.Damage(bulletDamage);
             }
 
-
             var newDummySpine = Instantiate(dummySpine, hitPos, transform.rotation);
             if (other.collider.attachedRigidbody)
             {
-                
                 newDummySpine.transform.SetParent(dummySpineParent, true);
             }
     
-           
 
-
-
-            Instantiate(bulletImpact, transform.position, Quaternion.identity);
+            Instantiate(bulletImpact, hitPos, Quaternion.identity);
 
             Deactivate();
         }
@@ -85,10 +80,6 @@ public class BulletController : MonoBehaviour
     void Deactivate()
     {
         currentLifespan = bulletLifespan;
-
-
-
-
         this.gameObject.SetActive(false);
     }
 

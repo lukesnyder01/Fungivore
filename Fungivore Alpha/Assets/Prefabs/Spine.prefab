@@ -129,7 +129,7 @@ MonoBehaviour:
   gravity: 0.5
   bulletImpact: {fileID: 8160540889385062186, guid: 5d75219e9aa1e6e4295f666474aadd9c,
     type: 3}
-  bulletLifespan: 2
+  bulletLifespan: 4
   playerStats: {fileID: 0}
   bulletDamage: 1
   hasCollided: 0

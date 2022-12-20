@@ -113,7 +113,6 @@ MonoBehaviour:
   waitTime: 0
   totalSteps: 0
   currentStep: 0
-  multipleRespawns: 1
   respawnCount: 10
   antSideLength: 1
   verticalSpawnOffset: 0
@@ -122,7 +121,7 @@ MonoBehaviour:
   boxRotation: {x: 0, y: 0, z: 0}
   antMoveDistance: 0
   minPlayerDistance: 6
-  minPlayerDistancePad: 1
+  minPlayerDistancePad: 5
   playerDistance: 0
   respawnPrefab: {fileID: 4899378156460765924, guid: 6059560456f01674daa78248e0866c17,
     type: 3}

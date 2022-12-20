@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
         playerStats = GetComponent<PlayerStats>();
         audioManager = FindObjectOfType<AudioManager>();
         cameraTransform = Camera.main.transform;
-        recoilScript = transform.Find("CameraRotation/CameraRecoil").GetComponent<Recoil>();
+        recoilScript = transform.GetComponent<Recoil>();
     }
 
 

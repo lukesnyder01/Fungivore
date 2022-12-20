@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8060442662772930978}
   - component: {fileID: 6582496508314016630}
   - component: {fileID: 12027840629348544}
+  - component: {fileID: -3930017974176615471}
   m_Layer: 8
   m_Name: Building Flat 7x7 Spawner
   m_TagString: Solid Block
@@ -118,7 +119,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4899378156460765924}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c979eafd5cc20de4ea0dd4c0c2e8257f, type: 3}
   m_Name: 
@@ -128,5 +129,20 @@ MonoBehaviour:
   mustBeClicked: 0
   minPlayerDistance: 100
   timeBetweenSteps: 1
-  destroyDistance: 0
   destroyWhenFarAway: 0
+  destroyDistance: 0
+--- !u!114 &-3930017974176615471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4899378156460765924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bc1799d03f4d654894b50144f8877aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPrefab: {fileID: 6385687563868456176, guid: 7e6f6128a09c95a44856bb883d78e8f3,
+    type: 3}
+  respawnsLeft: 0

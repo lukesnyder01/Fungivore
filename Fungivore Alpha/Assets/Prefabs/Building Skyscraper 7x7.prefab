@@ -107,12 +107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea9f8d77c2e743942854f605bef5cc15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combineMesh: {fileID: 0}
   minSteps: 8
   maxSteps: 30
   waitTime: 0
   totalSteps: 0
   currentStep: 0
-  multipleRespawns: 0
   respawnCount: 0
   antSideLength: 7
   verticalSpawnOffset: 3
@@ -121,7 +121,7 @@ MonoBehaviour:
   boxRotation: {x: 0, y: 0, z: 0}
   antMoveDistance: 0
   minPlayerDistance: 0
-  minPlayerDistancePad: 1
+  minPlayerDistancePad: 15
   playerDistance: 0
   respawnPrefab: {fileID: 4899378156460765924, guid: 230fb6eae7e6fe340b26d55067269a67,
     type: 3}

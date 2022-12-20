@@ -13,6 +13,7 @@ public class SporeShrine : InteractableObject, IDamageable
     public string spawnSound;
 
 
+
     void Start()
     {
         Health = _health;
@@ -30,8 +31,10 @@ public class SporeShrine : InteractableObject, IDamageable
 
         if (Health <= 0)
         {
-            Instantiate(spawnPrefab, transform.position, transform.rotation);
-            Instantiate(spawnParticleEffect, transform.position, transform.rotation);
+            var targetPos = transform.position + new Vector3(0f, 0.2f, 0f);
+
+            Instantiate(spawnPrefab, targetPos, transform.rotation);
+            Instantiate(spawnParticleEffect, targetPos, transform.rotation);
             FindObjectOfType<AudioManager>().Play(spawnSound);
 
             Destroy(this.gameObject);

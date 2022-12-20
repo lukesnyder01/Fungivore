@@ -51,10 +51,7 @@ public class MazeAnt : Ant
 
         if (currentStep == totalSteps)
         {
-            if (multipleRespawns)
-            {
-                Respawn();
-            }
+            Respawn();
 
             CloseMazeEnds();
         }
@@ -312,6 +309,7 @@ public class MazeAnt : Ant
             }
         }
     }
+
 
     public override void Respawn()
     {

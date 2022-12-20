@@ -107,13 +107,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7b02b24f1cbc04495a65754bbf21c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combineMesh: {fileID: 0}
   minSteps: 50
   maxSteps: 200
   waitTime: 0
   totalSteps: 0
   currentStep: 0
-  multipleRespawns: 0
-  respawnCount: 0
+  respawnCount: 1
   antSideLength: 1
   verticalSpawnOffset: 0
   boxCenter: {x: 0, y: 0, z: 0}
@@ -121,7 +121,7 @@ MonoBehaviour:
   boxRotation: {x: 0, y: 0, z: 0}
   antMoveDistance: 0
   minPlayerDistance: 0
-  minPlayerDistancePad: 1
+  minPlayerDistancePad: 7
   playerDistance: 0
   respawnPrefab: {fileID: 4899378156460765924, guid: 76091c2bdd90be249ab3d272fd3ae515,
     type: 3}
@@ -131,7 +131,7 @@ MonoBehaviour:
   availablePositions: []
   availableRotations: 
   noMovesLeft: 0
-  destroyChildren: 1
+  destroyChildren: 0
   meshIsLarge: 0
   antPos: {x: 0, y: 0, z: 0}
   antDir: 0
