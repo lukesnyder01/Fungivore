@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 velocity;
 
     private float jumpRecoilAmount = 15;
-    private float landRecoilAmount = 10;
+    private float landRecoilAmount = -10;
     private float strafeRecoilAmount = 3;
 
 
@@ -79,7 +79,8 @@ public class PlayerController : MonoBehaviour
 
         KillPlayerBelowWorldLimit();
 
-        recoilScript.RecoilStrafe(strafeRecoilAmount * -playerInput.xInput);
+        //recoilScript.RecoilStrafe(strafeRecoilAmount * -playerInput.xInput);
+
 
         SetPlayerMoveSpeed();
 
@@ -98,8 +99,9 @@ public class PlayerController : MonoBehaviour
         }
         
         moveDirection = transform.right * playerInput.xInput * moveSpeed * lateralSprintSpeedPenalty + transform.forward * playerInput.zInput * moveSpeed;
-
         
+        //recoilScript.Translate(-moveDirection);
+
         if (hitHead && velocity.y > 0)
         {
             velocity.y = -0.1f;

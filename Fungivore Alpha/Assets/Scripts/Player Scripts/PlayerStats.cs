@@ -82,12 +82,13 @@ public class PlayerStats : MonoBehaviour
     public Text doubleJumpText;
     public Text experiencePointsText;
 
-    private Recoil recoilScript;
+    //private Recoil recoilScript;
 
 
 
     void Start()
     {
+        //recoilScript = transform.Find("CameraRotation/CameraRecoil").GetComponent<Recoil>();
         screenDamage = GetComponent<ScreenDamageIndicator>();
         audioSource = GetComponent<AudioSource>();
         audioManager = FindObjectOfType<AudioManager>();
@@ -192,8 +193,6 @@ public class PlayerStats : MonoBehaviour
         sporesText.text = "Spores: " + sporesInventory.ToString();
         doubleJumpText.text = "Double Jumps: " + maxDoubleJumpValue.ToString();
         experiencePointsText.text = "XP: " + experiencePoints.ToString();
-
-        recoilScript = transform.Find("CameraRotation/CameraRecoil").GetComponent<Recoil>();
     }
 
 
@@ -240,7 +239,7 @@ public class PlayerStats : MonoBehaviour
     {
         currentHealth -= damage;
 
-        recoilScript.RecoilJump(damage / 2);
+        //recoilScript.RecoilJump(damage / 2);
 
         float bloodAmount = damage / 50 + 0.2f;
 

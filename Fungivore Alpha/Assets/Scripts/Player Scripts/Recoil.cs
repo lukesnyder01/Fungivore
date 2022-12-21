@@ -16,15 +16,31 @@ public class Recoil : MonoBehaviour
     [SerializeField] private float snappiness = 6;
     [SerializeField] private float returnSpeed = 5;
 
+    private Vector3 currentPosition;
+    private Vector3 targetPosition;
+
+    private Vector3 originalPosition;
+
+    void Awake()
+    {
+        originalPosition = recoilTarget.position;
+    }
+
 
     void Update()
     {
         if (!PauseMenu.gameIsPaused)
         {
+            targetPosition = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
+            currentPosition = Vector3.Lerp(currentPosition, targetPosition, snappiness * Time.fixedDeltaTime);
+
             targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
             currentRotation = Vector3.Lerp(currentRotation, targetRotation, snappiness * Time.fixedDeltaTime);
 
-           recoilTarget.localRotation = Quaternion.Euler(currentRotation);
+            recoilTarget.localPosition = currentPosition;
+
+            recoilTarget.localRotation = Quaternion.Euler(currentRotation);
+
         }
 
     }
@@ -48,5 +64,9 @@ public class Recoil : MonoBehaviour
         targetRotation.y = y;
     }
 
+    public void Translate(Vector3 dir)
+    {
+        targetPosition = transform.position += dir;
+    }
 
 }

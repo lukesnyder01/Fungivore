@@ -23,7 +23,7 @@ public class SimpleSmoothMouseLook : MonoBehaviour
 
     void Start()
     {
-        playerInput = transform.root.GetComponent<PlayerInput>();
+        playerInput = GameObject.FindWithTag("Player").GetComponent<PlayerInput>();
 
         // Set target direction to the camera's initial orientation.
         targetDirection = transform.localRotation.eulerAngles;
