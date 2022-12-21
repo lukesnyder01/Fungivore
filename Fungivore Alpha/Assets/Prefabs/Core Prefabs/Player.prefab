@@ -282,7 +282,7 @@ GameObject:
   m_Layer: 0
   m_Name: Center Screen Text Location
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -464,6 +464,7 @@ GameObject:
   - component: {fileID: 104922762}
   - component: {fileID: 4209480250165353046}
   - component: {fileID: 9187340029247936689}
+  - component: {fileID: 3060073390335926168}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -720,7 +721,7 @@ MonoBehaviour:
   interactDist: 1.5
   mask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 16384
 --- !u!114 &4209480250165353046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -752,6 +753,18 @@ MonoBehaviour:
   recoilZ: 3
   snappiness: 6
   returnSpeed: 5
+--- !u!114 &3060073390335926168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4855019364282867774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55e8cf5a9bdbfb44ad8c43176091601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4855019364364768012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1497,7 +1510,8 @@ PrefabInstance:
       propertyPath: m_firstOverflowCharacterIndex
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -5961152308181976658, guid: a791a65f6ddcbfa4bb0038b36aa47a24, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a791a65f6ddcbfa4bb0038b36aa47a24, type: 3}
 --- !u!224 &2865205987613800333 stripped
 RectTransform:
@@ -1680,7 +1694,7 @@ PrefabInstance:
     - target: {fileID: 7292983291268926195, guid: a791a65f6ddcbfa4bb0038b36aa47a24,
         type: 3}
       propertyPath: m_text
-      value: Prompt Text
+      value: prompt text
       objectReference: {fileID: 0}
     - target: {fileID: 7292983291268926195, guid: a791a65f6ddcbfa4bb0038b36aa47a24,
         type: 3}

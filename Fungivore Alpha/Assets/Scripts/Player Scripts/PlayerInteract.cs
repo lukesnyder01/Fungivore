@@ -13,13 +13,15 @@ public class PlayerInteract : MonoBehaviour
     private Transform cameraTransform;
     private InteractableObject currentTarget;
     private TextMeshPro textMesh;
-    
+    private PlayerInput playerInput;
 
-    void Start()
+
+    void Awake()
     {
         textMesh = gameObject.GetComponent<PlayerUI>().promptTextUI;
         cameraTransform = Camera.main.transform;
         textMesh.text = null;
+        playerInput = GetComponent<PlayerInput>();
     }
 
 

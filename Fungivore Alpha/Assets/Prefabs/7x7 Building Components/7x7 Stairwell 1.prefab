@@ -118,7 +118,7 @@ PrefabInstance:
     - target: {fileID: 2684491439875346282, guid: 3bf54ab21c774d9459939d032d75f60a,
         type: 3}
       propertyPath: m_Name
-      value: Random Spawn Rib Spawner (1)
+      value: Random Spawn Dropper (1)
       objectReference: {fileID: 0}
     - target: {fileID: 2684491439875346283, guid: 3bf54ab21c774d9459939d032d75f60a,
         type: 3}
@@ -184,7 +184,7 @@ PrefabInstance:
         type: 3}
       propertyPath: spawnPrefab
       value: 
-      objectReference: {fileID: 6385687563868456176, guid: cd32aec2643a5cd49a1e2d42c146ba12,
+      objectReference: {fileID: 4899378156460765924, guid: 272e183855babc240b4208bc8aaabebe,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bf54ab21c774d9459939d032d75f60a, type: 3}
@@ -204,7 +204,7 @@ PrefabInstance:
     - target: {fileID: 2684491439875346282, guid: 3bf54ab21c774d9459939d032d75f60a,
         type: 3}
       propertyPath: m_Name
-      value: Random Spawn Rib Spawner
+      value: Random Spawn Dropper
       objectReference: {fileID: 0}
     - target: {fileID: 2684491439875346283, guid: 3bf54ab21c774d9459939d032d75f60a,
         type: 3}
@@ -270,7 +270,7 @@ PrefabInstance:
         type: 3}
       propertyPath: spawnPrefab
       value: 
-      objectReference: {fileID: 6385687563868456176, guid: cd32aec2643a5cd49a1e2d42c146ba12,
+      objectReference: {fileID: 4899378156460765924, guid: 272e183855babc240b4208bc8aaabebe,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bf54ab21c774d9459939d032d75f60a, type: 3}

@@ -5,10 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    
-
     [Header("Player Settings")]
-
     float walkSpeed;
     float runSpeed;
     public bool isRunning;
@@ -36,6 +33,8 @@ public class PlayerController : MonoBehaviour
     private PlayerStats playerStats;
     private Recoil recoilScript;
 
+    private PlayerInput playerInput;
+
 
     [Header("Other")]
 
@@ -46,8 +45,6 @@ public class PlayerController : MonoBehaviour
 
     //Private variables
 
-    private float xMove;
-    private float zMove;
 
     private Vector3 moveDirection;
 
@@ -58,19 +55,18 @@ public class PlayerController : MonoBehaviour
     private bool hitHead;
     private Vector3 velocity;
 
-    private float jumpRecoilAmount = -15;
+    private float jumpRecoilAmount = 15;
     private float landRecoilAmount = 10;
     private float strafeRecoilAmount = 3;
 
 
-  
-
-    void Start()
+    void Awake()
     {
         screenDamage = GetComponent<ScreenDamageIndicator>();
         characterController = GetComponent<CharacterController>();
         audioSource = GetComponent<AudioSource>();
         playerStats = GetComponent<PlayerStats>();
+        playerInput = GetComponent<PlayerInput>();
         audioManager = FindObjectOfType<AudioManager>();
         cameraTransform = Camera.main.transform;
         recoilScript = transform.GetComponent<Recoil>();
@@ -79,19 +75,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
         GetPlayerStats();
 
         KillPlayerBelowWorldLimit();
 
-
-        xMove = Input.GetAxis("Horizontal");
-        zMove = Input.GetAxis("Vertical");
-
-        recoilScript.RecoilStrafe(strafeRecoilAmount * -xMove);
+        recoilScript.RecoilStrafe(strafeRecoilAmount * -playerInput.xInput);
 
         SetPlayerMoveSpeed();
-
 
         isGrounded = Physics.CheckSphere(groundCheckPosition.position, groundCheckRadius, groundMask);
         hitHead = Physics.CheckSphere(headCheckPosition.position, headCheckRadius, groundMask);
@@ -99,7 +89,6 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
-            
             PlayerHitsGround();
 
             PlayFootsteps();
@@ -107,12 +96,8 @@ public class PlayerController : MonoBehaviour
             doubleJumpCount = 0;                            //reset double jumps
             characterController.stepOffset = 0.2f;          //allows player to climb stairs
         }
-        else
-        { 
         
-        }
-        
-        moveDirection = transform.right * xMove * moveSpeed * lateralSprintSpeedPenalty + transform.forward * zMove * moveSpeed;
+        moveDirection = transform.right * playerInput.xInput * moveSpeed * lateralSprintSpeedPenalty + transform.forward * playerInput.zInput * moveSpeed;
 
         
         if (hitHead && velocity.y > 0)
@@ -129,7 +114,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (playerInput.jumpInput && isGrounded)
         {
             velocity.y += jumpForce;
             audioManager.Play("PlayerJump");
@@ -139,7 +124,7 @@ public class PlayerController : MonoBehaviour
 
 
         }
-        else if (Input.GetButtonDown("Jump") && doubleJumpCount < PlayerStats.doubleJumps.GetValue())
+        else if (playerInput.jumpInput && doubleJumpCount < PlayerStats.doubleJumps.GetValue())
         {
             velocity.y += jumpForce;
             audioManager.Play("PlayerDoubleJump");
@@ -148,18 +133,13 @@ public class PlayerController : MonoBehaviour
             recoilScript.RecoilJump(jumpRecoilAmount);
         }
 
-
         //clamp maximum vertical speed from jumping
         if (velocity.y > jumpForce)
         {
             velocity.y = jumpForce;
         }
 
-
         characterController.Move(moveDirection * Time.deltaTime + velocity * Time.deltaTime);
-
-        //characterController.Move(velocity * Time.deltaTime);
-
     }
 
 
@@ -174,29 +154,23 @@ public class PlayerController : MonoBehaviour
 
     void PlayerHitsGround()
     {
-        
-
         if (velocity.y < -1f)
         {
             float playbackVolume = Mathf.Clamp(-velocity.y / 10 + 0.3f, 0.5f, 1f);
             audioManager.PlayAtVolume("PlayerLanding", playbackVolume);
             recoilScript.RecoilJump(landRecoilAmount);
-
         }
 
-
-        if (velocity.y < -minSafeFallSpeed)                //fall damage calculation
+        //fall damage calculation
+        if (velocity.y < -minSafeFallSpeed)                
         {
             float fallDamage = Mathf.Ceil((-velocity.y - minSafeFallSpeed) * (-velocity.y - minSafeFallSpeed));
 
             playerStats.ApplyDamage(2 * fallDamage);
-
-            //recoilScript.RecoilJump(fallDamage/2 + landRecoilAmount);
-
         }
 
-
-        if (velocity.y < 0f)                                //slowly push player down so they keep in contact with the ground
+        //slowly push player down so they keep in contact with the ground
+        if (velocity.y < 0f)
         {
             velocity.y = -0.5f;         
         }
@@ -214,7 +188,7 @@ public class PlayerController : MonoBehaviour
 
     void SetPlayerMoveSpeed()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && zMove == 1)
+        if (playerInput.sprintInput && playerInput.zInput == 1)
         {
             moveSpeed = runSpeed;
             isRunning = true;

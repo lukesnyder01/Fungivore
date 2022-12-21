@@ -192,7 +192,7 @@ PrefabInstance:
         type: 3}
       propertyPath: spawnPrefab
       value: 
-      objectReference: {fileID: 6385687563868456176, guid: cd32aec2643a5cd49a1e2d42c146ba12,
+      objectReference: {fileID: 4899378156460765924, guid: 272e183855babc240b4208bc8aaabebe,
         type: 3}
     - target: {fileID: 2684491439875346284, guid: 60c9ef0ecd1d04640b830aa4856c21ef,
         type: 3}
@@ -353,7 +353,7 @@ PrefabInstance:
         type: 3}
       propertyPath: spawnPrefab
       value: 
-      objectReference: {fileID: 6385687563868456176, guid: cd32aec2643a5cd49a1e2d42c146ba12,
+      objectReference: {fileID: 4899378156460765924, guid: 272e183855babc240b4208bc8aaabebe,
         type: 3}
     - target: {fileID: 2684491439875346284, guid: 60c9ef0ecd1d04640b830aa4856c21ef,
         type: 3}
