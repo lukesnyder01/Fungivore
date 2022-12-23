@@ -100,7 +100,6 @@ public class PlayerController : MonoBehaviour
         
         moveDirection = transform.right * playerInput.xInput * moveSpeed * lateralSprintSpeedPenalty + transform.forward * playerInput.zInput * moveSpeed;
         
-        //recoilScript.Translate(-moveDirection);
 
         if (hitHead && velocity.y > 0)
         {
@@ -142,6 +141,7 @@ public class PlayerController : MonoBehaviour
         }
 
         characterController.Move(moveDirection * Time.deltaTime + velocity * Time.deltaTime);
+
     }
 
 

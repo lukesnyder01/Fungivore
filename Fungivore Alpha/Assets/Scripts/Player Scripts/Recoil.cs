@@ -19,11 +19,12 @@ public class Recoil : MonoBehaviour
     private Vector3 currentPosition;
     private Vector3 targetPosition;
 
-    private Vector3 originalPosition;
+    private Transform camera;
 
     void Awake()
     {
-        originalPosition = recoilTarget.position;
+        camera = Camera.main.transform;
+        recoilTarget.position = camera.position;
     }
 
 
@@ -31,18 +32,33 @@ public class Recoil : MonoBehaviour
     {
         if (!PauseMenu.gameIsPaused)
         {
-            targetPosition = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
-            currentPosition = Vector3.Lerp(currentPosition, targetPosition, snappiness * Time.fixedDeltaTime);
-
-            targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
-            currentRotation = Vector3.Lerp(currentRotation, targetRotation, snappiness * Time.fixedDeltaTime);
-
-            recoilTarget.localPosition = currentPosition;
-
-            recoilTarget.localRotation = Quaternion.Euler(currentRotation);
-
+            //UpdateRotation();
+            UpdateTranslation();
         }
+    }
 
+
+    void UpdateRotation()
+    {
+
+        targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
+        currentRotation = Vector3.Lerp(currentRotation, targetRotation, snappiness * Time.fixedDeltaTime);
+        recoilTarget.localRotation = Quaternion.Euler(currentRotation);
+    }
+
+
+
+    void UpdateTranslation()
+    {
+        targetPosition = Vector3.Lerp(targetPosition, camera.position, returnSpeed * Time.deltaTime);
+        currentPosition = Vector3.Lerp(currentPosition, targetPosition, snappiness * Time.fixedDeltaTime);
+
+        var difference = camera.position - targetPosition;
+        var direction = difference.normalized;
+        var distance = Mathf.Min(0.01f, difference.magnitude);
+
+
+        recoilTarget.position = currentPosition + direction * distance;
     }
 
 
@@ -64,9 +80,20 @@ public class Recoil : MonoBehaviour
         targetRotation.y = y;
     }
 
-    public void Translate(Vector3 dir)
+    public void TranslationRecoil()
     {
-        targetPosition = transform.position += dir;
+        Debug.Log(recoilTarget.forward);
+
+        targetPosition = camera.position + (recoilTarget.forward * -0.01f);
+
+
+        //Debug.Log(targetPosition);
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(targetPosition, 0.1f);
     }
 
 }
