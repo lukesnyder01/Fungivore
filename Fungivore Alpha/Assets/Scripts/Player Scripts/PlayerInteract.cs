@@ -42,18 +42,12 @@ public class PlayerInteract : MonoBehaviour
                     currentTarget.StartFocus();
                     textMesh.text = interactable.promptText;
                 }
-            }
-            /*
-            else
-            {
-                if (currentTarget != null)
+                else
                 {
-                    currentTarget.LoseFocus();
-                    currentTarget = null;
-                    textMesh.text = null;
+                    textMesh.text = interactable.promptText;
                 }
             }
-            */
+
 
         }
         else //if raycast didn't hit an interactable, lose focus on the previous interactable and set the currentTarget to null
