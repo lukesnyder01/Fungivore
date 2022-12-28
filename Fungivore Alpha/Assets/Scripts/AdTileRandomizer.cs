@@ -6,10 +6,10 @@ public class AdTileRandomizer : MonoBehaviour
 {
     private Material material;
 
-    private float maxResetTime = 0.5f;
-    private float minResetTime = 0.05f;
+    private float maxResetTime = 3f;
+    private float minResetTime = 2f;
 
-    private float scrollSpeed = 0.1f;
+    private float scrollSpeed = 0.003f;
 
     private float xScrollSpeed;
     private float yScrollSpeed;

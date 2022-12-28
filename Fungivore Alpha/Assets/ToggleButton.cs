@@ -24,14 +24,12 @@ public class ToggleButton : InteractableObject
             toggleIsOn = false;
             targetObject.SetActive(false);
             promptText = toggleOffText;
-            Debug.Log("door opened");
         }
         else
         {
             toggleIsOn = true;
             targetObject.SetActive(true);
             promptText = toggleOnText;
-            Debug.Log("door closed");
         }
     }
 

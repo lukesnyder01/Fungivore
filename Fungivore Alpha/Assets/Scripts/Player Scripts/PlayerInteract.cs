@@ -29,7 +29,7 @@ public class PlayerInteract : MonoBehaviour
     {
         Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
         RaycastHit hitInfo;
-        //Debug.DrawRay(ray.origin, ray.direction * interactDist);
+        Debug.DrawRay(ray.origin, ray.direction * interactDist);
 
 
         if (Physics.Raycast(ray, out hitInfo, interactDist, mask))
@@ -47,10 +47,18 @@ public class PlayerInteract : MonoBehaviour
                     textMesh.text = interactable.promptText;
                 }
             }
+            else //didn't hit an interactable
+            {
+                if (currentTarget != null)
+                {
+                    currentTarget.LoseFocus();
+                    currentTarget = null;
+                }
 
-
+                textMesh.text = null;
+            }
         }
-        else //if raycast didn't hit an interactable, lose focus on the previous interactable and set the currentTarget to null
+        else //if raycast didn't hit anything at all
         {
             if (currentTarget != null)
             {
@@ -60,8 +68,6 @@ public class PlayerInteract : MonoBehaviour
 
             textMesh.text = null;
         }
-
-
 
 
         //interact if there's an interactable target
