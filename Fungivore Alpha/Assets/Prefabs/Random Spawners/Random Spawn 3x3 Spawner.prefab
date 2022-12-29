@@ -43,7 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f92e59d1663934842ae334e44ee981cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPrefab: {fileID: 4899378156460765924, guid: 99d42ffc1485d164aaefeba26494f461,
-    type: 3}
-  makePrefabChild: 0
+  spawnPrefab:
+  - {fileID: 4899378156460765924, guid: 99d42ffc1485d164aaefeba26494f461, type: 3}
   spawnChance: 20
+  randomizeRotation: 0
+  makePrefabChild: 0
+  directionArray:
+  - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
+  - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}

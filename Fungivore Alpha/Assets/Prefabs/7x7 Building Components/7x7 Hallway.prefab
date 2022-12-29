@@ -120,6 +120,12 @@ PrefabInstance:
       propertyPath: randomizeRotation
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346284, guid: 60c9ef0ecd1d04640b830aa4856c21ef,
+        type: 3}
+      propertyPath: spawnPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 4344953998712860487, guid: 21bb84050868f8744b32feb38127ea3e,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c9ef0ecd1d04640b830aa4856c21ef, type: 3}
 --- !u!4 &3888544889803051668 stripped
@@ -211,6 +217,12 @@ PrefabInstance:
       propertyPath: randomizeRotation
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346284, guid: 60c9ef0ecd1d04640b830aa4856c21ef,
+        type: 3}
+      propertyPath: spawnPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 4344953998712860487, guid: 21bb84050868f8744b32feb38127ea3e,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c9ef0ecd1d04640b830aa4856c21ef, type: 3}
 --- !u!4 &4161088412146149946 stripped
@@ -372,6 +384,12 @@ PrefabInstance:
       propertyPath: spawnChance
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346284, guid: 60c9ef0ecd1d04640b830aa4856c21ef,
+        type: 3}
+      propertyPath: spawnPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 6385687563868456176, guid: 7e8bcefc0a265c5478e28671f6e69fac,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c9ef0ecd1d04640b830aa4856c21ef, type: 3}
 --- !u!4 &7368028604851425181 stripped
@@ -463,6 +481,12 @@ PrefabInstance:
       propertyPath: randomizeRotation
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346284, guid: 60c9ef0ecd1d04640b830aa4856c21ef,
+        type: 3}
+      propertyPath: spawnPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 4344953998712860487, guid: 21bb84050868f8744b32feb38127ea3e,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c9ef0ecd1d04640b830aa4856c21ef, type: 3}
 --- !u!4 &5284419762869877304 stripped
@@ -554,6 +578,12 @@ PrefabInstance:
       propertyPath: randomizeRotation
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346284, guid: 60c9ef0ecd1d04640b830aa4856c21ef,
+        type: 3}
+      propertyPath: spawnPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 4344953998712860487, guid: 21bb84050868f8744b32feb38127ea3e,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c9ef0ecd1d04640b830aa4856c21ef, type: 3}
 --- !u!4 &5436220186462738621 stripped
@@ -645,6 +675,12 @@ PrefabInstance:
       propertyPath: randomizeRotation
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346284, guid: 60c9ef0ecd1d04640b830aa4856c21ef,
+        type: 3}
+      propertyPath: spawnPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 4344953998712860487, guid: 21bb84050868f8744b32feb38127ea3e,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c9ef0ecd1d04640b830aa4856c21ef, type: 3}
 --- !u!4 &6047873483629558585 stripped

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class RandomSpawn : MonoBehaviour
 {
-    public GameObject spawnPrefab;
-
-    public bool makePrefabChild = false;
+    public GameObject[] spawnPrefab;
 
     [Range(0, 100)]
     public float spawnChance;
 
     public bool randomizeRotation = false;
+
+    public bool makePrefabChild = false;
 
     [HideInInspector]
     public Vector3[] directionArray = new[] {
@@ -27,8 +27,8 @@ public class RandomSpawn : MonoBehaviour
 
         if (Random.Range(0, 100) < spawnChance)
         {
-            
-            GameObject newSpawnedObject = Instantiate(spawnPrefab, transform.position, transform.rotation);
+            var selectedPrefab = spawnPrefab[(Random.Range(0, spawnPrefab.Length))];
+            GameObject newSpawnedObject = Instantiate(selectedPrefab, transform.position, transform.rotation);
 
             if (randomizeRotation)
             {

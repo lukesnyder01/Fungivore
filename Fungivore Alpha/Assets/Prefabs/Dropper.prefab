@@ -109,11 +109,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   combineMesh: {fileID: 0}
   minSteps: 20
-  maxSteps: 25
+  maxSteps: 30
   waitTime: 0
   totalSteps: 0
   currentStep: 0
-  respawnCount: 2
+  respawnCount: 0
   antSideLength: 1
   verticalSpawnOffset: 0
   boxCenter: {x: 0, y: 0, z: 0}
