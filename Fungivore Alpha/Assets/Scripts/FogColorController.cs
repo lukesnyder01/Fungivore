@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FogColorController : MonoBehaviour
 {
-
     public Material[] fogMaterials;
     public Color currentColor;
     public Color targetFogColor;
@@ -40,7 +39,6 @@ public class FogColorController : MonoBehaviour
         player = GameObject.Find("Player");
         cam.clearFlags = CameraClearFlags.SolidColor;
 
-        /*
         //create material instances so that the original materials aren't modified
         Material[] tempMaterials = new Material[fogMaterials.Length];
 
@@ -49,7 +47,6 @@ public class FogColorController : MonoBehaviour
             tempMaterials[i] = fogMaterials[i];
             fogMaterials[i] = tempMaterials[i];
         }
-        */
     }
 
 
