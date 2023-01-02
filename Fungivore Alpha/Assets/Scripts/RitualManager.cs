@@ -34,21 +34,12 @@ public class RitualManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown("p"))
-        {
-            DoWorldShift();
-        }
-
-
         if (doorOpenDistance <= 0f)
         {
             doorFinishedOpening = true;
             Destroy(door);
             
             DisableRitualManager();
-
-            
-
         }
 
         if (doorStartedOpening && !doorFinishedOpening)
@@ -57,11 +48,7 @@ public class RitualManager : MonoBehaviour
             doorOpenDistance -= Time.deltaTime * doorOpenSpeed;
             door.transform.position = new Vector3(doorPos.x, doorPos.y + Time.deltaTime * doorOpenSpeed, doorPos.z);
         }
-
-
-
     }
-
 
 
     public void SetZShift(float z)
@@ -72,14 +59,12 @@ public class RitualManager : MonoBehaviour
     }
 
 
-
     public void SetYShift(float y)
     {
         yShift = y;
         DoWorldShift();
         yShift = 0f;
     }
-
 
 
     public void SetXShift(float x)
@@ -98,8 +83,6 @@ public class RitualManager : MonoBehaviour
     {
         doorStartedOpening = true;
         FindObjectOfType<AudioManager>().Play("DoorGrind");
-
-
     }
 
 
@@ -118,6 +101,8 @@ public class RitualManager : MonoBehaviour
 
         player.GetComponent<CharacterController>().enabled = false;
         //player.transform.position += shiftDelta;
+
+        Debug.Log("shifted world");
         
 
         foreach (GameObject target in shiftTargets)
@@ -127,6 +112,7 @@ public class RitualManager : MonoBehaviour
 
         player.GetComponent<CharacterController>().enabled = true;
     }
+
 
     void DisableRitualManager()
     {

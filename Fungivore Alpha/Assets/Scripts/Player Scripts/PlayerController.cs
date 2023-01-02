@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
     private float jumpRecoilAmount = 15;
     private float landRecoilAmount = -10;
-    private float strafeRecoilAmount = 3;
+    //private float strafeRecoilAmount = 3;
 
 
     void Awake()

@@ -40,9 +40,8 @@ public class FogColorController : MonoBehaviour
         player = GameObject.Find("Player");
         cam.clearFlags = CameraClearFlags.SolidColor;
 
-
+        /*
         //create material instances so that the original materials aren't modified
-
         Material[] tempMaterials = new Material[fogMaterials.Length];
 
         for (int i = 0; i < fogMaterials.Length; i++)
@@ -50,6 +49,7 @@ public class FogColorController : MonoBehaviour
             tempMaterials[i] = fogMaterials[i];
             fogMaterials[i] = tempMaterials[i];
         }
+        */
     }
 
 

@@ -82,10 +82,9 @@ public class Recoil : MonoBehaviour
 
     public void TranslationRecoil()
     {
-        Debug.Log(recoilTarget.forward);
+        //Debug.Log(recoilTarget.forward);
 
         targetPosition = playerCam.position + (recoilTarget.forward * -0.01f);
-
 
         //Debug.Log(targetPosition);
     }
