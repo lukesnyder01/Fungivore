@@ -9,8 +9,6 @@ public class RitualManager : MonoBehaviour
     public float zShift = 0f;
 
     public float shiftMultiplier = 2f;
-
-
     public Vector3 shiftDelta = new Vector3(0f, 0f, 0f);
 
     public GameObject[] shiftTargets;
@@ -18,18 +16,11 @@ public class RitualManager : MonoBehaviour
 
     public GameObject door;
 
-    public float doorOpenDistance = 15;
-    public float doorOpenSpeed = 2;
+    private float doorOpenDistance = 25f;
+    private float doorOpenSpeed = 3.3f;
 
-
-    bool doorStartedOpening = false;
-    bool doorFinishedOpening = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private bool doorStartedOpening = false;
+    private bool doorFinishedOpening = false;
 
 
     void Update()
@@ -102,7 +93,6 @@ public class RitualManager : MonoBehaviour
         player.GetComponent<CharacterController>().enabled = false;
         //player.transform.position += shiftDelta;
 
-        Debug.Log("shifted world");
         
 
         foreach (GameObject target in shiftTargets)
