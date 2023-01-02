@@ -21,8 +21,17 @@ public class RandomSpawn : MonoBehaviour
         new Vector3(0f, 0f, 1f)
     };
 
+
     void Start()
     {
+        var coroutine = SpawnObject();
+        StartCoroutine(coroutine);
+    }
+
+    IEnumerator SpawnObject()
+    {
+        yield return new WaitForSeconds(Random.Range(0.001f, 0.01f));
+
         Random.InitState(transform.position.GetHashCode() % 100000);
 
         if (Random.Range(0, 100) < spawnChance)
@@ -45,10 +54,8 @@ public class RandomSpawn : MonoBehaviour
                 newSpawnedObject.transform.parent = transform.parent;
                 transform.parent = null;
             }
-
         }
 
         Destroy(gameObject);
     }
-
 }
