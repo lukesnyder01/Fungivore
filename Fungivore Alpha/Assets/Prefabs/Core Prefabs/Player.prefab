@@ -182,7 +182,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1350247690323627385}
   m_LocalRotation: {x: -0.043619405, y: 0, z: 0, w: 0.9990483}
-  m_LocalPosition: {x: 0, y: -0.0094, z: 0.2507}
+  m_LocalPosition: {x: 0, y: -0.0684, z: 0.0819}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1842554381450518712}
@@ -325,7 +325,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4469958133492466634}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.06, z: -0.1483}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8751653186502924951}
@@ -613,22 +613,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d21c1f3338b8d47933e71d57c83110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fogMaterial:
+  defaultColor: {r: 0.6415094, g: 0.4668494, b: 0.30562478, a: 0}
+  fogMaterials:
+  - {fileID: 2100000, guid: 3f217d64b5352cc4795de3d0344745ad, type: 2}
   - {fileID: 2100000, guid: 17c30420b4921bb4b95bf00ee5d93f6a, type: 2}
+  - {fileID: 2100000, guid: 4b4caf2efb24bfc49841852e265561de, type: 2}
+  - {fileID: 2100000, guid: 751872c94726fa04c9dd2544dddc9bb3, type: 2}
+  - {fileID: 2100000, guid: 62a86513cebe0784bb3024a085ca021e, type: 2}
   - {fileID: 2100000, guid: 94df072e274ad4449aeafb53c2924469, type: 2}
   - {fileID: 2100000, guid: 584f81a72a797d44e8cf87ee33a38f69, type: 2}
+  - {fileID: 2100000, guid: 77d8d35d9d72dcb47a70deee2973c12b, type: 2}
   - {fileID: 2100000, guid: 5f5e99bdd8344994396520aef57140a9, type: 2}
   - {fileID: 2100000, guid: 3333621b0c5139b49818a48bbc2d14a7, type: 2}
+  - {fileID: 2100000, guid: baefb2e7ba0387b4582aa9a46ef9fa04, type: 2}
   - {fileID: 2100000, guid: e205cbeb9a75411449bf8373fa3f15db, type: 2}
   - {fileID: 2100000, guid: 5ca9e57ce771de749a306cbc51a947fa, type: 2}
+  - {fileID: 2100000, guid: 83bee279c9438ec4987838dcf0c8a888, type: 2}
   - {fileID: 2100000, guid: 6e9d8d9c7c15e5f4787d0b49c68e0995, type: 2}
   - {fileID: 2100000, guid: d991e9544bba08c4d82915b44c97e96a, type: 2}
   - {fileID: 2100000, guid: fc5a5225b44ef3740abb64cb46ba2ab6, type: 2}
   - {fileID: 2100000, guid: 90c785e89dd61b940b9217cdafc5e73b, type: 2}
-  - {fileID: 2100000, guid: baefb2e7ba0387b4582aa9a46ef9fa04, type: 2}
-  - {fileID: 2100000, guid: 751872c94726fa04c9dd2544dddc9bb3, type: 2}
-  - {fileID: 2100000, guid: 3f217d64b5352cc4795de3d0344745ad, type: 2}
-  - {fileID: 2100000, guid: 4b4caf2efb24bfc49841852e265561de, type: 2}
+  - {fileID: 2100000, guid: 627b47f241007f749a1f11c1e707cd65, type: 2}
   currentColor: {r: 1, g: 1, b: 1, a: 0}
   targetFogColor: {r: 0, g: 0, b: 0, a: 0}
   targetParticleColor: {r: 0, g: 0, b: 0, a: 0}
@@ -649,8 +654,6 @@ MonoBehaviour:
   postProcessVolume: {fileID: 0}
   screenDamageMaterial: {fileID: 2100000, guid: f9089ac52d54df04db048e60aafbba69,
     type: 2}
-  bloodFadeSpeed: 0.005
-  maximumOpacity: 0.5
 --- !u!114 &4958094084062408467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -683,7 +686,7 @@ MonoBehaviour:
   interactDist: 1.5
   mask:
     serializedVersion: 2
-    m_Bits: 16384
+    m_Bits: 16641
 --- !u!114 &4209480250165353046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,7 +707,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4855019364282867774}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0f4bb8c352738a498059b7e55632ac0, type: 3}
   m_Name: 

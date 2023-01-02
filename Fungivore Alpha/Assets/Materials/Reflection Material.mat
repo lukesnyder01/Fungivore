@@ -115,7 +115,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_8B4C3782: {r: 0.735849, g: 0.48366785, b: 0.24644002, a: 0}
+    - Color_8B4C3782: {r: 0.6415094, g: 0.4668494, b: 0.30562478, a: 0}
     - Color_EB369EAD: {r: 0.8301887, g: 0.8301887, b: 0.8301887, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

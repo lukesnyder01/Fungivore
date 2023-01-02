@@ -6,25 +6,18 @@ using UnityEngine.Rendering.PostProcessing;
 public class ScreenDamageIndicator : MonoBehaviour
 {
     public PostProcessVolume postProcessVolume;
-
     public Material screenDamageMaterial;
 
+    private float bloodFadeSpeed = 0.005f;
+    private float maximumOpacity = 0.5f;
+
     private Vignette vignette;
-    public float bloodFadeSpeed = 0.1f;
-
-
-
-    public float maximumOpacity = 0.1f;
-
     private Color targetColor;
-
     private float targetOpacity;
-
     private Color startColor;
 
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         startColor = screenDamageMaterial.color;
         startColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
@@ -35,12 +28,13 @@ public class ScreenDamageIndicator : MonoBehaviour
         postProcessVolume.profile.TryGetSettings(out vignette);
     }
 
+
     public void MakeScreenBloody(float bloodAmount)
     {
         targetOpacity += bloodAmount;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         float damagePercent = 1 - PlayerStats.healthPercent;
@@ -52,7 +46,6 @@ public class ScreenDamageIndicator : MonoBehaviour
             targetOpacity = maximumOpacity;
         }
 
-
         if (targetOpacity > shiftedDamagePercent && targetOpacity > 0)
         {
             targetOpacity -= bloodFadeSpeed;
@@ -62,9 +55,13 @@ public class ScreenDamageIndicator : MonoBehaviour
             targetOpacity += bloodFadeSpeed;
         }
 
-
         screenDamageMaterial.color = new Color(startColor.r, startColor.g, startColor.b, targetOpacity);
-
-
     }
+
+
+    void OnDestroy()
+    {
+        screenDamageMaterial.color = new Color(startColor.r, startColor.g, startColor.b, 0);
+    }
+
 }
