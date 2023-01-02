@@ -462,6 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 270796644661f2b4a94c16a4a1addc5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  promptText: '[E] Assimilate Data'
   textMeshPro: {fileID: 194525626}
   hitEffect: {fileID: 8160540889385062186, guid: 1e27bb646e498824ab6123e3afcac2c9,
     type: 3}

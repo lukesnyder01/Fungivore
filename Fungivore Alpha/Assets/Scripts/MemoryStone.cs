@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using TMPro;
 
-public class MemoryStone : MonoBehaviour
+public class MemoryStone : InteractableObject
 {
 
     string death = "d̶̖̏ḙ̴͋ă̴͙t̷̘̚h̶͇͝";
@@ -134,7 +134,7 @@ public class MemoryStone : MonoBehaviour
     }
 
 
-
+    /*
     void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "PlayerBullet")
@@ -147,6 +147,19 @@ public class MemoryStone : MonoBehaviour
         }
 
     }
+    */
+
+
+    public override void Interact()
+    {
+        AddStats();
+
+        Destroy(gameObject);
+        Instantiate(hitEffect, transform.position, transform.rotation);
+        FindObjectOfType<AudioManager>().Play("StoneBreak");
+    }
+
+
 
 
     void AddStats()
