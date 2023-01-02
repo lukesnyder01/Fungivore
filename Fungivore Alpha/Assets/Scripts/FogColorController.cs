@@ -5,7 +5,7 @@ using UnityEngine;
 public class FogColorController : MonoBehaviour
 {
 
-    public Material[] fogMaterial;
+    public Material[] fogMaterials;
     public Color currentColor;
     public Color targetFogColor;
     public Color targetParticleColor;
@@ -35,12 +35,21 @@ public class FogColorController : MonoBehaviour
 
 
 
-    void Start()
+    void Awake()
     {
         player = GameObject.Find("Player");
-
         cam.clearFlags = CameraClearFlags.SolidColor;
 
+
+        //create material instances so that the original materials aren't modified
+
+        Material[] tempMaterials = new Material[fogMaterials.Length];
+
+        for (int i = 0; i < fogMaterials.Length; i++)
+        {
+            tempMaterials[i] = fogMaterials[i];
+            fogMaterials[i] = tempMaterials[i];
+        }
     }
 
 
@@ -55,7 +64,6 @@ public class FogColorController : MonoBehaviour
         SetTargetFogColor();
         UpdateFogColor();
         UpdateParticleColor();
-
     }
 
     void SetTargetFogColor()
@@ -91,9 +99,13 @@ public class FogColorController : MonoBehaviour
         cam.backgroundColor = targetFogColor;
 
 
-        foreach (Material m in fogMaterial)
+        foreach (Material m in fogMaterials)
         {
             m.SetColor("Color_8B4C3782", targetFogColor);
+
+
+
+
         }
 
 
