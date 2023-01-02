@@ -19,12 +19,12 @@ public class Recoil : MonoBehaviour
     private Vector3 currentPosition;
     private Vector3 targetPosition;
 
-    private Transform camera;
+    private Transform playerCam;
 
     void Awake()
     {
-        camera = Camera.main.transform;
-        recoilTarget.position = camera.position;
+        playerCam = Camera.main.transform;
+        recoilTarget.position = playerCam.position;
     }
 
 
@@ -50,10 +50,10 @@ public class Recoil : MonoBehaviour
 
     void UpdateTranslation()
     {
-        targetPosition = Vector3.Lerp(targetPosition, camera.position, returnSpeed * Time.deltaTime);
+        targetPosition = Vector3.Lerp(targetPosition, playerCam.position, returnSpeed * Time.deltaTime);
         currentPosition = Vector3.Lerp(currentPosition, targetPosition, snappiness * Time.fixedDeltaTime);
 
-        var difference = camera.position - targetPosition;
+        var difference = playerCam.position - targetPosition;
         var direction = difference.normalized;
         var distance = Mathf.Min(0.01f, difference.magnitude);
 
@@ -84,7 +84,7 @@ public class Recoil : MonoBehaviour
     {
         Debug.Log(recoilTarget.forward);
 
-        targetPosition = camera.position + (recoilTarget.forward * -0.01f);
+        targetPosition = playerCam.position + (recoilTarget.forward * -0.01f);
 
 
         //Debug.Log(targetPosition);
