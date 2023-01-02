@@ -1,3 +1,5 @@
+<b>Fungivore</b>
+
 This is a game in early development.
 
 It relies heavily on procedural generation, much of which occurs at runtime as the
