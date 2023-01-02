@@ -1,4 +1,4 @@
-<b>Fungivore</b>
+Fungivore
 
 This is a game in early development.
 
