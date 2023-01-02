@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class FogColorController : MonoBehaviour
 {
+    private Material[] initialMaterials;
+
+    public Color defaultColor;
+
     public Material[] fogMaterials;
     public Color currentColor;
     public Color targetFogColor;
@@ -38,15 +42,6 @@ public class FogColorController : MonoBehaviour
     {
         player = GameObject.Find("Player");
         cam.clearFlags = CameraClearFlags.SolidColor;
-
-        //create material instances so that the original materials aren't modified
-        Material[] tempMaterials = new Material[fogMaterials.Length];
-
-        for (int i = 0; i < fogMaterials.Length; i++)
-        {
-            tempMaterials[i] = fogMaterials[i];
-            fogMaterials[i] = tempMaterials[i];
-        }
     }
 
 
@@ -62,6 +57,19 @@ public class FogColorController : MonoBehaviour
         UpdateFogColor();
         UpdateParticleColor();
     }
+
+    /*
+    void CacheInitialMaterials()
+    {
+            initialMaterials = new Material[fogMaterials.Length];
+
+            for (int i = 0; i < fogMaterials.Length; i++)
+            {
+                initialMaterials[i] = fogMaterials[i];
+            }
+    }
+    */
+
 
     void SetTargetFogColor()
     {
@@ -92,20 +100,12 @@ public class FogColorController : MonoBehaviour
 
     void UpdateFogColor()
     {
-
         cam.backgroundColor = targetFogColor;
-
 
         foreach (Material m in fogMaterials)
         {
             m.SetColor("Color_8B4C3782", targetFogColor);
-
-
-
-
         }
-
-
     }
 
 
@@ -141,22 +141,13 @@ public class FogColorController : MonoBehaviour
     }
 
 
-
-
-    /*
-    void OnDestroy() 
+    void OnDestroy()
     {
-        targetColor = targetColor + new Color(0.17f, 0.15f, 0.10f, 1f);
-
-        cam.backgroundColor = targetColor;
-        //RenderSettings.skybox.SetColor("_Tint", targetColor);
-
-        foreach (Material m in fogMaterial)
+        foreach (Material m in fogMaterials)
         {
-            m.SetColor("Color_8B4C3782", targetColor);
+            m.SetColor("Color_8B4C3782", defaultColor);
         }
-
     }
-    */
+
 }
 
