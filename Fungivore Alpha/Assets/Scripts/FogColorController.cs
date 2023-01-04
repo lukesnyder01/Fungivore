@@ -15,11 +15,8 @@ public class FogColorController : MonoBehaviour
 
     public ParticleSystem ps;
 
-
     private GameObject player;
     public Camera cam;
-
-
 
     float heightScale = 500f;
     float distanceScale = 1000f;
@@ -28,14 +25,11 @@ public class FogColorController : MonoBehaviour
     float maxValue = 0.99f;
 
     float maxSaturation = 0.6f;
-
-
     float baseValue = 0.4f;
 
     float m_playerX;
     float m_playerY;
     float m_playerZ;
-
 
 
     void Awake()
@@ -57,18 +51,6 @@ public class FogColorController : MonoBehaviour
         UpdateFogColor();
         UpdateParticleColor();
     }
-
-    /*
-    void CacheInitialMaterials()
-    {
-            initialMaterials = new Material[fogMaterials.Length];
-
-            for (int i = 0; i < fogMaterials.Length; i++)
-            {
-                initialMaterials[i] = fogMaterials[i];
-            }
-    }
-    */
 
 
     void SetTargetFogColor()
@@ -117,7 +99,7 @@ public class FogColorController : MonoBehaviour
         targetParticleColor = new Color(currentHeight, currentHeight, currentHeight, 1.0f);
         */
 
-        targetParticleColor = (Color.white - targetFogColor) * 0.5f;
+        targetParticleColor = (Color.white - targetFogColor) * 0.8f;
 
         //Debug.Log(targetParticleColor);
 

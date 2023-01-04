@@ -613,7 +613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d21c1f3338b8d47933e71d57c83110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultColor: {r: 0.6415094, g: 0.4668494, b: 0.30562478, a: 0}
+  defaultColor: {r: 0.6431373, g: 0.46049377, b: 0.30588236, a: 0}
   fogMaterials:
   - {fileID: 2100000, guid: 3f217d64b5352cc4795de3d0344745ad, type: 2}
   - {fileID: 2100000, guid: 17c30420b4921bb4b95bf00ee5d93f6a, type: 2}
