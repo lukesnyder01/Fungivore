@@ -207,3 +207,12 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: Conveyor
+    clip: {fileID: 8300000, guid: c2d9705197e917e4dab6fc7fba169762, type: 3}
+    volume: 0.784
+    volumeVariance: 0
+    pitch: 0.677
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}

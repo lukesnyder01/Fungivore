@@ -14,6 +14,9 @@ public class AudioManager : MonoBehaviour
 
 	public Sound[] sounds;
 
+	private bool isFadingOut = false;
+	private IEnumerator fadeCoroutine;
+
 	void Awake()
 	{
 		if (instance != null)
@@ -53,12 +56,22 @@ public class AudioManager : MonoBehaviour
 
 	public void StartLoop(string sound)
 	{
+		if (isFadingOut)
+		{
+			StopCoroutine(fadeCoroutine);
+			isFadingOut = false;
+		}
+
+
 		Sound s = Array.Find(sounds, item => item.name == sound);
 		if (s == null)
 		{
 			Debug.LogWarning("Sound: " + name + " not found!");
 			return;
 		}
+
+		s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
+		s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
 		s.source.Play();
 	}
@@ -86,7 +99,9 @@ public class AudioManager : MonoBehaviour
 			return;
 		}
 
-		StartCoroutine(FadeOutCoroutine(s, fadeLength));
+		//store a reference to the most recent fade out so we can stop the coroutine later
+		fadeCoroutine = FadeOutCoroutine(s, fadeLength);
+		StartCoroutine(fadeCoroutine);
 	}
 
 
@@ -111,6 +126,8 @@ public class AudioManager : MonoBehaviour
 
 	public IEnumerator FadeOutCoroutine(Sound s, float fadeLength)
 	{
+		isFadingOut = true;
+
 		float startVolume = s.source.volume;
 
 		while (s.source.volume > 0)
@@ -122,6 +139,7 @@ public class AudioManager : MonoBehaviour
 		if (s.source.volume <= 0)
 		{
 			s.source.Stop();
+			isFadingOut = false;
 		}
 
 	}

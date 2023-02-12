@@ -49,12 +49,19 @@ public class PlayerController : MonoBehaviour
 
     private float maxBeamSpeed = 15f;
     private float beamAcceleration = 1.02f;
-    private float beamDeceleration = 0.96f;
+    private float beamDeceleration = 0.98f;
 
     private bool playerInConveyorBeam;
     private Vector3 beamPushForce;
+    private Vector3 beamDirection;
+
 
     private Vector3 moveDirection;
+
+    private GameObject beamRings;
+    private Vector3 ringOrientation;
+
+    private Vector3 targetRingPos;
 
     private float moveSpeed;
     private float timeUntilNextFootstep = 0f;
@@ -83,6 +90,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
+
+
         GetPlayerStats();
 
         KillPlayerBelowWorldLimit();
@@ -222,7 +232,9 @@ public class PlayerController : MonoBehaviour
 
     void PlayFootsteps()
     {
-        if (moveDirection != new Vector3(0f, 0f, 0f) && Mathf.Abs(velocity.y) < 0.52)
+        Vector3 moveInput = new Vector3(playerInput.xInput, 0, playerInput.zInput);
+
+        if (moveInput != new Vector3(0f, 0f, 0f) && Mathf.Abs(velocity.y) < 0.52)
         {
             timeUntilNextFootstep -= Time.deltaTime;
 
@@ -242,6 +254,18 @@ public class PlayerController : MonoBehaviour
             {
                 beamPushForce *= beamAcceleration;
             }
+
+
+            targetRingPos = new Vector3(transform.position.x, beamRings.transform.position.y, transform.position.z);
+            targetRingPos.x *= ringOrientation.x;
+            targetRingPos.z *= ringOrientation.z;
+
+
+            SetTargetBeamRingPosition();
+
+            var beamSpeed = 30f;
+            beamRings.transform.position = Vector3.Lerp(beamRings.transform.position, targetRingPos, beamSpeed * Time.deltaTime);
+
         }
         else
         {
@@ -252,21 +276,81 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    void SetTargetBeamRingPosition()
+    {
+        targetRingPos = new Vector3(transform.position.x, beamRings.transform.position.y, transform.position.z);
+
+        //if the beam is oriented in the z axis
+        if (ringOrientation.z >= 0.5f)
+        {
+            targetRingPos.x = beamRings.transform.position.x;
+        }
+        else
+        {
+            targetRingPos.z = beamRings.transform.position.z;
+        }
+    }
+
+
+    void SetBeamDirection(Vector3 beamOrientation)
+    {
+        var playerDirection = transform.forward;
+
+        if (playerDirection.x > 0)
+        {
+            playerDirection.x = 1;
+        }
+        else
+        {
+            playerDirection.x = -1;
+        }
+
+        if (playerDirection.z > 0)
+        {
+            playerDirection.z = 1;
+        }
+        else
+        {
+            playerDirection.z = -1;
+        }
+
+        beamDirection = new Vector3 (playerDirection.x * beamOrientation.x, 0f , playerDirection.z * beamOrientation.z);
+
+    }
+
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("ConveyorBeam"))
         {
-            playerInConveyorBeam = true;
+            audioManager.StartLoop("Conveyor");
+
             var beam = other.GetComponent<ConveyorBeam>();
-            beamPushForce = beam.beamDirection;
+
+            beamRings = beam.beamRingParticles;
+
+            SetTargetBeamRingPosition();
+            beamRings.transform.position = targetRingPos;
+            beamRings.SetActive(true);
+
+            SetBeamDirection(beam.ringOrientation);
+            beamPushForce = beamDirection;
+
+            ringOrientation = beam.ringOrientation;
+
+            playerInConveyorBeam = true;
         }
     }
+
+
 
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("ConveyorBeam"))
         {
+            beamRings.SetActive(false);
+            audioManager.FadeOut("Conveyor", 0.2f);
+
             playerInConveyorBeam = false;
         }
     }

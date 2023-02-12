@@ -38,16 +38,16 @@ public class GameManager : MonoBehaviour
 
     public void Ritual()
     {
-        FindObjectOfType<AudioManager>().Play("theme00");
+        //FindObjectOfType<AudioManager>().Play("theme00");
         GameObject ritualText = Instantiate(centerScreenText, centerScreenTextLocation);
         ritualText.GetComponent<TextMeshPro>().text = "Ritual";
     }
 
     public void Fate()
     {
-        FindObjectOfType<AudioManager>().FadeOut("theme00", 2);
+        //FindObjectOfType<AudioManager>().FadeOut("theme00", 2);
 
-        FindObjectOfType<AudioManager>().Play("theme02");
+        //FindObjectOfType<AudioManager>().Play("theme02");
         GameObject ritualText = Instantiate(centerScreenText, centerScreenTextLocation);
         ritualText.GetComponent<TextMeshPro>().text = "Fate";
     }
