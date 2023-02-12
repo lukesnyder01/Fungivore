@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1588339099063473399}
+  - component: {fileID: 9018883062706901799}
   m_Layer: 0
   m_Name: Conveyor Beam 256 Long
   m_TagString: Untagged
@@ -33,6 +34,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &9018883062706901799
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588339099063473392}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3, z: 256}
+  m_Center: {x: 0, y: 0, z: 127.5}
 --- !u!1 &1588339099477643898
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,10 +372,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f926b789e75994d878da3e737cae89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beamSpeed: 10
-  beamDirection: {x: 0, y: 0, z: 0}
   beamRingParticles: {fileID: 6687576238408985034}
-  ringOrientation: {x: 0, y: 0, z: 0}
+  beamOrientation: {x: 0, y: 0, z: 0}
+  beamSpeed: 20
 --- !u!1 &9081191174077040709
 GameObject:
   m_ObjectHideFlags: 0

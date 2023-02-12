@@ -47,8 +47,8 @@ public class PlayerController : MonoBehaviour
     //Private variables
     //------------------------------------------------------------------------------
 
-    private float maxBeamSpeed = 15f;
-    private float beamAcceleration = 1.02f;
+    private float maxBeamSpeed = 20f;
+    private float beamAcceleration = 1.03f;
     private float beamDeceleration = 0.98f;
 
     private bool playerInConveyorBeam;
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveDirection;
 
     private GameObject beamRings;
-    private Vector3 ringOrientation;
+    private Vector3 beamOrientation;
 
     private Vector3 targetRingPos;
 
@@ -255,11 +255,11 @@ public class PlayerController : MonoBehaviour
                 beamPushForce *= beamAcceleration;
             }
 
-
+            /*
             targetRingPos = new Vector3(transform.position.x, beamRings.transform.position.y, transform.position.z);
-            targetRingPos.x *= ringOrientation.x;
-            targetRingPos.z *= ringOrientation.z;
-
+            targetRingPos.x *= beamOrientation.x;
+            targetRingPos.z *= beamOrientation.z;
+            */
 
             SetTargetBeamRingPosition();
 
@@ -281,7 +281,7 @@ public class PlayerController : MonoBehaviour
         targetRingPos = new Vector3(transform.position.x, beamRings.transform.position.y, transform.position.z);
 
         //if the beam is oriented in the z axis
-        if (ringOrientation.z >= 0.5f)
+        if (beamOrientation.z >= 0.5f)
         {
             targetRingPos.x = beamRings.transform.position.x;
         }
@@ -316,6 +316,7 @@ public class PlayerController : MonoBehaviour
 
         beamDirection = new Vector3 (playerDirection.x * beamOrientation.x, 0f , playerDirection.z * beamOrientation.z);
 
+        beamPushForce = beamDirection;
     }
 
 
@@ -323,22 +324,20 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("ConveyorBeam"))
         {
+            playerInConveyorBeam = true;
+
             audioManager.StartLoop("Conveyor");
 
             var beam = other.GetComponent<ConveyorBeam>();
-
             beamRings = beam.beamRingParticles;
+            maxBeamSpeed = beam.beamSpeed;
+
+            SetBeamDirection(beam.beamOrientation);
+            beamOrientation = beam.beamOrientation;
 
             SetTargetBeamRingPosition();
             beamRings.transform.position = targetRingPos;
             beamRings.SetActive(true);
-
-            SetBeamDirection(beam.ringOrientation);
-            beamPushForce = beamDirection;
-
-            ringOrientation = beam.ringOrientation;
-
-            playerInConveyorBeam = true;
         }
     }
 
