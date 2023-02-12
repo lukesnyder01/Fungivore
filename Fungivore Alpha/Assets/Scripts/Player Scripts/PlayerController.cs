@@ -43,8 +43,16 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundMask;
 
 
+    //------------------------------------------------------------------------------
     //Private variables
+    //------------------------------------------------------------------------------
 
+    private float maxBeamSpeed = 15f;
+    private float beamAcceleration = 1.02f;
+    private float beamDeceleration = 0.96f;
+
+    private bool playerInConveyorBeam;
+    private Vector3 beamPushForce;
 
     private Vector3 moveDirection;
 
@@ -94,8 +102,11 @@ public class PlayerController : MonoBehaviour
 
             PlayFootsteps();
 
-            doubleJumpCount = 0;                            //reset double jumps
-            characterController.stepOffset = 0.2f;          //allows player to climb stairs
+            //reset double jumps
+            doubleJumpCount = 0;
+
+            //allows player to climb stairs
+            characterController.stepOffset = 0.2f;          
         }
         
         moveDirection = transform.right * playerInput.xInput * moveSpeed * lateralSprintSpeedPenalty + transform.forward * playerInput.zInput * moveSpeed;
@@ -111,7 +122,9 @@ public class PlayerController : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
 
             timeUntilNextFootstep = footStepDelay;
-            characterController.stepOffset = 0.0001f;       //prevents player from catching on edges when jumping up near them
+
+            //prevents player from catching on edges when jumping up near them
+            characterController.stepOffset = 0.0001f;       
         }
 
 
@@ -139,6 +152,10 @@ public class PlayerController : MonoBehaviour
         {
             velocity.y = jumpForce;
         }
+
+        AddBeamSpeed();
+
+
 
         characterController.Move(moveDirection * Time.deltaTime + velocity * Time.deltaTime);
 
@@ -216,5 +233,43 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    void AddBeamSpeed()
+    {
+        if (playerInConveyorBeam)
+        {
+            if (beamPushForce.magnitude <= maxBeamSpeed)
+            {
+                beamPushForce *= beamAcceleration;
+            }
+        }
+        else
+        {
+            beamPushForce *= beamDeceleration;
+        }
+
+        moveDirection += beamPushForce;
+    }
+
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("ConveyorBeam"))
+        {
+            playerInConveyorBeam = true;
+            var beam = other.GetComponent<ConveyorBeam>();
+            beamPushForce = beam.beamDirection;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("ConveyorBeam"))
+        {
+            playerInConveyorBeam = false;
+        }
+    }
+
 
 }
