@@ -106,7 +106,10 @@ public class PlayerController : MonoBehaviour
         {
             PlayerHitsGround();
 
-            PlayFootsteps();
+            if (!playerInConveyorBeam) 
+            {
+                PlayFootsteps();
+            }
 
             //reset double jumps
             doubleJumpCount = 0;
@@ -225,6 +228,7 @@ public class PlayerController : MonoBehaviour
 
     void PlayFootsteps()
     {
+
         Vector3 moveInput = new Vector3(playerInput.xInput, 0, playerInput.zInput);
 
         if (moveInput != new Vector3(0f, 0f, 0f) && Mathf.Abs(velocity.y) < 0.52)
@@ -312,8 +316,6 @@ public class PlayerController : MonoBehaviour
         {
             playerInConveyorBeam = true;
 
-            
-
             var beam = other.GetComponent<ConveyorBeam>();
             beamRings = beam.beamRingParticles;
             maxBeamSpeed = beam.beamSpeed;
@@ -329,7 +331,6 @@ public class PlayerController : MonoBehaviour
             beamRings.SetActive(true);
         }
     }
-
 
 
     void OnTriggerExit(Collider other)
