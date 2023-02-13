@@ -56,12 +56,12 @@ public class PlayerController : MonoBehaviour
     private Vector3 beamDirection;
 
 
-    private Vector3 moveDirection;
-
     private GameObject beamRings;
     private Vector3 beamOrientation;
-
     private Vector3 targetRingPos;
+
+
+    private Vector3 moveDirection;
 
     private float moveSpeed;
     private float timeUntilNextFootstep = 0f;
@@ -90,15 +90,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
-
-
         GetPlayerStats();
 
         KillPlayerBelowWorldLimit();
 
         //recoilScript.RecoilStrafe(strafeRecoilAmount * -playerInput.xInput);
-
 
         SetPlayerMoveSpeed();
 
@@ -165,10 +161,7 @@ public class PlayerController : MonoBehaviour
 
         AddBeamSpeed();
 
-
-
         characterController.Move(moveDirection * Time.deltaTime + velocity * Time.deltaTime);
-
     }
 
 
@@ -255,17 +248,10 @@ public class PlayerController : MonoBehaviour
                 beamPushForce *= beamAcceleration;
             }
 
-            /*
-            targetRingPos = new Vector3(transform.position.x, beamRings.transform.position.y, transform.position.z);
-            targetRingPos.x *= beamOrientation.x;
-            targetRingPos.z *= beamOrientation.z;
-            */
-
             SetTargetBeamRingPosition();
 
-            var beamSpeed = 30f;
+            var beamSpeed = 50f;
             beamRings.transform.position = Vector3.Lerp(beamRings.transform.position, targetRingPos, beamSpeed * Time.deltaTime);
-
         }
         else
         {
@@ -326,11 +312,14 @@ public class PlayerController : MonoBehaviour
         {
             playerInConveyorBeam = true;
 
-            audioManager.StartLoop("Conveyor");
+            
 
             var beam = other.GetComponent<ConveyorBeam>();
             beamRings = beam.beamRingParticles;
             maxBeamSpeed = beam.beamSpeed;
+
+            var beamPitch = 0.5f + (maxBeamSpeed / 200);
+            audioManager.StartLoop("Conveyor", beamPitch);
 
             SetBeamDirection(beam.beamOrientation);
             beamOrientation = beam.beamOrientation;

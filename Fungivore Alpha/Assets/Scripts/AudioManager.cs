@@ -50,8 +50,9 @@ public class AudioManager : MonoBehaviour
 		}
 
 		StartCoroutine(SmoothVolumeCoroutine(s));
-
 	}
+
+
 
 
 	public void StartLoop(string sound)
@@ -61,7 +62,6 @@ public class AudioManager : MonoBehaviour
 			StopCoroutine(fadeCoroutine);
 			isFadingOut = false;
 		}
-
 
 		Sound s = Array.Find(sounds, item => item.name == sound);
 		if (s == null)
@@ -75,6 +75,33 @@ public class AudioManager : MonoBehaviour
 
 		s.source.Play();
 	}
+
+
+	public void StartLoop(string sound, float pitch)
+	{
+		if (isFadingOut)
+		{
+			StopCoroutine(fadeCoroutine);
+			isFadingOut = false;
+		}
+
+		Sound s = Array.Find(sounds, item => item.name == sound);
+		if (s == null)
+		{
+			Debug.LogWarning("Sound: " + name + " not found!");
+			return;
+		}
+
+		s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
+		s.source.pitch = pitch;
+
+		s.source.Play();
+	}
+
+
+
+
+
 
 
 	public void Stop(string sound)
@@ -141,7 +168,6 @@ public class AudioManager : MonoBehaviour
 			s.source.Stop();
 			isFadingOut = false;
 		}
-
 	}
 
 

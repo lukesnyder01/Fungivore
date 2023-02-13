@@ -372,10 +372,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f926b789e75994d878da3e737cae89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beamSpeed: 10
-  beamDirection: {x: 0, y: 0, z: 0}
   beamRingParticles: {fileID: 6687576238408985034}
-  ringOrientation: {x: 0, y: 0, z: 0}
+  beamOrientation: {x: 0, y: 0, z: 0}
+  beamSpeed: 10
 --- !u!1 &9081191174077040709
 GameObject:
   m_ObjectHideFlags: 0
