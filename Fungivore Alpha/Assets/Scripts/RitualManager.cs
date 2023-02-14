@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class RitualManager : MonoBehaviour
 {
+    private int currentSeed;
+
+
     public float xShift = 0f;
     public float yShift = 0f;
     public float zShift = 0f;
@@ -108,5 +111,14 @@ public class RitualManager : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+
+    public void AddToCurrentSeed(int value)
+    {
+        currentSeed += value;
+
+        Debug.Log(currentSeed);
+    }
+
 
 }

@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class RitualGate : MonoBehaviour
 {
+    public GameObject bloodSpatter;
+    public GameObject gateTrigger;
+
     private GameObject player;
     private RitualManager ritualManager;
 
-    public GameObject gatesToDestroy;
-    public GameObject bloodSpatter;
+    private int positionHash;
 
-    public bool isXGate = false;
-    public bool isYGate = false;
-    public bool isZGate = false;
 
-    void Start()
+
+    void Awake()
     {
         player = GameObject.Find("Player");
         ritualManager = GameObject.Find("Ritual Manager").GetComponent<RitualManager>();
-        
 
+        positionHash = transform.position.GetHashCode() % 100000;
     }
 
 
@@ -27,37 +27,19 @@ public class RitualGate : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-
             FindObjectOfType<AudioManager>().Play("DoorSlam");
 
             var playerStats = other.gameObject.GetComponent<PlayerStats>();
             playerStats.ApplyDamage(10);
 
-            var particleSpatter = Instantiate(bloodSpatter, other.transform.position, transform.rotation);
+            var camTransform = Camera.main.transform;
+
+            var particleSpatter = Instantiate(bloodSpatter, camTransform.position, camTransform.rotation);
             particleSpatter.transform.parent = transform.root;
 
-            if (isXGate)
-            {
-                ritualManager.SetXShift(transform.position.x);
-            }
+            ritualManager.AddToCurrentSeed(positionHash);
 
-            if (isYGate)
-            {
-                ritualManager.SetYShift(transform.position.x);
-            }
-
-            if (isZGate)
-            {
-                ritualManager.SetZShift(transform.position.x);
-            }
-
-            Destroy(gatesToDestroy);
-
+            gateTrigger.SetActive(false);
         }
-
-
-
-
     }
-
 }
