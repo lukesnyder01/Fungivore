@@ -6,119 +6,43 @@ public class RitualManager : MonoBehaviour
 {
     private int currentSeed;
 
-
-    public float xShift = 0f;
-    public float yShift = 0f;
-    public float zShift = 0f;
-
-    public float shiftMultiplier = 2f;
-    public Vector3 shiftDelta = new Vector3(0f, 0f, 0f);
-
-    public GameObject[] shiftTargets;
     public GameObject player;
 
-    public GameObject door;
+    public Transform spawnLocationsParent;
 
-    private float doorOpenDistance = 25f;
-    private float doorOpenSpeed = 3.3f;
-
-    private bool doorStartedOpening = false;
-    private bool doorFinishedOpening = false;
+    public Transform[] spawnLocations;
 
 
-    void Update()
+    void Awake()
     {
-        if (doorOpenDistance <= 0f)
-        {
-            doorFinishedOpening = true;
-            Destroy(door);
-            
-            DisableRitualManager();
-        }
-
-        if (doorStartedOpening && !doorFinishedOpening)
-        {
-            Vector3 doorPos = door.transform.position;
-            doorOpenDistance -= Time.deltaTime * doorOpenSpeed;
-            door.transform.position = new Vector3(doorPos.x, doorPos.y + Time.deltaTime * doorOpenSpeed, doorPos.z);
-        }
+        player = GameObject.Find("Player");
     }
-
-
-    public void SetZShift(float z)
-    {
-        zShift = z * shiftMultiplier;
-        DoWorldShift();
-        zShift = 0f;
-    }
-
-
-    public void SetYShift(float y)
-    {
-        yShift = y;
-        DoWorldShift();
-        yShift = 0f;
-    }
-
-
-    public void SetXShift(float x)
-    {
-        xShift = x * shiftMultiplier;
-        DoWorldShift();
-
-        ActivateShiftTargets();
-        Invoke("OpenDoor", 4f);
-        FindObjectOfType<GameManager>().Fate();
-        xShift = 0f;
-    }
-
-
-    void OpenDoor()
-    {
-        doorStartedOpening = true;
-        FindObjectOfType<AudioManager>().Play("DoorGrind");
-    }
-
-
-    void ActivateShiftTargets()
-    {
-        foreach (GameObject target in shiftTargets)
-        {
-            target.SetActive(true);
-        }
-    }
-
-
-    void DoWorldShift()
-    {
-        shiftDelta = new Vector3(xShift, yShift, zShift);
-
-        player.GetComponent<CharacterController>().enabled = false;
-        //player.transform.position += shiftDelta;
-
-        
-
-        foreach (GameObject target in shiftTargets)
-        {
-            target.transform.position += shiftDelta;
-        }
-
-        player.GetComponent<CharacterController>().enabled = true;
-    }
-
-
-    void DisableRitualManager()
-    {
-        gameObject.SetActive(false);
-    }
-
 
     public void AddToCurrentSeed(int value)
     {
-        currentSeed += value;
+        currentSeed += Mathf.Abs(value);
 
         Debug.Log(currentSeed);
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            var selectedSpawn = currentSeed % (spawnLocations.Length);
+
+            var targetPosition = spawnLocations[selectedSpawn].position;
+            var targetForward = spawnLocations[selectedSpawn].forward;
+
+            player.GetComponent<CharacterController>().enabled = false;
+
+            player.transform.position = targetPosition;
+            player.transform.rotation = Quaternion.Euler(targetForward);
+
+            player.GetComponent<CharacterController>().enabled = true;
+        }
+    }
+
 
 
 }

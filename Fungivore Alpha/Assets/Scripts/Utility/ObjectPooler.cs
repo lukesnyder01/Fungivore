@@ -26,10 +26,7 @@ public class ObjectPooler : MonoBehaviour {
     void Awake()
     {
         current = this;
-    }
 
-    void Start()
-    {
         for (int i = 0; i < objectPools.Count; i++)
         {
             objectPools[i].pooledObjects = new List<GameObject>();
@@ -41,6 +38,7 @@ public class ObjectPooler : MonoBehaviour {
                 objectPools[i].pooledObjects.Add(obj);
             }
         }
+
     }
 
     public GameObject GetPooledObject(int poolIndex)

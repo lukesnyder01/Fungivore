@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     private float maxBeamSpeed = 20f;
     private float beamAcceleration = 1.03f;
-    private float beamDeceleration = 0.98f;
+    private float beamDeceleration = 0.97f;
 
     private bool playerInConveyorBeam;
     private Vector3 beamPushForce;
@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour
         //slowly push player down so they keep in contact with the ground
         if (velocity.y < 0f)
         {
-            velocity.y = -0.5f;         
+            velocity.y = -0.2f;         
         }
     }
 

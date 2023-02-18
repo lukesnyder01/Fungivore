@@ -58,9 +58,8 @@ public class CombineMesh : MonoBehaviour
 
             Debug.Log("mesh material is: " + perMatCombineParents[i].GetComponent<MeshRenderer>().sharedMaterials[0]);
         }
-
-
     }
+
 
     public void Combine(GameObject combineParent)
     {
@@ -87,7 +86,6 @@ public class CombineMesh : MonoBehaviour
         int i = 0;
         while (i < meshFilters.Length)
         {
-
             if (meshFilters[i].sharedMesh == null) continue;
 
             combineInstances[i].mesh = meshFilters[i].sharedMesh;
@@ -132,18 +130,18 @@ public class CombineMesh : MonoBehaviour
             MeshCollider meshCollider = combineParent.gameObject.AddComponent<MeshCollider>();
 
             meshCollider.sharedMesh = newMeshCollider;
-            //Debug.Log("added a mesh collider to " + combineParent);
         }
 
 
         if (!destroyChildren)
         {
-            combineParent.gameObject.transform.DetachChildren();
+           combineParent.gameObject.transform.DetachChildren();
         }
         else
         {
             foreach (Transform child in combineParent.transform)
             {
+
                 GameObject.Destroy(child.gameObject);
             }
         }
