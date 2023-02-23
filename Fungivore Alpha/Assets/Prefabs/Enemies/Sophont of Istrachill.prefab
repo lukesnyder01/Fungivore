@@ -1805,7 +1805,7 @@ MonoBehaviour:
   chargeSpeed: 10
   rapidEvasionSpeed: 20
   collisionDamageDealt: 1000
-  rotationSpeed: 30
+  rotationSpeed: 300
   playerCamera: {fileID: 0}
   cameraTransform: {fileID: 0}
   player: {fileID: 0}

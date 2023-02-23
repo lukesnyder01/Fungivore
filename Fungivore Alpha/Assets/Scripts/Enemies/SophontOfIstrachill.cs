@@ -22,8 +22,6 @@ public class SophontOfIstrachill : Enemy
     {
         directionToTarget = (targetPosition - transform.position).normalized;
 
-        PointAtPlayer();
-
         Spin();
 
         switch (state)
@@ -48,6 +46,8 @@ public class SophontOfIstrachill : Enemy
 
 
             case State.MaintainDistance:
+
+                PointAtPlayer();
 
                 if (distanceFromPlayer < minimumDistance)
                 {
@@ -75,7 +75,18 @@ public class SophontOfIstrachill : Enemy
 
     private void PointAtTarget()
     {
-        transform.forward = Vector3.Slerp(transform.forward, directionToTarget, Time.deltaTime * turnSpeed);
+        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+
+        // Calculate the angle between the object's forward vector and the direction to target
+        float angleToTarget = Vector3.SignedAngle(transform.forward, directionToTarget, transform.up);
+
+        // Adjust the target rotation to keep the object's z-axis rotation fixed
+        Vector3 euler = targetRotation.eulerAngles;
+        euler.z -= angleToTarget;
+        targetRotation = Quaternion.Euler(euler);
+
+        // Apply the modified target rotation to the object's rotation using Slerp
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
     }
 
 

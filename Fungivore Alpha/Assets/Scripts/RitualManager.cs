@@ -18,12 +18,12 @@ public class RitualManager : MonoBehaviour
         player = GameObject.Find("Player");
     }
 
+
     public void AddToCurrentSeed(int value)
     {
         currentSeed += Mathf.Abs(value);
-
-        Debug.Log(currentSeed);
     }
+
 
     void OnTriggerEnter(Collider other)
     {

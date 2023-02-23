@@ -4,20 +4,33 @@ using UnityEngine;
 
 public class TextToSpeech : MonoBehaviour
 {
-    public float soundDelay;
-    public float speedMultiplier;
+    public float speechSpeed;
+
+    public float letterSoundLength;
+
     public float clipVolume;
 
+    public float shortPauseLength;
+    public float longPauseLength;
+
     public AudioClip[] sound;
+
+    public GameObject player;
 
 
     void Start()
     {
-        string testString = "I am the Sophont of Istrachill. Grovel before me you filthy worm, you Morld-Cologi depraved.";
+        player = GameObject.Find("Player");
+    }
 
-        Debug.Log(testString);
+    void Update()
+    {
+        if (Input.GetKeyDown("p"))
+        {
+            string testString = "I am the Sophont of Istrachill. Grovel before me you filthy worm, you Morld-Cologi depraved.";
 
-        StartCoroutine(ReadString(testString));
+            StartCoroutine(ReadString(testString));
+        }
     }
 
 
@@ -25,15 +38,13 @@ public class TextToSpeech : MonoBehaviour
     {
         foreach (char c in text)
         {
-            if (c == ' ')
+            if (c == ' ' || c == ',')
             {
-                yield return new WaitForSeconds(0.2f / speedMultiplier);
-                Debug.Log("space");
+                yield return new WaitForSeconds(shortPauseLength / speechSpeed);
             }
             else if (c == '.')
             {
-                yield return new WaitForSeconds(0.3f / speedMultiplier);
-                Debug.Log("period");
+                yield return new WaitForSeconds(longPauseLength / speechSpeed);
             }
             else
             {
@@ -43,16 +54,17 @@ public class TextToSpeech : MonoBehaviour
 
                 if (index >= 0 && index < sound.Length) // make sure the index is within bounds
                 {
-                    duration = sound[index].length / speedMultiplier;
+                    duration = sound[index].length / speechSpeed;
 
-                    Debug.Log(index);
                     // play the AudioClip at the position of the GameObject
-                    AudioSource.PlayClipAtPoint(sound[index], transform.position, clipVolume); 
+                    AudioSource.PlayClipAtPoint(sound[index], player.transform.position, clipVolume);
                 }
 
-                yield return new WaitForSeconds(duration * soundDelay);
+                yield return new WaitForSeconds(duration * letterSoundLength);
             }
         }
     }
+
+
 
 }
