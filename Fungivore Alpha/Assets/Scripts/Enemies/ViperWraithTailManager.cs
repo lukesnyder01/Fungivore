@@ -20,7 +20,7 @@ public class ViperWraithTailManager : MonoBehaviour
     {
         for (int i = 0; i < numberOfSegments; i++)
         {
-            var targetLocation = transform.position - new Vector3(0, 0, spawnSeparation * i + spawnSeparation);
+            var targetLocation = transform.position + new Vector3(0, 0, spawnSeparation * i + spawnSeparation);
             var prefab = Instantiate(segmentPrefab, targetLocation, Quaternion.identity);
             var segment = prefab.GetComponent<ViperWraithBodySegment>();
 

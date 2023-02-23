@@ -31,9 +31,9 @@ public class ViperWraithBodySegment : Enemy
             {
                 var moveForce = 3 * currentDistance * thrust;
 
-                if (moveForce > thrust * 2f)
+                if (moveForce > thrust * 4f)
                 {
-                    moveForce = thrust * 2f;
+                    moveForce = thrust * 4f;
                 }
 
                 rb.AddForce(transform.forward * moveForce);

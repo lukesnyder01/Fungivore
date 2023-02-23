@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public State state;
 
 
-    void Start()
+    void Awake()
     {
         Health = maxHealth;
 
@@ -202,9 +202,9 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void PointAtPlayer()
     {
-        transform.forward = Vector3.Slerp(transform.forward, directionToPlayer, Time.deltaTime * turnSpeed);
+        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
 
-        //transform.LookAt(playerTransform, transform.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
     }
 
 
