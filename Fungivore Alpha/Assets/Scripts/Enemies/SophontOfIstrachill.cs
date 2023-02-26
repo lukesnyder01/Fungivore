@@ -75,17 +75,7 @@ public class SophontOfIstrachill : Enemy
 
     private void PointAtTarget()
     {
-        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-
-        // Calculate the angle between the object's forward vector and the direction to target
-        float angleToTarget = Vector3.SignedAngle(transform.forward, directionToTarget, transform.up);
-
-        // Adjust the target rotation to keep the object's z-axis rotation fixed
-        Vector3 euler = targetRotation.eulerAngles;
-        euler.z -= angleToTarget;
-        targetRotation = Quaternion.Euler(euler);
-
-        // Apply the modified target rotation to the object's rotation using Slerp
+        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, transform.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
     }
 
