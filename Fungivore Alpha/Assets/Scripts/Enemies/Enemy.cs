@@ -100,7 +100,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
         if (distanceFromPlayer > despawnRange)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
         UpdateStateMachine();
@@ -202,9 +202,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void PointAtPlayer()
     {
-
         Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer, transform.up);
-
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
     }
 
