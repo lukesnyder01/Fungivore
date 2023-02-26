@@ -17,7 +17,7 @@ public class ViperWraithBodySegment : Enemy
 
     public override void FixedUpdate()
     {
-        Spin();
+        Spin(Random.Range(-rotationSpeed, rotationSpeed));
 
         if (followTransform != null)
         {

@@ -111,7 +111,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         if (rotationSpeed > 0f)
         {
-            Spin();
+            Spin(Random.Range(-rotationSpeed, rotationSpeed));
         }
 
         PointAtPlayer();
@@ -202,7 +202,8 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void PointAtPlayer()
     {
-        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+
+        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer, transform.up);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
     }
@@ -292,9 +293,9 @@ public class Enemy : MonoBehaviour, IDamageable
     }
 
 
-    public void Spin()
+    public void Spin(float speed)
     {
-        rb.AddTorque(transform.forward * Random.Range(-rotationSpeed, rotationSpeed));
+        rb.AddTorque(transform.forward * speed);
     }
 
 

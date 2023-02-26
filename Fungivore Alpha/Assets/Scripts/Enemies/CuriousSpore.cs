@@ -14,7 +14,7 @@ public class CuriousSpore : Enemy
         targetPosition = cameraTransform.forward * targetDistance + cameraTransform.position;
         directionToTarget = (targetPosition - transform.position).normalized;
 
-        Spin();
+        Spin(Random.Range(-rotationSpeed, rotationSpeed));
 
         PointAtTarget();
 

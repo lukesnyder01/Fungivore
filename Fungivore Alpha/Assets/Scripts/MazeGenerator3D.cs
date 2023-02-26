@@ -26,7 +26,9 @@ public class MazeGenerator3D : MonoBehaviour
         InitializeCells();
 
         //spawn a block in each empty cell
-        SpawnCellPrefabs();
+        StartCoroutine(SpawnCellPrefabs());
+
+
 
     }
 
@@ -58,7 +60,7 @@ public class MazeGenerator3D : MonoBehaviour
 
 
 
-    void SpawnCellPrefabs()
+    IEnumerator SpawnCellPrefabs()
     {
         for (int x = 0; x < sizeX; x++)
         {
@@ -72,9 +74,22 @@ public class MazeGenerator3D : MonoBehaviour
                         var cellPosY = transform.position.y + (y * cellSize);
                         var cellPosZ = transform.position.z + (z * cellSize);
 
-                        Instantiate(cellPrefab, new Vector3(cellPosX, cellPosY, cellPosZ), Quaternion.identity);
+                        Transform newCell = Instantiate(cellPrefab, new Vector3(cellPosX, cellPosY, cellPosZ), Quaternion.identity).transform;
+
+                        for (int i = 0; i < newCell.childCount; i++)
+                        {
+                            if (Random.value > 0.8)
+                            {
+                                newCell.GetChild(i).gameObject.SetActive(true);
+                            }
+
+                        }
                     }
+
                 }
+
+                yield return null;
+
             }
         }
     }

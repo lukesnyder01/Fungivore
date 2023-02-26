@@ -22,7 +22,7 @@ public class SophontOfIstrachill : Enemy
     {
         directionToTarget = (targetPosition - transform.position).normalized;
 
-        Spin();
+        Spin(rotationSpeed);
 
         switch (state)
         {
