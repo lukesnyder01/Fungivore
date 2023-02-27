@@ -15,7 +15,7 @@ public class MazeGenerator3D : MonoBehaviour
     public float chanceToMoveInOpenDirection = 0.5f;
     public float chanceToCloseExterior = 0.5f;
 
-    public GameObject cellPrefab;
+    public GameObject[] cellPrefab;
 
     public int maxMazeSteps = 100;
 
@@ -53,7 +53,7 @@ public class MazeGenerator3D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Random.InitState(transform.position.GetHashCode() % 100000);
 
 
         //overlap box each cell to see if it's obstructed, then mark it 0 for empty and 1 for obstructed
@@ -123,7 +123,6 @@ public class MazeGenerator3D : MonoBehaviour
         //add one maze cell per maze step
         for (int currentMazeStep = 1; currentMazeStep <= maxMazeSteps; currentMazeStep++)
         {
-
             if (cellsToCreate.Count > 0) 
             {
                 //get a random cell to check
@@ -198,11 +197,9 @@ public class MazeGenerator3D : MonoBehaviour
             }
 
 
-
             //yield return new WaitForSeconds(timeBetweenSteps);
-            yield return null;
-
         }
+        yield return null;
 
         //end the maze
 
@@ -253,9 +250,11 @@ public class MazeGenerator3D : MonoBehaviour
         var cellPosY = transform.position.y + (pos.y * cellSize);
         var cellPosZ = transform.position.z + (pos.z * cellSize);
 
-        Transform newCell = Instantiate(cellPrefab, new Vector3(cellPosX, cellPosY, cellPosZ), Quaternion.identity).transform;
+        GameObject selectedPrefab = cellPrefab[Random.Range(0, cellPrefab.Length)];
 
-        return newCell;
+        GameObject newCell = Instantiate(selectedPrefab, new Vector3(cellPosX, cellPosY, cellPosZ), Quaternion.identity);
+
+        return newCell.transform;
     }
 
 
@@ -270,41 +269,6 @@ public class MazeGenerator3D : MonoBehaviour
         else
         {
             return false;
-        }
-    }
-
-
-    IEnumerator FloodFillPrefabs()
-    {
-        for (int x = 0; x < sizeX; x++)
-        {
-            for (int y = 0; y < sizeY; y++)
-            {
-                for (int z = 0; z < sizeZ; z++)
-                {
-                    if (mazeGrid[x, y, z].cellState == 0) //spawn a block if the cell is marked 0 for empty
-                    {
-                        var cellPosX = transform.position.x + (x * cellSize);
-                        var cellPosY = transform.position.y + (y * cellSize);
-                        var cellPosZ = transform.position.z + (z * cellSize);
-
-                        Transform newCell = Instantiate(cellPrefab, new Vector3(cellPosX, cellPosY, cellPosZ), Quaternion.identity).transform;
-
-                        for (int i = 0; i < newCell.childCount; i++)
-                        {
-                            if (Random.value > 0.8)
-                            {
-                                newCell.GetChild(i).gameObject.SetActive(true);
-                            }
-
-                        }
-                    }
-
-                }
-
-                yield return null;
-
-            }
         }
     }
 
