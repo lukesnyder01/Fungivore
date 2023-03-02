@@ -196,7 +196,6 @@ public class MazeGenerator3D : MonoBehaviour
                 break;
             }
 
-
             //yield return new WaitForSeconds(timeBetweenSteps);
         }
         yield return null;

@@ -25,7 +25,7 @@ public class TextToSpeech : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown("p"))
+        if (Input.GetKeyDown("q"))
         {
             string testString = "I am the Sophont of Istrachill. Grovel before me you filthy worm, you Morld-Cologi depraved.";
 
