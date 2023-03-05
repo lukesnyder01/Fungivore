@@ -118,15 +118,8 @@ public class PlayerController : MonoBehaviour
             characterController.stepOffset = 0.2f;          
         }
 
-        if (playerInput.playerCanMove)
-        {
-            moveDirection = transform.right * playerInput.xInput * moveSpeed * lateralSprintSpeedPenalty + transform.forward * playerInput.zInput * moveSpeed;
-        }
-        else
-        {
-            moveDirection = Vector3.zero;
-        }
-
+   
+        moveDirection = transform.right * playerInput.xInput * moveSpeed * lateralSprintSpeedPenalty + transform.forward * playerInput.zInput * moveSpeed;
 
 
         if (hitHead && velocity.y > 0)

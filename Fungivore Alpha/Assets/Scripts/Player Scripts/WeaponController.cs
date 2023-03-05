@@ -16,12 +16,14 @@ public class WeaponController : MonoBehaviour
     private float timeUntilNextShot;
 
     private Recoil recoilScript;
+    private PlayerInput playerInput;
 
 
 
 
     void Start()
     {
+        playerInput = GetComponent<PlayerInput>();
         playerChar = GameObject.Find("Player").GetComponent<CharacterController>();
         recoilScript = transform.GetComponent<Recoil>();
         //recoilScript = transform.Find("CameraRotation/CameraRecoil").GetComponent<Recoil>();
@@ -36,7 +38,7 @@ public class WeaponController : MonoBehaviour
             shotTimer -= Time.deltaTime;
 
 
-            if (Input.GetMouseButton(0))
+            if (playerInput.shootInput)
             {
                 if (shotTimer < 0f)
                 {

@@ -50,21 +50,8 @@ public class SimpleSmoothMouseLook : MonoBehaviour
             var targetOrientation = Quaternion.Euler(targetDirection);
             var targetCharacterOrientation = Quaternion.Euler(targetCharacterDirection);
 
-
-
-
-            if (playerInput.playerCanLook)
-            {
-                // Get raw mouse input for a cleaner reading on more sensitive mice.
-                mouseDelta = playerInput.mouseRawInput;
-            }
-            else
-            {
-                mouseDelta = Vector2.zero;
-            }
-
-
-
+            // Get raw mouse input for a cleaner reading on more sensitive mice.
+            mouseDelta = playerInput.mouseRawInput;
 
 
             // Scale input against the sensitivity setting and multiply that against the smoothing value.
