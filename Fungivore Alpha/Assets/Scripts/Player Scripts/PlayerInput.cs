@@ -12,6 +12,8 @@ public class PlayerInput : MonoBehaviour
     public bool interactInput { get; private set; }
     public Vector2 mouseRawInput { get; private set; }
 
+    public bool pauseButton { get; private set; }
+
     public bool inputEnabled { get; set; }
 
     void Awake()
@@ -26,6 +28,8 @@ public class PlayerInput : MonoBehaviour
         {
             inputEnabled = !inputEnabled;
         }
+
+        pauseButton = Input.GetKeyDown(KeyCode.Escape);
 
 
         if (inputEnabled)

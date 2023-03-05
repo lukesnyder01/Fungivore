@@ -32,23 +32,18 @@ public class WeaponController : MonoBehaviour
 
     void Update()
     {
-        if (!PauseMenu.gameIsPaused)
+        shotTimer -= Time.deltaTime;
+
+        if (playerInput.shootInput)
         {
-
-            shotTimer -= Time.deltaTime;
-
-
-            if (playerInput.shootInput)
+            if (shotTimer < 0f)
             {
-                if (shotTimer < 0f)
-                {
-                    FireGun();
+                FireGun();
 
-                    var baseTimeBetweenShots = 1 / PlayerStats.spineFireRate.GetValue();
-                    var modifiedTimeBetweenShots = baseTimeBetweenShots * (1 + ((PlayerStats.spinesPerShot.GetValue() - 1) * 0.5f));
+                var baseTimeBetweenShots = 1 / PlayerStats.spineFireRate.GetValue();
+                var modifiedTimeBetweenShots = baseTimeBetweenShots * (1 + ((PlayerStats.spinesPerShot.GetValue() - 1) * 0.5f));
 
-                    shotTimer = modifiedTimeBetweenShots;
-                }
+                shotTimer = modifiedTimeBetweenShots;
             }
         }
     }

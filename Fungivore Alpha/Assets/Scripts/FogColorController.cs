@@ -9,9 +9,15 @@ public class FogColorController : MonoBehaviour
     public Color defaultColor;
 
     public Material[] fogMaterials;
-    public Color currentColor;
-    public Color targetFogColor;
-    public Color targetParticleColor;
+
+    public Color[] colorPalette;
+
+
+    private Color startColor;
+    private Color currentColor;
+    private Color targetColor;
+
+    private Color targetParticleColor;
 
     public ParticleSystem ps;
 
@@ -31,30 +37,64 @@ public class FogColorController : MonoBehaviour
     float m_playerY;
     float m_playerZ;
 
+    float lerpTimer;
+    float elapsedTimer;
+
+
 
     void Awake()
     {
         player = GameObject.Find("Player");
         cam.clearFlags = CameraClearFlags.SolidColor;
+        startColor = defaultColor;
+        currentColor = defaultColor;
+
+        SetFogColor(colorPalette[0], 5f);
+
     }
 
 
     void Update()
+    {
+        elapsedTimer+= Time.deltaTime;
+
+        var lerpRatio = elapsedTimer / lerpTimer;
+
+        currentColor = Color.Lerp(startColor, targetColor, lerpRatio);
+
+        //SetFogColorFromLocation();
+        if (elapsedTimer <= lerpTimer)
+        {
+            UpdateFogColor(currentColor);
+            UpdateParticleColor(currentColor);
+
+        }
+
+
+    }
+
+
+
+
+    public void SetFogColor(Color color, float time)
+    {
+        //reset the colorLerp timer
+        lerpTimer = time;
+        elapsedTimer = 0f;
+
+        //set the target fog color
+        startColor = currentColor;
+        targetColor = color;
+    }
+
+
+    void SetFogColorFromLocation()
     {
         var playerPos = player.transform.position;
 
         m_playerX = playerPos.x;
         m_playerY = playerPos.y;
         m_playerZ = playerPos.z;
-
-        SetTargetFogColor();
-        UpdateFogColor();
-        UpdateParticleColor();
-    }
-
-
-    void SetTargetFogColor()
-    {
 
         Vector3 directionToPlayer = Vector3.Normalize(new Vector3(m_playerX, 0f, m_playerZ));
         float playerAngle = Mathf.Atan2(directionToPlayer.x, directionToPlayer.z) * Mathf.Rad2Deg + 180;
@@ -71,37 +111,28 @@ public class FogColorController : MonoBehaviour
 
         float m_Value = Mathf.Clamp(baseValue + (m_playerY / heightScale), minValue, maxValue);
 
-        targetFogColor = Color.HSVToRGB(m_Hue, m_Saturation, m_Value);
+        targetColor = Color.HSVToRGB(m_Hue, m_Saturation, m_Value);
 
         //targetFogColor = Color.Lerp(currentColor, Color.HSVToRGB(m_Hue, m_Saturation, m_Value), Time.deltaTime * 10f);
 
-        currentColor = targetFogColor;
-
+        currentColor = targetColor;
     }
 
 
-    void UpdateFogColor()
+    void UpdateFogColor(Color color)
     {
-        cam.backgroundColor = targetFogColor;
+        cam.backgroundColor = color;
 
         foreach (Material m in fogMaterials)
         {
-            m.SetColor("Color_8B4C3782", targetFogColor);
+            m.SetColor("Color_8B4C3782", color);
         }
     }
 
 
-    void UpdateParticleColor()
+    void UpdateParticleColor(Color color)
     {
-        /*
-        float currentHeight = (transform.position.y + 30) / -100;
-        currentHeight = currentHeight - 0.2f;
-        targetParticleColor = new Color(currentHeight, currentHeight, currentHeight, 1.0f);
-        */
-
-        targetParticleColor = (Color.white - targetFogColor) * 0.8f;
-
-        //Debug.Log(targetParticleColor);
+        targetParticleColor = Color.white - (color * 0.5f);
 
         Gradient gradient = new Gradient();
         gradient.SetKeys(
@@ -119,7 +150,6 @@ public class FogColorController : MonoBehaviour
         colorOverLifetime.enabled = true;
 
         colorOverLifetime.color = new ParticleSystem.MinMaxGradient(gradient);
-
     }
 
 
