@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MazeGenerator3D : MonoBehaviour
 {
-    private float timeBetweenSteps = 0.0f;
+    //private float timeBetweenSteps = 0.0f;
 
     public int sizeX;
     public int sizeY;

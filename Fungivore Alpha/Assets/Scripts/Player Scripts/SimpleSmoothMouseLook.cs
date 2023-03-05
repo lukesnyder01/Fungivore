@@ -15,6 +15,7 @@ public class SimpleSmoothMouseLook : MonoBehaviour
     public Vector2 targetCharacterDirection;
 
     private PlayerInput playerInput;
+    private Vector2 mouseDelta;
 
     // Assign this if there's a parent object controlling motion, such as a Character Controller.
     // Yaw rotation will affect this object instead of the camera if set.
@@ -49,8 +50,22 @@ public class SimpleSmoothMouseLook : MonoBehaviour
             var targetOrientation = Quaternion.Euler(targetDirection);
             var targetCharacterOrientation = Quaternion.Euler(targetCharacterDirection);
 
-            // Get raw mouse input for a cleaner reading on more sensitive mice.
-            var mouseDelta = playerInput.mouseRawInput;
+
+
+
+            if (playerInput.playerCanLook)
+            {
+                // Get raw mouse input for a cleaner reading on more sensitive mice.
+                mouseDelta = playerInput.mouseRawInput;
+            }
+            else
+            {
+                mouseDelta = Vector2.zero;
+            }
+
+
+
+
 
             // Scale input against the sensitivity setting and multiply that against the smoothing value.
             mouseDelta = Vector2.Scale(mouseDelta, new Vector2(sensitivity.x * smoothing.x, sensitivity.y * smoothing.y));

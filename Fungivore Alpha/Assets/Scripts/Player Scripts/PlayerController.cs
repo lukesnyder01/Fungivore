@@ -117,9 +117,17 @@ public class PlayerController : MonoBehaviour
             //allows player to climb stairs
             characterController.stepOffset = 0.2f;          
         }
-        
-        moveDirection = transform.right * playerInput.xInput * moveSpeed * lateralSprintSpeedPenalty + transform.forward * playerInput.zInput * moveSpeed;
-        
+
+        if (playerInput.playerCanMove)
+        {
+            moveDirection = transform.right * playerInput.xInput * moveSpeed * lateralSprintSpeedPenalty + transform.forward * playerInput.zInput * moveSpeed;
+        }
+        else
+        {
+            moveDirection = Vector3.zero;
+        }
+
+
 
         if (hitHead && velocity.y > 0)
         {

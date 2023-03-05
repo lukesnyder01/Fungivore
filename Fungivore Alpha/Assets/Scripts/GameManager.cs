@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
         SetCameraRenderDistance(cameraRenderDistance);
 
-        Invoke("Ritual", 2f);
+        //Invoke("Ritual", 2f);
     }
 
 

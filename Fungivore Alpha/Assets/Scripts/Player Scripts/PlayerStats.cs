@@ -176,7 +176,7 @@ public class PlayerStats : MonoBehaviour
 
         UpdatePlayerHealth();
 
-        UpdateUI();
+        //UpdateUI();
 
     }
 
@@ -185,6 +185,9 @@ public class PlayerStats : MonoBehaviour
     {
         hungerPercent = currentHunger / maxHunger;
         hungerBar.fillAmount = hungerPercent;
+
+        healthPercent = currentHealth / maxHealth;
+        healthBar.fillAmount = healthPercent;
 
         spinesPercent = currentSpines / maxSpines.GetValue();
         spinesBar.fillAmount = spinesPercent;
@@ -333,9 +336,9 @@ public class PlayerStats : MonoBehaviour
             currentHealth = 0;
         }
 
-        healthPercent = currentHealth / maxHealth;
 
-        healthBar.fillAmount = healthPercent;
+
+
 
     }
 

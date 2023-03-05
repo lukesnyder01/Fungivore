@@ -11,6 +11,15 @@ public class PlayerInput : MonoBehaviour
     public bool interactInput { get; private set; }
     public Vector2 mouseRawInput { get; private set; }
 
+    public bool playerCanMove { get; set; }
+    public bool playerCanLook { get; set; }
+
+    void Awake()
+    {
+        playerCanMove = false;
+        playerCanLook = false;
+    }
+
 
     void Update()
     {
@@ -20,5 +29,14 @@ public class PlayerInput : MonoBehaviour
         sprintInput = Input.GetKey(KeyCode.LeftShift);
         interactInput = Input.GetKeyDown(KeyCode.E);
         mouseRawInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            playerCanMove = !playerCanMove;
+            playerCanLook = !playerCanLook;
+        }
+
+
     }
 }
