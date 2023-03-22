@@ -11,26 +11,18 @@ public class PlayerInput : MonoBehaviour
     public bool sprintInput { get; private set; }
     public bool interactInput { get; private set; }
     public Vector2 mouseRawInput { get; private set; }
-
     public bool pauseButton { get; private set; }
-
     public bool inputEnabled { get; set; }
+
 
     void Awake()
     {
         inputEnabled = false;
     }
 
-
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            inputEnabled = !inputEnabled;
-        }
-
         pauseButton = Input.GetKeyDown(KeyCode.Escape);
-
 
         if (inputEnabled)
         {
@@ -52,11 +44,20 @@ public class PlayerInput : MonoBehaviour
             interactInput = false;
             mouseRawInput = Vector2.zero;
         }
-
-
-
-
-
-
     }
+
+    public void EnableInput()
+    {
+        inputEnabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void DisableInput()
+    {
+        inputEnabled = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
 }

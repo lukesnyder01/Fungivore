@@ -14,16 +14,14 @@ public class GameManager : MonoBehaviour
     public GameObject centerScreenText;
     public Transform centerScreenTextLocation;
 
-
-
-
-
-    void Start()
+    void Awake()
     {
         pseudoRandom = new System.Random(seed.GetHashCode());
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
 
         QualitySettings.vSyncCount = 0;
 
@@ -33,8 +31,6 @@ public class GameManager : MonoBehaviour
 
         //Invoke("Ritual", 2f);
     }
-
-
 
     public void Ritual()
     {
@@ -51,10 +47,6 @@ public class GameManager : MonoBehaviour
         GameObject ritualText = Instantiate(centerScreenText, centerScreenTextLocation);
         ritualText.GetComponent<TextMeshPro>().text = "Fate";
     }
-
-
-
-
 
     public void SetCameraRenderDistance(float distance)
     {

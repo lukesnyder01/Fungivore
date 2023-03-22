@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class FrameRateDisplay : MonoBehaviour
 {
-    private Text displayText;
+    private TextMeshProUGUI displayText;
 
     private int count;
     private float totalTime;
@@ -14,7 +15,8 @@ public class FrameRateDisplay : MonoBehaviour
 
     public void Start()
     {
-        displayText = gameObject.GetComponent<Text>();
+        displayText = gameObject.GetComponent<TextMeshProUGUI>();
+
         count = samples;
         totalTime = 0f;
     }

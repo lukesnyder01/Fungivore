@@ -19,8 +19,6 @@ public class WeaponController : MonoBehaviour
     private PlayerInput playerInput;
 
 
-
-
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
