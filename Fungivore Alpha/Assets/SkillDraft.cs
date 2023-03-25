@@ -3,136 +3,235 @@ using UnityEngine;
 
 public class SkillDraft : MonoBehaviour
 {
+ 
 
-    public List<UpgradeCard> currentPool = new List<UpgradeCard>();
+    int cardsPerDraft = 3;
+
+    //list of rarities 
+    //0 - common, 1 - uncommon, 2 - rare, 3 - legendary   
+    private List<int> rarityDistribution = new List<int>();
+
+    //how many times each rarity shows up in the rarity distribution
+    private int legendaryCount = 1;
+    private int rareCount = 8;
+    private int uncommonCount = 32;
+    private int commonCount = 64;
 
 
-    int cardsPerDraft = 100;
-
-
-    private List<int> upgradeValues = new List<int>();
+    // will hold all of the stat mods that can show up on a card
+    private List<StatModifier> statModList = new List<StatModifier>();
 
 
     // will hold all of the possible stat modifiers in the game, even ones that are currently locked or have already been maxed out
-    private List<StatModifier> masterStatModList = new List<StatModifier>();
+    private List<UpgradeCard> masterUpgradeList = new List<UpgradeCard>();
 
+    //list for all the possible upgrades that are currently unlocked
+    private List<UpgradeCard> currentUpgradePool = new List<UpgradeCard>();
 
-    // will hold all of the stat mods that could currently show up on an upgrade card
-    // when a new stat mod is unlocked it gets added to this list and can be selected whenever an upgrade card is created
-    private List<StatModifier> statModPool = new List<StatModifier>();
+    //temporary pool for upgrade cards, to prevent upgrade cards from showing up twice in the same draft
+    private List<UpgradeCard> tempUpgradePool = new List<UpgradeCard>();
 
-
-
-
-    private List<UpgradeCard> commonUpgradePool = new List<UpgradeCard>();
-
+    //temporary list for cards selected in each draft
+    public List<UpgradeCard> draftPool = new List<UpgradeCard>();
 
 
     public class StatModifier
     {
-        public readonly string statName;
-        public readonly int pointValue;
-        public readonly float changePerLevel;
+        public readonly string name;
+        public readonly float amount;
 
-        public StatModifier(string _statName, int _pointValue, float _changePerLevel)
+        public StatModifier(string _name, float _amount)
         {
-            statName = _statName;
-            pointValue = _pointValue;
-            changePerLevel = _changePerLevel;
+            name = _name;
+            amount = _amount;
         }
     }
 
 
     public class UpgradeCard
     {
-        public int totalPointValue;
-
+        public string name;
+        public int rarity;
         public List<StatModifier> statModifiers = new List<StatModifier>();
+        public List<string> unlocks = new List<string>();
     }
-
-
-
-
 
 
 
 
     void Awake()
     {
-        statModPool.Add(new StatModifier("Max Health", 1, 5f));
-        statModPool.Add(new StatModifier("Move Speed", 1, 0.2f));
-        statModPool.Add(new StatModifier("Spine Damage", 1, 1f));
+        GenerateMasterUpgradeList();
 
+        InitialzeStartingUpgradeList();
 
-        statModPool.Add(new StatModifier("Armor", 2, 1f));
-
-        statModPool.Add(new StatModifier("Double Jumps", 4, 1f));
-
-        InititalizeUpgradeValues();
+        GenerateRarityDistribution();
     }
+
 
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-
             StartNewDraft();
         }
     }
 
 
-    void InititalizeUpgradeValues()
-    {
-         int legendaryCount = 2;
-         int rareCount = 8;
-         int uncommonCount = 32;
-         int commonCount = 64;
 
+    void GenerateRarityDistribution()
+    {
+        rarityDistribution.Clear();
 
         for (int i = 0; i < legendaryCount; i++)
         {
-            upgradeValues.Add(8);
+            rarityDistribution.Add(3);
         }
 
         for (int i = 0; i < rareCount; i++)
         {
-            upgradeValues.Add(4);
+            rarityDistribution.Add(2);
         }
 
         for (int i = 0; i < uncommonCount; i++)
         {
-            upgradeValues.Add(2);
+            rarityDistribution.Add(1);
         }
 
         for (int i = 0; i < commonCount; i++)
         {
-            upgradeValues.Add(1);
+            rarityDistribution.Add(0);
         }
+    }
+
+    void GenerateMasterUpgradeList()
+    {
+        UpgradeCard card;
+
+        card = new UpgradeCard();
+        card.name = "Fortify Constitution I";
+        card.rarity = 0;
+        card.statModifiers.Add(new StatModifier("Max Health", 5f));
+        card.unlocks.Add("Fortify Constitution II");
+        masterUpgradeList.Add(card);
+
+
+        card = new UpgradeCard();
+        card.name = "Chitinous Shell";
+        card.rarity = 0;
+        card.statModifiers.Add(new StatModifier("Armor", 1f));
+        masterUpgradeList.Add(card);
+
+
+        card = new UpgradeCard();
+        card.name = "Quickness";
+        card.rarity = 0;
+        card.statModifiers.Add(new StatModifier("Movement Speed", 1f));
+        masterUpgradeList.Add(card);
+
+
+        card = new UpgradeCard();
+        card.name = "Fortify Constitution II";
+        card.rarity = 0;
+        card.statModifiers.Add(new StatModifier("Max Health", 10f));
+        masterUpgradeList.Add(card);
+    }
+
+
+    void InitialzeStartingUpgradeList()
+    {
+        MoveCardToList("Fortify Constitution I", masterUpgradeList, currentUpgradePool);
+        MoveCardToList("Chitinous Shell", masterUpgradeList, currentUpgradePool);
+        MoveCardToList("Quickness", masterUpgradeList, currentUpgradePool);
+    }
+
+
+    void MoveCardToList(string card, List<UpgradeCard> fromList, List<UpgradeCard> toList)
+    {
+        for (int i = 0; i < fromList.Count; i++)
+        {
+            if (fromList[i].name == card)
+            {
+                toList.Add(fromList[i]);
+                fromList.RemoveAt(i);
+                return;
+            }
+        }
+
+        Debug.Log("Didn't find the card [" + card + "] to move");
+    }
+
+
+
+
+    void GenerateModList()
+    {
+        statModList.Add(new StatModifier("Max Health", 5f));
+        statModList.Add(new StatModifier("Move Speed", 0.2f));
+        statModList.Add(new StatModifier("Spine Damage", 1f));
+        statModList.Add(new StatModifier("Armor", 1f));
+        statModList.Add(new StatModifier("Double Jumps", 1f));
     }
 
 
 
     void StartNewDraft()
     {
-        Debug.Log("Starting new draft...");
+        tempUpgradePool.Clear();
 
+        foreach (UpgradeCard card in currentUpgradePool)
+        {
+            tempUpgradePool.Add(card);
+        }
+
+        Debug.Log("Starting new draft, clearing pool");
+        draftPool.Clear();
 
         for(int i = 0; i < cardsPerDraft; i++)
         {
-            CreateNewUpgradeCard();
+            AddRandomCardToCurrentDraft();
         }
 
     }
 
 
+    void AddRandomCardToCurrentDraft()
+    {
+        if (tempUpgradePool.Count > 0)
+        {
+            var cardIndex = Random.Range(0, tempUpgradePool.Count);
+            UpgradeCard card = tempUpgradePool[cardIndex];
+            draftPool.Add(card);
+            tempUpgradePool.RemoveAt(cardIndex);
+
+
+            Debug.Log("┌──────────────────────────");
+            Debug.Log("│   ** " + card.name + " **");
+            for (int i = 0; i < card.statModifiers.Count; i++)
+            {
+                Debug.Log("│ " + card.statModifiers[i].name + " +" + card.statModifiers[i].amount);
+            }
+            Debug.Log("└──────────────────────────");
+
+        }
+        else
+        {
+            Debug.Log("Not enough cards to draft!");
+        }
+
+    }
+
+
+
+    /*
     void CreateNewUpgradeCard()
     {
         //create a new card
         UpgradeCard newCard = new UpgradeCard();
 
         //give it a point value from the upgrade values list
-        newCard.totalPointValue = NewUpgradeValue();
+        newCard.totalPointValue = RandomRarity();
 
         var currentPointValue = 0;
 
@@ -172,14 +271,15 @@ public class SkillDraft : MonoBehaviour
         }
 
         Debug.Log("└──────────────────────────");
-
-
     }
+    */
 
 
-    int NewUpgradeValue()
+
+    //returns value from 0-3 according to the rarityDistribution list, 0 being the most common
+    int RandomRarity()
     {
-        return upgradeValues[Random.Range(0, upgradeValues.Count)];
+        return rarityDistribution[Random.Range(0, rarityDistribution.Count)];
     }
 
 
