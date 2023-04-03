@@ -28,28 +28,13 @@ public class PlayerStats : MonoBehaviour
     private static float sporeAccumulator = 0f;
     private static float timeBetweenIncubationSteps = 10f;
 
-/*
-    [Header("Legs")]
-
-    //public static float baseWalkSpeed = 2f;
-    public static float baseRunMultiplier = 2f;
-
-    public static float baseJumpForce = 5f;
-
-    public static float baseSafeFallSpeed = 7f;
-
-    public static int maxDoubleJumpValue = 0;
-*/
 
     [Header("Thorax")]
 
-    public static float maxHealth = 100f;
     public static float healthRegen = 2f;
     public static float currentHealth { get; private set; }
     public static float healthPercent;
 
-    public static float maxHunger = 100f;
-    //public static float baseHungerDecay = 0.1f;
 
     public static float runHungerMultiplier = 3f;
     public static float jumpHungerCost = 0.5f;
@@ -78,32 +63,9 @@ public class PlayerStats : MonoBehaviour
 
 
 
-    void Start()
+    void Awake()
     {
-        stats.Add("Max Health", 100f);
-        stats.Add("Max Energy", 100f);
-
-        stats.Add("Walk Speed", 2f);
-        stats.Add("Run Multiplier", 2f);
-
-
-        stats.Add("Spines Per Shot", 1f);
-        stats.Add("Fire Rate", 1f);
-        stats.Add("Spine Regen", 2f);
-        stats.Add("Max Spines", 10f);
-        stats.Add("Spine Speed", 10f);
-
-
-
-        stats.Add("Double Jumps", 0f);
-        stats.Add("Safe Fall Speed", 7f);
-        stats.Add("Jump Force", 5f);
-
-
-        stats.Add("Base Metabolism", 0.1f);
-        stats.Add("Incubator Efficiency", 1f);
-
-
+        InitializeStatsList();
 
 
         //recoilScript = transform.Find("CameraRotation/CameraRecoil").GetComponent<Recoil>();
@@ -113,24 +75,47 @@ public class PlayerStats : MonoBehaviour
 
         playerController = GetComponent<PlayerController>();
 
-
-
-
-
-        currentHealth = maxHealth;
-        currentEnergy = maxHunger;
-
+        currentHealth = GetStatValue("Max Health");
+        currentEnergy = GetStatValue("Max Energy");
         currentSpines = GetStatValue("Max Spines");
-
     }
 
+
+    private void InitializeStatsList()
+    {
+        stats.Add("Max Health", 100f);
+        stats.Add("Max Energy", 100f);
+        stats.Add("Armor", 0f);
+
+
+        stats.Add("Walk Speed", 2f);
+        stats.Add("Run Multiplier", 2f);
+
+        stats.Add("Spines Per Shot", 1f);
+        stats.Add("Fire Rate", 1f);
+        stats.Add("Spine Regen", 2f);
+        stats.Add("Max Spines", 10f);
+        stats.Add("Spine Speed", 10f);
+
+        stats.Add("Double Jumps", 0f);
+        stats.Add("Safe Fall Speed", 7f);
+        stats.Add("Jump Force", 5f);
+
+        stats.Add("Base Metabolism", 0.1f);
+        stats.Add("Incubator Efficiency", 1f);
+    }
 
 
     public void ApplyModifier(string name, float value)
     {
-        stats[name] += value;
+        if (stats.ContainsKey(name))
+        {
+            stats[name] += value;
+        }
+        {
+            Debug.Log("Stat " + name + " not found, no modifier applied.");
+        }
     }
-
 
 
     public float GetStatValue(string name)
@@ -141,12 +126,10 @@ public class PlayerStats : MonoBehaviour
         }
         else
         {
-            Debug.Log("Stat " + name + " not found.");
+            Debug.Log("Stat " + name + " not found, returning value of 0.");
             return 0f;
         }
     }
-
-
 
 
     void Update()
@@ -171,10 +154,10 @@ public class PlayerStats : MonoBehaviour
 
     void UpdateUI()
     {
-        energyPercent = currentEnergy / maxHunger;
+        energyPercent = currentEnergy / GetStatValue("Max Energy");
         hungerBar.fillAmount = energyPercent;
 
-        healthPercent = currentHealth / maxHealth;
+        healthPercent = currentHealth / GetStatValue("Max Health");
         healthBar.fillAmount = healthPercent;
 
         spinesPercent = currentSpines / GetStatValue("Max Spines");
@@ -198,7 +181,6 @@ public class PlayerStats : MonoBehaviour
 
     public void IncubateSpores()
     {
-       
         sporeAccumulator += sporeIncubatorContents * Time.deltaTime / (timeBetweenIncubationSteps / GetStatValue("Incubator Efficiency"));
 
         if (sporeAccumulator > 1.0f)
@@ -206,13 +188,11 @@ public class PlayerStats : MonoBehaviour
             sporeAccumulator -= 1.0f;
             experiencePoints++;
         }
-
     }
 
 
     void UpdateSpines()
     {
-
         timeUntilNextSpine = 1 / GetStatValue("Spine Regen");
 
         spineTimer -= Time.deltaTime;
@@ -222,8 +202,6 @@ public class PlayerStats : MonoBehaviour
             currentSpines++;
             spineTimer = timeUntilNextSpine;
         }
-
-
     }
 
 
@@ -240,7 +218,6 @@ public class PlayerStats : MonoBehaviour
         float hurtSoundVolume = Mathf.Clamp(bloodAmount, 0.2f, 0.6f);
 
         audioManager.PlayAtVolume("PlayerHurt", bloodAmount);
-
 
 
         if (currentHealth <= 0f)
@@ -283,7 +260,6 @@ public class PlayerStats : MonoBehaviour
             currentEnergy = 0;
         }
 
-
     }
 
 
@@ -302,8 +278,6 @@ public class PlayerStats : MonoBehaviour
 
     void UpdatePlayerHealth()
     {
-        maxHealth = GetStatValue("Max Health");
-
         if (energyPercent > 0.5f)
         {
             currentHealth += Time.deltaTime * (healthRegen * energyPercent * energyPercent);
@@ -314,9 +288,9 @@ public class PlayerStats : MonoBehaviour
         }
 
 
-        if (currentHealth > maxHealth)
+        if (currentHealth > GetStatValue("Max Health"))
         {
-            currentHealth = maxHealth;
+            currentHealth = GetStatValue("Max Health");
         }
 
 
@@ -324,10 +298,6 @@ public class PlayerStats : MonoBehaviour
         {
             currentHealth = 0;
         }
-
-
-
-
 
     }
 

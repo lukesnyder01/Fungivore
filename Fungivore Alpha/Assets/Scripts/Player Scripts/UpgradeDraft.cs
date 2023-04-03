@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillDraft : MonoBehaviour
+public class UpgradeDraft : MonoBehaviour
 {
-    int cardsPerDraft = 3;
+    private PlayerStats playerStats;
 
+    int cardsPerDraft = 3;
 
     //list of rarities 
     //0 - common, 1 - uncommon, 2 - rare, 3 - legendary   
@@ -18,20 +19,21 @@ public class SkillDraft : MonoBehaviour
     private int commonCount = 64;
 
 
-    // will hold all of the possible stat modifiers in the game, even ones that are currently locked or have already been maxed out
+    // will hold all of the possible upgrades in the game, even ones that are currently locked or have already been selected
     private List<UpgradeCard> masterUpgradeList = new List<UpgradeCard>();
 
 
-    //list for all the possible upgrades that are currently unlocked
+    //list for all the possible upgrades that are currently unlocked and could show up in a draft
     private List<UpgradeCard> currentUpgradePool = new List<UpgradeCard>();
 
+    //temporary pool of upgrades in the draft pool, any of which could be selected by the player
+    public List<UpgradeCard> draftPool = new List<UpgradeCard>();
 
-    //temporary pool for upgrade cards, to prevent upgrade cards from showing up twice in the same draft
+    //temporary pool of upgrades to prevent upgrade cards from showing up twice in the same draft
     private List<UpgradeCard> tempUpgradePool = new List<UpgradeCard>();
 
 
-    //temporary list for cards selected in each draft
-    public List<UpgradeCard> draftPool = new List<UpgradeCard>();
+
 
 
     public class StatModifier
@@ -58,6 +60,8 @@ public class SkillDraft : MonoBehaviour
 
     void Awake()
     {
+        playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
+
         GenerateMasterUpgradeList();
 
         InitialzeStartingUpgradeList();
@@ -108,8 +112,7 @@ public class SkillDraft : MonoBehaviour
         card = new UpgradeCard();
         card.name = "Fortify Constitution I";
         card.rarity = 0;
-        card.statModifiers.Add(new StatModifier("Max Health", 5f));
-        card.statModifiers.Add(new StatModifier("Armor", 1f));
+        card.statModifiers.Add(new StatModifier("Max Health", 10f));
         card.unlocks.Add("Fortify Constitution II");
         masterUpgradeList.Add(card);
 
@@ -124,15 +127,33 @@ public class SkillDraft : MonoBehaviour
         card = new UpgradeCard();
         card.name = "Quickness";
         card.rarity = 0;
-        card.statModifiers.Add(new StatModifier("Movement Speed", 1f));
+        card.statModifiers.Add(new StatModifier("Walk Speed", 0.5f));
         masterUpgradeList.Add(card);
 
 
         card = new UpgradeCard();
-        card.name = "Fortify Constitution II";
+        card.name = "Improve Energy Reserve";
         card.rarity = 0;
-        card.statModifiers.Add(new StatModifier("Max Health", 10f));
+        card.statModifiers.Add(new StatModifier("Max Energy", 10f));
         masterUpgradeList.Add(card);
+
+
+
+
+
+
+
+
+        card = new UpgradeCard();
+        card.name = "Fortify Constitution II";
+        card.rarity = 1;
+        card.statModifiers.Add(new StatModifier("Max Health", 15f));
+        card.statModifiers.Add(new StatModifier("Armor", 1f));
+        masterUpgradeList.Add(card);
+
+
+
+
     }
 
 
@@ -141,6 +162,7 @@ public class SkillDraft : MonoBehaviour
         MoveCardToList("Fortify Constitution I", masterUpgradeList, currentUpgradePool);
         MoveCardToList("Chitinous Shell", masterUpgradeList, currentUpgradePool);
         MoveCardToList("Quickness", masterUpgradeList, currentUpgradePool);
+        MoveCardToList("Improve Energy Reserve", masterUpgradeList, currentUpgradePool);
     }
 
 
@@ -195,7 +217,12 @@ public class SkillDraft : MonoBehaviour
             Debug.Log("│   ** " + card.name + " **");
             for (int i = 0; i < card.statModifiers.Count; i++)
             {
-                Debug.Log("│ " + card.statModifiers[i].name + " +" + card.statModifiers[i].amount);
+                string modifierName = card.statModifiers[i].name;
+                float currentValue = playerStats.GetStatValue(card.statModifiers[i].name);
+                float upgradedValue = currentValue + card.statModifiers[i].amount;
+
+                Debug.Log("│ " + modifierName + " " + currentValue + " > " + upgradedValue);
+
             }
             Debug.Log("└──────────────────────────");
 
