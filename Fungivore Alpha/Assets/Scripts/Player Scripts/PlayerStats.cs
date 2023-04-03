@@ -112,6 +112,7 @@ public class PlayerStats : MonoBehaviour
         {
             stats[name] += value;
         }
+        else
         {
             Debug.Log("Stat " + name + " not found, no modifier applied.");
         }

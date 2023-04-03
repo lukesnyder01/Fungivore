@@ -22,7 +22,6 @@ public class UpgradeDraft : MonoBehaviour
     // will hold all of the possible upgrades in the game, even ones that are currently locked or have already been selected
     private List<UpgradeCard> masterUpgradeList = new List<UpgradeCard>();
 
-
     //list for all the possible upgrades that are currently unlocked and could show up in a draft
     private List<UpgradeCard> currentUpgradePool = new List<UpgradeCard>();
 
@@ -76,6 +75,21 @@ public class UpgradeDraft : MonoBehaviour
         {
             StartNewDraft();
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            ChooseCard(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ChooseCard(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            ChooseCard(3);
+        }
+
+
     }
 
 
@@ -121,6 +135,7 @@ public class UpgradeDraft : MonoBehaviour
         card.name = "Chitinous Shell";
         card.rarity = 0;
         card.statModifiers.Add(new StatModifier("Armor", 1f));
+        card.statModifiers.Add(new StatModifier("Walk Speed", -0.2f));
         masterUpgradeList.Add(card);
 
 
@@ -138,12 +153,6 @@ public class UpgradeDraft : MonoBehaviour
         masterUpgradeList.Add(card);
 
 
-
-
-
-
-
-
         card = new UpgradeCard();
         card.name = "Fortify Constitution II";
         card.rarity = 1;
@@ -152,9 +161,13 @@ public class UpgradeDraft : MonoBehaviour
         masterUpgradeList.Add(card);
 
 
-
-
+        card = new UpgradeCard();
+        card.name = "Double Jump I";
+        card.rarity = 3;
+        card.statModifiers.Add(new StatModifier("Double Jumps", 1f));
+        masterUpgradeList.Add(card);
     }
+
 
 
     void InitialzeStartingUpgradeList()
@@ -163,7 +176,9 @@ public class UpgradeDraft : MonoBehaviour
         MoveCardToList("Chitinous Shell", masterUpgradeList, currentUpgradePool);
         MoveCardToList("Quickness", masterUpgradeList, currentUpgradePool);
         MoveCardToList("Improve Energy Reserve", masterUpgradeList, currentUpgradePool);
+        MoveCardToList("Double Jump I", masterUpgradeList, currentUpgradePool);
     }
+
 
 
     void MoveCardToList(string card, List<UpgradeCard> fromList, List<UpgradeCard> toList)
@@ -233,6 +248,36 @@ public class UpgradeDraft : MonoBehaviour
         }
 
     }
+
+
+    void ChooseCard(int cardNumber)
+    {
+        var draftIndex = cardNumber - 1;
+        if (draftPool[draftIndex] != null)
+        {
+
+            UpgradeCard selectedCard = draftPool[draftIndex];
+            for (int i = 0; i < selectedCard.statModifiers.Count; i++)
+            {
+                string modifierName = selectedCard.statModifiers[i].name;
+
+                float modifierAmount = selectedCard.statModifiers[i].amount;
+
+                playerStats.ApplyModifier(modifierName, modifierAmount);
+
+                float currentValue = playerStats.GetStatValue(selectedCard.statModifiers[i].name);
+                float upgradedValue = currentValue + selectedCard.statModifiers[i].amount;
+            }
+
+            Debug.Log("Selected card " + cardNumber);
+
+        }
+        else
+        {
+            Debug.Log("No card in slot " + cardNumber);
+        }
+    }
+
 
 
     //returns value from 0-3 according to the rarityDistribution list, 0 being the most common
