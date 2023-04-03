@@ -20,7 +20,7 @@ public class SkillButton : MonoBehaviour
 
     private bool canAfford;
 
-    private int upgradeCost;
+    private int upgradeCost = 0;
 
 
 
@@ -40,7 +40,7 @@ public class SkillButton : MonoBehaviour
     {
         UpdateTooltipValues();
 
-        upgradeCost = PlayerStats.skills[skillID].GetUpgradeCost();
+        //upgradeCost = PlayerStats.skills[skillID].GetUpgradeCost();
 
         UpdateAffordability();
 
@@ -59,7 +59,7 @@ public class SkillButton : MonoBehaviour
         if (canAfford)
         {
             PlayerStats.experiencePoints -= upgradeCost;
-            PlayerStats.skills[skillID].AddLevel();
+            //PlayerStats.skills[skillID].AddLevel();
         }
     }
 
@@ -74,6 +74,7 @@ public class SkillButton : MonoBehaviour
 
     public void UpdateTooltipValues()
     {
+        /*
         tooltipTrigger.header = PlayerStats.skills[skillID].GetName();
 
         nameText.text = PlayerStats.skills[skillID].GetLevel().ToString();
@@ -84,7 +85,7 @@ public class SkillButton : MonoBehaviour
                 "\nCurrent: " + PlayerStats.skills[skillID].GetValue() + 
                 "\nNext Level: " + PlayerStats.skills[skillID].GetNextLevelValue() + 
                 "\nCost: " + PlayerStats.skills[skillID].GetUpgradeCost();
-
+        */
     }
 
 }

@@ -185,7 +185,7 @@ public class MemoryStone : InteractableObject
 
         for (int i = 0; i < lifeWords; i++)
         {
-            PlayerStats.sufferingTolerance.AddLevel();
+            //PlayerStats.sufferingTolerance.AddLevel();
         }
 
         if (lifeWords > 0)
@@ -201,7 +201,7 @@ public class MemoryStone : InteractableObject
 
         for (int i = 0; i < fungusWords; i++)
         {
-            PlayerStats.incubatorEfficiency.AddLevel();
+            //PlayerStats.incubatorEfficiency.AddLevel();
         }
 
         if (fungusWords > 0)

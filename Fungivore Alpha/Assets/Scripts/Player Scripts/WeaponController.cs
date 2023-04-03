@@ -17,6 +17,7 @@ public class WeaponController : MonoBehaviour
 
     private Recoil recoilScript;
     private PlayerInput playerInput;
+    private PlayerStats playerStats;
 
 
     void Start()
@@ -24,6 +25,7 @@ public class WeaponController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         playerChar = GameObject.Find("Player").GetComponent<CharacterController>();
         recoilScript = transform.GetComponent<Recoil>();
+        playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
         //recoilScript = transform.Find("CameraRotation/CameraRecoil").GetComponent<Recoil>();
     }
 
@@ -38,8 +40,8 @@ public class WeaponController : MonoBehaviour
             {
                 FireGun();
 
-                var baseTimeBetweenShots = 1 / PlayerStats.spineFireRate.GetValue();
-                var modifiedTimeBetweenShots = baseTimeBetweenShots * (1 + ((PlayerStats.spinesPerShot.GetValue() - 1) * 0.5f));
+                var baseTimeBetweenShots = 1 / playerStats.GetStatValue("Fire Rate");
+                var modifiedTimeBetweenShots = baseTimeBetweenShots * (1 + ((playerStats.GetStatValue("Spines Per Shot") - 1) * 0.5f));
 
                 shotTimer = modifiedTimeBetweenShots;
             }
@@ -49,7 +51,7 @@ public class WeaponController : MonoBehaviour
 
     void FireGun()
     {
-        var spinesPerShot = PlayerStats.spinesPerShot.GetValue();
+        var spinesPerShot = playerStats.GetStatValue("Spines Per Shot");
 
 
         if (PlayerStats.currentSpines >= spinesPerShot)
@@ -74,7 +76,7 @@ public class WeaponController : MonoBehaviour
 
         Vector3 directionWithoutSpread = bulletSpawn.transform.forward;
 
-        spread = PlayerStats.spineSpread + PlayerStats.spinesPerShot.GetValue() / 100;
+        spread = PlayerStats.spineSpread + playerStats.GetStatValue("Spines Per Shot") / 100;
 
         float x = Random.Range(-spread, spread);
         float y = Random.Range(-spread, spread);
@@ -91,7 +93,7 @@ public class WeaponController : MonoBehaviour
         var rb = bullet.GetComponent<Rigidbody>();
         bullet.GetComponent<BulletController>().hasCollided = false;
 
-        rb.velocity = (playerChar.velocity + directionWithSpread * PlayerStats.spineSpeed.GetValue());
+        rb.velocity = (playerChar.velocity + directionWithSpread * playerStats.GetStatValue("Spine Speed"));
 
     }
 

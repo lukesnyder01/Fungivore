@@ -5,18 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
-    public Skill[] skills = new Skill[100];
+    private Dictionary<string, float> stats = new Dictionary<string, float>();
 
-    [HideInInspector] public static Skill spinesPerShot;
-    [HideInInspector] public static Skill spineRegen;
-    [HideInInspector] public static Skill maxSpines;
-    [HideInInspector] public static Skill spineFireRate;
-    [HideInInspector] public static Skill spineSpeed;
-    [HideInInspector] public static Skill incubatorEfficiency;
-    [HideInInspector] public static Skill sufferingTolerance;
-    [HideInInspector] public static Skill doubleJumps;
-    [HideInInspector] public static Skill baseWalkSpeed;
-    [HideInInspector] public static Skill baseHungerDecay;
+
 
     public static float verticalRecoil = -6;
     public static float horizontalRecoil = 2;
@@ -37,7 +28,7 @@ public class PlayerStats : MonoBehaviour
     private static float sporeAccumulator = 0f;
     private static float timeBetweenIncubationSteps = 10f;
 
-
+/*
     [Header("Legs")]
 
     //public static float baseWalkSpeed = 2f;
@@ -48,7 +39,7 @@ public class PlayerStats : MonoBehaviour
     public static float baseSafeFallSpeed = 7f;
 
     public static int maxDoubleJumpValue = 0;
-
+*/
 
     [Header("Thorax")]
 
@@ -59,11 +50,12 @@ public class PlayerStats : MonoBehaviour
 
     public static float maxHunger = 100f;
     //public static float baseHungerDecay = 0.1f;
-    public static float currentHungerDecay;
+
     public static float runHungerMultiplier = 3f;
     public static float jumpHungerCost = 0.5f;
-    public static float currentHunger;
-    private static float hungerPercent;
+
+    public static float currentEnergy;
+    private static float energyPercent;
 
 
     [Header("References")]
@@ -88,6 +80,32 @@ public class PlayerStats : MonoBehaviour
 
     void Start()
     {
+        stats.Add("Max Health", 100f);
+        stats.Add("Max Energy", 100f);
+
+        stats.Add("Walk Speed", 2f);
+        stats.Add("Run Multiplier", 2f);
+
+
+        stats.Add("Spines Per Shot", 1f);
+        stats.Add("Fire Rate", 1f);
+        stats.Add("Spine Regen", 2f);
+        stats.Add("Max Spines", 10f);
+        stats.Add("Spine Speed", 10f);
+
+
+
+        stats.Add("Double Jumps", 0f);
+        stats.Add("Safe Fall Speed", 7f);
+        stats.Add("Jump Force", 5f);
+
+
+        stats.Add("Base Metabolism", 0.1f);
+        stats.Add("Incubator Efficiency", 1f);
+
+
+
+
         //recoilScript = transform.Find("CameraRotation/CameraRecoil").GetComponent<Recoil>();
         screenDamage = GetComponent<ScreenDamageIndicator>();
         audioSource = GetComponent<AudioSource>();
@@ -96,73 +114,43 @@ public class PlayerStats : MonoBehaviour
         playerController = GetComponent<PlayerController>();
 
 
-        DefineSkill(_index: 0, _skillName: "Spines Per Shot",
-            _skillDescription: "Increases the number of spines per shot, but makes fire rate and accuracy worse.",
-            _baseValue: 1, _valueChangePerLevel: 1, _baseUpgradeCost: 10, _maxLevel: 5);
-
-        DefineSkill(_index: 1, _skillName: "Spine Regen",
-            _skillDescription: "",
-            _baseValue: 2, _valueChangePerLevel: 1, _baseUpgradeCost: 5, _maxLevel: 10);
-
-        DefineSkill(_index: 2, _skillName: "Max Spines",
-            _skillDescription: "",
-            _baseValue: 10, _valueChangePerLevel: 5, _baseUpgradeCost: 1, _maxLevel: 10);
-
-        DefineSkill(_index: 3, _skillName: "Fire Rate",
-            _skillDescription: "",
-            _baseValue: 3, _valueChangePerLevel: 0.5f, _baseUpgradeCost: 5, _maxLevel: 10);
-
-        DefineSkill(_index: 4, _skillName: "Spine Speed",
-            _skillDescription: "",
-            _baseValue: 10, _valueChangePerLevel: 2f, _baseUpgradeCost: 2, _maxLevel: 5);
-
-        DefineSkill(_index: 5, _skillName: "Incubator Efficiency",
-            _skillDescription: "Your spore incubation gland can perform more efficiently, yielding greater mutagen harvests.",
-            _baseValue: 1, _valueChangePerLevel: 0.2f, _baseUpgradeCost: 1, _maxLevel: 10);
-
-        DefineSkill(_index: 6, _skillName: "Suffering Tolerance",
-            _skillDescription: "",
-            _baseValue: 100, _valueChangePerLevel: 10, _baseUpgradeCost: 1, _maxLevel: 10);
-
-        DefineSkill(_index: 7, _skillName: "Double Jumps",
-            _skillDescription: "",
-            _baseValue: 0, _valueChangePerLevel: 1, _baseUpgradeCost: 50, _maxLevel: 4);
-
-        DefineSkill(_index: 8, _skillName: "Movement Speed",
-            _skillDescription: "",
-            _baseValue: 2, _valueChangePerLevel: 0.2f, _baseUpgradeCost: 1, _maxLevel: 10);
-
-        DefineSkill(_index: 9, _skillName: "Base Metabolism",
-            _skillDescription: "",
-            _baseValue: 0.1f, _valueChangePerLevel: -0.01f, _baseUpgradeCost: 10, _maxLevel: 5);
-
-
-        spinesPerShot = skills[0];
-        spineRegen = skills[1];
-        maxSpines = skills[2];
-        spineFireRate = skills[3];
-        spineSpeed = skills[4];
-        incubatorEfficiency = skills[5];
-        sufferingTolerance = skills[6];
-        doubleJumps = skills[7];
-        baseWalkSpeed = skills[8];
-        baseHungerDecay = skills[9];
-
-
 
 
 
         currentHealth = maxHealth;
-        currentHunger = maxHunger;
-        currentSpines = maxSpines.GetValue();
+        currentEnergy = maxHunger;
+
+        currentSpines = GetStatValue("Max Spines");
 
     }
 
 
+
+    public void ApplyModifier(string name, float value)
+    {
+        stats[name] += value;
+    }
+
+
+
+    public float GetStatValue(string name)
+    {
+        if (stats.ContainsKey(name))
+        {
+            return stats[name];
+        }
+        else
+        {
+            Debug.Log("Stat " + name + " not found.");
+            return 0f;
+        }
+    }
+
+
+
+
     void Update()
     {
-        maxDoubleJumpValue = (int)doubleJumps.GetValue();
-
         if (Input.GetKeyDown("1") && sporesInventory > 0)
         {
             EatSpore();
@@ -172,7 +160,7 @@ public class PlayerStats : MonoBehaviour
 
         UpdateSpines();
 
-        UpdatePlayerHunger();
+        UpdatePlayerEnergy();
 
         UpdatePlayerHealth();
 
@@ -183,18 +171,19 @@ public class PlayerStats : MonoBehaviour
 
     void UpdateUI()
     {
-        hungerPercent = currentHunger / maxHunger;
-        hungerBar.fillAmount = hungerPercent;
+        energyPercent = currentEnergy / maxHunger;
+        hungerBar.fillAmount = energyPercent;
 
         healthPercent = currentHealth / maxHealth;
         healthBar.fillAmount = healthPercent;
 
-        spinesPercent = currentSpines / maxSpines.GetValue();
+        spinesPercent = currentSpines / GetStatValue("Max Spines");
+
         spinesBar.fillAmount = spinesPercent;
 
         sporesIncubatorText.text = "(1) Incubator: " + sporeIncubatorContents.ToString();
         sporesText.text = "Spores: " + sporesInventory.ToString();
-        doubleJumpText.text = "Double Jumps: " + maxDoubleJumpValue.ToString();
+        doubleJumpText.text = "Double Jumps: " + GetStatValue("Double Jumps").ToString();
         experiencePointsText.text = "XP: " + experiencePoints.ToString();
     }
 
@@ -203,14 +192,14 @@ public class PlayerStats : MonoBehaviour
     {
         sporesInventory--;
         sporeIncubatorContents++;
-        PlayerStats.currentHunger += 30f;
+        PlayerStats.currentEnergy += 30f;
     }
 
 
     public void IncubateSpores()
     {
        
-        sporeAccumulator += sporeIncubatorContents * Time.deltaTime / (timeBetweenIncubationSteps / incubatorEfficiency.GetValue());
+        sporeAccumulator += sporeIncubatorContents * Time.deltaTime / (timeBetweenIncubationSteps / GetStatValue("Incubator Efficiency"));
 
         if (sporeAccumulator > 1.0f)
         {
@@ -224,11 +213,11 @@ public class PlayerStats : MonoBehaviour
     void UpdateSpines()
     {
 
-        timeUntilNextSpine = 1 / spineRegen.GetValue();
+        timeUntilNextSpine = 1 / GetStatValue("Spine Regen");
 
         spineTimer -= Time.deltaTime;
 
-        if (currentSpines < maxSpines.GetValue() && spineTimer < 0f)
+        if (currentSpines < GetStatValue("Max Spines") && spineTimer < 0f)
         {
             currentSpines++;
             spineTimer = timeUntilNextSpine;
@@ -267,31 +256,31 @@ public class PlayerStats : MonoBehaviour
     }
 
 
-    void UpdatePlayerHunger()
+    void UpdatePlayerEnergy()
     {
+        float currentEnergyDecay;
 
         if (playerController.isRunning == true)
         {
-            currentHungerDecay = baseHungerDecay.GetValue() * runHungerMultiplier;
+            currentEnergyDecay = GetStatValue("Base Metabolism") * runHungerMultiplier;
         }
         else
         {
-            currentHungerDecay = baseHungerDecay.GetValue();
+            currentEnergyDecay = GetStatValue("Base Metabolism");
+        }
+
+        currentEnergy -= Time.deltaTime * currentEnergyDecay;
+
+
+        if (currentEnergy > GetStatValue("Max Energy"))
+        {
+            currentEnergy = GetStatValue("Max Energy");
         }
 
 
-        currentHunger -= Time.deltaTime * currentHungerDecay;
-
-
-        if (currentHunger > maxHunger)
+        if (currentEnergy < 0)
         {
-            currentHunger = maxHunger;
-        }
-
-
-        if (currentHunger < 0)
-        {
-            currentHunger = 0;
+            currentEnergy = 0;
         }
 
 
@@ -301,11 +290,11 @@ public class PlayerStats : MonoBehaviour
 
     public void IncreaseHungerFromJumping()
     {
-        currentHunger -= jumpHungerCost;
+        currentEnergy -= jumpHungerCost;
 
-        if (currentHunger < 0)
+        if (currentEnergy < 0)
         {
-            currentHunger = 0;
+            currentEnergy = 0;
         }
     }
 
@@ -313,15 +302,15 @@ public class PlayerStats : MonoBehaviour
 
     void UpdatePlayerHealth()
     {
-        maxHealth = sufferingTolerance.GetValue();
+        maxHealth = GetStatValue("Max Health");
 
-        if (hungerPercent > 0.5f)
+        if (energyPercent > 0.5f)
         {
-            currentHealth += Time.deltaTime * (healthRegen * hungerPercent * hungerPercent);
+            currentHealth += Time.deltaTime * (healthRegen * energyPercent * energyPercent);
         }
-        else if (hungerPercent < 0.1f)
+        else if (energyPercent < 0.1f)
         {
-            currentHealth -= Time.deltaTime * (healthRegen * (1f - hungerPercent) * (1f - hungerPercent));
+            currentHealth -= Time.deltaTime * (healthRegen * (1f - energyPercent) * (1f - energyPercent));
         }
 
 
@@ -342,24 +331,6 @@ public class PlayerStats : MonoBehaviour
 
     }
 
-
-    void DefineSkill(
-        int _index, 
-        string _skillName, 
-        string _skillDescription, 
-        float _baseValue, 
-        float _valueChangePerLevel, 
-        int _baseUpgradeCost,
-        int _maxLevel
-        )
-    {
-        skills[_index].skillName = _skillName;
-        skills[_index].skillDescription = _skillDescription;
-        skills[_index].baseValue = _baseValue;
-        skills[_index].valueChangePerLevel = _valueChangePerLevel;
-        skills[_index].baseUpgradeCost = _baseUpgradeCost;
-        skills[_index].maxLevel = _maxLevel;
-    }
 
 
 

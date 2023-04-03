@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
 
 
         }
-        else if (playerInput.jumpInput && doubleJumpCount < PlayerStats.doubleJumps.GetValue())
+        else if (playerInput.jumpInput && doubleJumpCount < playerStats.GetStatValue("Double Jumps"))
         {
             velocity.y += jumpForce;
             audioManager.Play("PlayerDoubleJump");
@@ -171,10 +171,15 @@ public class PlayerController : MonoBehaviour
 
     void GetPlayerStats()
     {
-        walkSpeed = PlayerStats.baseWalkSpeed.GetValue();
-        runSpeed = walkSpeed * PlayerStats.baseRunMultiplier;
-        minSafeFallSpeed = PlayerStats.baseSafeFallSpeed;
-        jumpForce = PlayerStats.baseJumpForce;
+        walkSpeed = playerStats.GetStatValue("Walk Speed");
+
+        runSpeed = walkSpeed * playerStats.GetStatValue("Run Multiplier");
+
+
+        minSafeFallSpeed = playerStats.GetStatValue("Safe Fall Speed");
+
+        jumpForce = playerStats.GetStatValue("Jump Force");
+
     }
 
 
