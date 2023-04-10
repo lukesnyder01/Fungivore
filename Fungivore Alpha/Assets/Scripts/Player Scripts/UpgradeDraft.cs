@@ -33,26 +33,11 @@ public class UpgradeDraft : MonoBehaviour
 
 
 
-
-
-    public class StatModifier
-    {
-        public readonly string name;
-        public readonly float amount;
-
-        public StatModifier(string _name, float _amount)
-        {
-            name = _name;
-            amount = _amount;
-        }
-    }
-
-
     public class UpgradeCard
     {
         public string name;
         public int rarity;
-        public List<StatModifier> statModifiers = new List<StatModifier>();
+        public List<KeyValuePair<string, float>> statModifiers = new List<KeyValuePair<string, float>>();
         public List<string> unlocks = new List<string>();
     }
 
@@ -126,7 +111,7 @@ public class UpgradeDraft : MonoBehaviour
         card = new UpgradeCard();
         card.name = "Fortify Constitution I";
         card.rarity = 0;
-        card.statModifiers.Add(new StatModifier("Max Health", 10f));
+        card.statModifiers.Add(new KeyValuePair<string, float>("Max Health", 10f));
         card.unlocks.Add("Fortify Constitution II");
         masterUpgradeList.Add(card);
 
@@ -134,37 +119,37 @@ public class UpgradeDraft : MonoBehaviour
         card = new UpgradeCard();
         card.name = "Chitinous Shell";
         card.rarity = 0;
-        card.statModifiers.Add(new StatModifier("Armor", 1f));
-        card.statModifiers.Add(new StatModifier("Walk Speed", -0.2f));
+        card.statModifiers.Add(new KeyValuePair<string, float>("Armor", 1f));
+        card.statModifiers.Add(new KeyValuePair<string, float>("Walk Speed", -0.2f));
         masterUpgradeList.Add(card);
 
 
         card = new UpgradeCard();
         card.name = "Quickness";
         card.rarity = 0;
-        card.statModifiers.Add(new StatModifier("Walk Speed", 0.5f));
+        card.statModifiers.Add(new KeyValuePair<string, float>("Walk Speed", 0.5f));
         masterUpgradeList.Add(card);
 
 
         card = new UpgradeCard();
         card.name = "Improve Energy Reserve";
         card.rarity = 0;
-        card.statModifiers.Add(new StatModifier("Max Energy", 10f));
+        card.statModifiers.Add(new KeyValuePair<string, float>("Max Energy", 10f));
         masterUpgradeList.Add(card);
 
 
         card = new UpgradeCard();
         card.name = "Fortify Constitution II";
         card.rarity = 1;
-        card.statModifiers.Add(new StatModifier("Max Health", 15f));
-        card.statModifiers.Add(new StatModifier("Armor", 1f));
+        card.statModifiers.Add(new KeyValuePair<string, float>("Max Health", 15f));
+        card.statModifiers.Add(new KeyValuePair<string, float>("Armor", 1f));
         masterUpgradeList.Add(card);
 
 
         card = new UpgradeCard();
         card.name = "Double Jump I";
         card.rarity = 3;
-        card.statModifiers.Add(new StatModifier("Double Jumps", 1f));
+        card.statModifiers.Add(new KeyValuePair<string, float>("Double Jumps", 1f));
         masterUpgradeList.Add(card);
     }
 
@@ -232,9 +217,9 @@ public class UpgradeDraft : MonoBehaviour
             Debug.Log("│   ** " + card.name + " **");
             for (int i = 0; i < card.statModifiers.Count; i++)
             {
-                string modifierName = card.statModifiers[i].name;
-                float currentValue = playerStats.GetStatValue(card.statModifiers[i].name);
-                float upgradedValue = currentValue + card.statModifiers[i].amount;
+                string modifierName = card.statModifiers[i].Key;
+                float currentValue = playerStats.GetStatValue(card.statModifiers[i].Key);
+                float upgradedValue = currentValue + card.statModifiers[i].Value;
 
                 Debug.Log("│ " + modifierName + " " + currentValue + " > " + upgradedValue);
 
@@ -259,14 +244,14 @@ public class UpgradeDraft : MonoBehaviour
             UpgradeCard selectedCard = draftPool[draftIndex];
             for (int i = 0; i < selectedCard.statModifiers.Count; i++)
             {
-                string modifierName = selectedCard.statModifiers[i].name;
+                string modifierName = selectedCard.statModifiers[i].Key;
 
-                float modifierAmount = selectedCard.statModifiers[i].amount;
+                float modifierAmount = selectedCard.statModifiers[i].Value;
 
                 playerStats.ApplyModifier(modifierName, modifierAmount);
 
-                float currentValue = playerStats.GetStatValue(selectedCard.statModifiers[i].name);
-                float upgradedValue = currentValue + selectedCard.statModifiers[i].amount;
+                float currentValue = playerStats.GetStatValue(selectedCard.statModifiers[i].Key);
+                float upgradedValue = currentValue + selectedCard.statModifiers[i].Value;
             }
 
             Debug.Log("Selected card " + cardNumber);
