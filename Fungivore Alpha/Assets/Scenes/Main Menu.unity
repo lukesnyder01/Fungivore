@@ -139,6 +139,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a300a0676693a48857c3ef9f172236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentUpgradePool:
+  - {fileID: 11400000, guid: fc1a75c964baea7438d4d2f90550fa44, type: 2}
+  - {fileID: 11400000, guid: 932d58b57ddac3f44a1f65f454c21407, type: 2}
+  - {fileID: 11400000, guid: 861470be4882bdf46ae8064e21ed538e, type: 2}
+  draftPool: []
 --- !u!20 &170971668 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 4855019364407952552, guid: b29a6afc2a92c534ba7d0b9e201b70e6,

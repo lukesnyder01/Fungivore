@@ -18,12 +18,8 @@ public class UpgradeDraft : MonoBehaviour
     private int uncommonCount = 32;
     private int commonCount = 64;
 
-
-    // will hold all of the possible upgrades in the game, even ones that are currently locked or have already been selected
-    private List<UpgradeCard> masterUpgradeList = new List<UpgradeCard>();
-
     //list for all the possible upgrades that are currently unlocked and could show up in a draft
-    private List<UpgradeCard> currentUpgradePool = new List<UpgradeCard>();
+    public List<UpgradeCard> currentUpgradePool = new List<UpgradeCard>();
 
     //temporary pool of upgrades in the draft pool, any of which could be selected by the player
     public List<UpgradeCard> draftPool = new List<UpgradeCard>();
@@ -33,34 +29,19 @@ public class UpgradeDraft : MonoBehaviour
 
 
 
-    public class UpgradeCard
-    {
-        public string name;
-        public int rarity;
-        public List<KeyValuePair<string, float>> statModifiers = new List<KeyValuePair<string, float>>();
-        public List<string> unlocks = new List<string>();
-    }
-
 
     void Awake()
     {
         playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
 
-        GenerateMasterUpgradeList();
-
-        InitialzeStartingUpgradeList();
-
         GenerateRarityDistribution();
+
+        StartNewDraft();
     }
 
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            StartNewDraft();
-        }
-
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ChooseCard(1);
@@ -73,8 +54,6 @@ public class UpgradeDraft : MonoBehaviour
         {
             ChooseCard(3);
         }
-
-
     }
 
 
@@ -104,64 +83,24 @@ public class UpgradeDraft : MonoBehaviour
     }
 
 
-    void GenerateMasterUpgradeList()
+    void RemoveCardFromPool(UpgradeCard card)
     {
-        UpgradeCard card;
+        for (int i = 0; i < currentUpgradePool.Count; i++)
+        {
+            if (currentUpgradePool[i].name == card.name)
+            {
+                currentUpgradePool.RemoveAt(i);
+                return;
+            }
+        }
 
-        card = new UpgradeCard();
-        card.name = "Fortify Constitution I";
-        card.rarity = 0;
-        card.statModifiers.Add(new KeyValuePair<string, float>("Max Health", 10f));
-        card.unlocks.Add("Fortify Constitution II");
-        masterUpgradeList.Add(card);
-
-
-        card = new UpgradeCard();
-        card.name = "Chitinous Shell";
-        card.rarity = 0;
-        card.statModifiers.Add(new KeyValuePair<string, float>("Armor", 1f));
-        card.statModifiers.Add(new KeyValuePair<string, float>("Walk Speed", -0.2f));
-        masterUpgradeList.Add(card);
-
-
-        card = new UpgradeCard();
-        card.name = "Quickness";
-        card.rarity = 0;
-        card.statModifiers.Add(new KeyValuePair<string, float>("Walk Speed", 0.5f));
-        masterUpgradeList.Add(card);
-
-
-        card = new UpgradeCard();
-        card.name = "Improve Energy Reserve";
-        card.rarity = 0;
-        card.statModifiers.Add(new KeyValuePair<string, float>("Max Energy", 10f));
-        masterUpgradeList.Add(card);
-
-
-        card = new UpgradeCard();
-        card.name = "Fortify Constitution II";
-        card.rarity = 1;
-        card.statModifiers.Add(new KeyValuePair<string, float>("Max Health", 15f));
-        card.statModifiers.Add(new KeyValuePair<string, float>("Armor", 1f));
-        masterUpgradeList.Add(card);
-
-
-        card = new UpgradeCard();
-        card.name = "Double Jump I";
-        card.rarity = 3;
-        card.statModifiers.Add(new KeyValuePair<string, float>("Double Jumps", 1f));
-        masterUpgradeList.Add(card);
+        Debug.Log("Didn't find the card [" + card.name + "] to remove");
     }
 
 
-
-    void InitialzeStartingUpgradeList()
+    void Unlock(UpgradeCard card)
     {
-        MoveCardToList("Fortify Constitution I", masterUpgradeList, currentUpgradePool);
-        MoveCardToList("Chitinous Shell", masterUpgradeList, currentUpgradePool);
-        MoveCardToList("Quickness", masterUpgradeList, currentUpgradePool);
-        MoveCardToList("Improve Energy Reserve", masterUpgradeList, currentUpgradePool);
-        MoveCardToList("Double Jump I", masterUpgradeList, currentUpgradePool);
+        currentUpgradePool.Add(card);
     }
 
 
@@ -185,20 +124,29 @@ public class UpgradeDraft : MonoBehaviour
 
     void StartNewDraft()
     {
-        tempUpgradePool.Clear();
-
-        foreach (UpgradeCard card in currentUpgradePool)
-        {
-            tempUpgradePool.Add(card);
-        }
-
         Debug.Log("Starting new draft, clearing pool");
+
         draftPool.Clear();
 
-        for(int i = 0; i < cardsPerDraft; i++)
+        tempUpgradePool.Clear();
+
+        if (currentUpgradePool.Count > 0)
         {
-            AddRandomCardToCurrentDraft();
+            foreach (UpgradeCard card in currentUpgradePool)
+            {
+                tempUpgradePool.Add(card);
+            }
+
+            for (int i = 0; i < cardsPerDraft; i++)
+            {
+                AddRandomCardToCurrentDraft();
+            }
         }
+        else
+        {
+            Debug.Log("Somehow, you already drafted every single upgrade");
+        }
+
 
     }
 
@@ -207,55 +155,69 @@ public class UpgradeDraft : MonoBehaviour
     {
         if (tempUpgradePool.Count > 0)
         {
-            var cardIndex = Random.Range(0, tempUpgradePool.Count);
+            int chosenRarity = RandomRarity();
+
+            int cardIndex = IndexOfRandomCardOfRarity(chosenRarity);
+
             UpgradeCard card = tempUpgradePool[cardIndex];
+
             draftPool.Add(card);
+
             tempUpgradePool.RemoveAt(cardIndex);
+
+
 
 
             Debug.Log("┌──────────────────────────");
             Debug.Log("│   ** " + card.name + " **");
+            Debug.Log("|  " + card.rarity);
             for (int i = 0; i < card.statModifiers.Count; i++)
             {
-                string modifierName = card.statModifiers[i].Key;
-                float currentValue = playerStats.GetStatValue(card.statModifiers[i].Key);
-                float upgradedValue = currentValue + card.statModifiers[i].Value;
-
+                string modifierName = card.statModifiers[i].name;
+                float currentValue = playerStats.GetStatValue(card.statModifiers[i].name);
+                float upgradedValue = currentValue + card.statModifiers[i].value;
                 Debug.Log("│ " + modifierName + " " + currentValue + " > " + upgradedValue);
-
             }
             Debug.Log("└──────────────────────────");
-
         }
         else
         {
             Debug.Log("Not enough cards to draft!");
         }
-
     }
 
 
     void ChooseCard(int cardNumber)
     {
         var draftIndex = cardNumber - 1;
+
         if (draftPool[draftIndex] != null)
         {
-
             UpgradeCard selectedCard = draftPool[draftIndex];
+
+            //apply modifiers to the player's stats
             for (int i = 0; i < selectedCard.statModifiers.Count; i++)
             {
-                string modifierName = selectedCard.statModifiers[i].Key;
-
-                float modifierAmount = selectedCard.statModifiers[i].Value;
-
+                string modifierName = selectedCard.statModifiers[i].name;
+                float modifierAmount = selectedCard.statModifiers[i].value;
                 playerStats.ApplyModifier(modifierName, modifierAmount);
-
-                float currentValue = playerStats.GetStatValue(selectedCard.statModifiers[i].Key);
-                float upgradedValue = currentValue + selectedCard.statModifiers[i].Value;
+                float currentValue = playerStats.GetStatValue(selectedCard.statModifiers[i].name);
+                float upgradedValue = currentValue + selectedCard.statModifiers[i].value;
             }
+
+            //unlock any additional upgrades
+            for (int i = 0; i < selectedCard.unlocks.Count; i++)
+            {
+                Unlock(selectedCard.unlocks[i]);
+            }
+
+            //remove from the draft pool
+            RemoveCardFromPool(selectedCard);
 
             Debug.Log("Selected card " + cardNumber);
 
+            //end current draft
+            EndDraft();
         }
         else
         {
@@ -264,11 +226,59 @@ public class UpgradeDraft : MonoBehaviour
     }
 
 
+    void EndDraft()
+    {
+        tempUpgradePool.Clear();
+        draftPool.Clear();
+
+        for (int i = 0; i < 10; i++)
+        {
+            Debug.Log(" ");
+        }
+
+        StartNewDraft();
+
+    }
+
+
+
 
     //returns value from 0-3 according to the rarityDistribution list, 0 being the most common
     int RandomRarity()
     {
         return rarityDistribution[Random.Range(0, rarityDistribution.Count)];
+    }
+
+
+    int IndexOfRandomCardOfRarity(int rarity)
+    {
+        //list of indices of cards in temp draft pool of the chosen rarity
+        List<int> indexOfTempPoolCard = new List<int>();
+
+
+        for (int i = 0; i < tempUpgradePool.Count; i++)
+        {
+            if (tempUpgradePool[i].rarity == rarity)
+            {
+                indexOfTempPoolCard.Add(i);
+            }
+        }
+
+        if (indexOfTempPoolCard.Count > 0)
+        {
+            int selectedIndex = indexOfTempPoolCard[Random.Range(0, indexOfTempPoolCard.Count)];
+            return selectedIndex;
+        }
+        else if (rarity > 0)
+        {
+            return IndexOfRandomCardOfRarity(rarity - 1);
+        }
+        else
+        {
+            Debug.Log("No remaining cards of rarity " + rarity + " or lower in pool");
+            return 0;
+        }
+        
     }
 
 

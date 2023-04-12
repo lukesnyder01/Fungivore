@@ -88,7 +88,7 @@ public class PlayerStats : MonoBehaviour
         stats.Add("Armor", 0f);
 
 
-        stats.Add("Walk Speed", 2f);
+        stats.Add("Move Speed", 2f);
         stats.Add("Run Multiplier", 2f);
 
         stats.Add("Spines Per Shot", 1f);

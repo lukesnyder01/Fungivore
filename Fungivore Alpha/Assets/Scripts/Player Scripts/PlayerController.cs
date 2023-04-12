@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour
 
     void GetPlayerStats()
     {
-        walkSpeed = playerStats.GetStatValue("Walk Speed");
+        walkSpeed = playerStats.GetStatValue("Move Speed");
 
         runSpeed = walkSpeed * playerStats.GetStatValue("Run Multiplier");
 
