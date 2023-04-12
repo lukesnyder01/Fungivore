@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171424072867f1c4c850cf26a2a656fa, type: 3}
   m_Name: Tissue Weave II
   m_EditorClassIdentifier: 
-  rarity: 1
+  rarity: 0
   statModifiers:
   - name: Max Health
     value: 10

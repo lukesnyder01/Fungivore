@@ -16,4 +16,5 @@ MonoBehaviour:
   statModifiers:
   - name: Fire Rate
     value: 0.5
-  unlocks: []
+  unlocks:
+  - {fileID: 11400000, guid: ed3f976abe15e7f489079894389de146, type: 2}

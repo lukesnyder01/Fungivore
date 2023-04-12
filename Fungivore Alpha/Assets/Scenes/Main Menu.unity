@@ -143,6 +143,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fc1a75c964baea7438d4d2f90550fa44, type: 2}
   - {fileID: 11400000, guid: 932d58b57ddac3f44a1f65f454c21407, type: 2}
   - {fileID: 11400000, guid: 861470be4882bdf46ae8064e21ed538e, type: 2}
+  - {fileID: 11400000, guid: 881beef8eda071748bdf7c03c7f9823a, type: 2}
+  - {fileID: 11400000, guid: c00820112006ba94a958885e0e5d7b59, type: 2}
   draftPool: []
 --- !u!20 &170971668 stripped
 Camera:

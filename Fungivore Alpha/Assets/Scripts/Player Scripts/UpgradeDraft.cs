@@ -42,14 +42,21 @@ public class UpgradeDraft : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            StartNewDraft();
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ChooseCard(1);
         }
+
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             ChooseCard(2);
         }
+
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             ChooseCard(3);
@@ -255,7 +262,7 @@ public class UpgradeDraft : MonoBehaviour
         //list of indices of cards in temp draft pool of the chosen rarity
         List<int> indexOfTempPoolCard = new List<int>();
 
-
+        //loop through the temp upgrade pool, and add the indices of cards with a rarity matching the rarity passed into the function
         for (int i = 0; i < tempUpgradePool.Count; i++)
         {
             if (tempUpgradePool[i].rarity == rarity)
@@ -264,16 +271,16 @@ public class UpgradeDraft : MonoBehaviour
             }
         }
 
-        if (indexOfTempPoolCard.Count > 0)
+        if (indexOfTempPoolCard.Count > 0)        //if there are cards that match the rarity, pick a random one and return its index in the temp pool
         {
             int selectedIndex = indexOfTempPoolCard[Random.Range(0, indexOfTempPoolCard.Count)];
             return selectedIndex;
         }
-        else if (rarity > 0)
+        else if (indexOfTempPoolCard.Count == 0 && rarity > 0)    //if no cards match the rarity, recurse through the function with a lower rarity
         {
             return IndexOfRandomCardOfRarity(rarity - 1);
         }
-        else
+        else //if there were no cards of that rarity or lower, return the first card in the temp pool (note, this will return a card of a higher rarity than was selected initially)
         {
             Debug.Log("No remaining cards of rarity " + rarity + " or lower in pool");
             return 0;

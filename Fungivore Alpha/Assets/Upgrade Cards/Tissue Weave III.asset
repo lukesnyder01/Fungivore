@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171424072867f1c4c850cf26a2a656fa, type: 3}
   m_Name: Tissue Weave III
   m_EditorClassIdentifier: 
-  rarity: 2
+  rarity: 0
   statModifiers:
   - name: Max Health
-    value: 15
-  unlocks: []
+    value: 10
+  unlocks:
+  - {fileID: 11400000, guid: 7e9781037bee68643b3357540233e2db, type: 2}

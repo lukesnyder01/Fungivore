@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 171424072867f1c4c850cf26a2a656fa, type: 3}
-  m_Name: Tissue Weave I
+  m_Name: Rupture Hyperactivity III
   m_EditorClassIdentifier: 
   rarity: 0
   statModifiers:
-  - name: Max Health
-    value: 10
+  - name: Fire Rate
+    value: 0.5
   unlocks:
-  - {fileID: 11400000, guid: 4989ca6cc47fc684c8f578827b4ad509, type: 2}
-  - {fileID: 11400000, guid: 3c4b2e7ae3bc49b4e8d42989a86706c2, type: 2}
+  - {fileID: 11400000, guid: d17b95dc16c01c140ba07806d5ed004c, type: 2}

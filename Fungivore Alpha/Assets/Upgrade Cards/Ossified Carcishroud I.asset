@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171424072867f1c4c850cf26a2a656fa, type: 3}
   m_Name: Ossified Carcishroud I
   m_EditorClassIdentifier: 
-  rarity: 3
+  rarity: 1
   statModifiers:
   - name: Armor
     value: 1
+  - name: Move Speed
+    value: -0.1
   unlocks:
   - {fileID: 11400000, guid: 0a317f0d80c1c7444ad8042d83843ac5, type: 2}
