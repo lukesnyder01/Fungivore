@@ -35,7 +35,10 @@ public class UpgradeDraft : MonoBehaviour
         playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
 
         GenerateRarityDistribution();
+    }
 
+    void Start()
+    {
         StartNewDraft();
     }
 
