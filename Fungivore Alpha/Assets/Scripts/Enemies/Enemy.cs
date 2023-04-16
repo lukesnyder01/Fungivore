@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public float minimumDistance = 1f;
 
     public float detectionRange = 40f;
-    public float detectionRadius = 0.01f;
+    public float detectionSpherecastRadius = 0.01f;
 
     public float raycastDistToFindEmpty = 4f;
 
@@ -211,7 +211,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         RaycastHit hit;
 
-        if (Physics.SphereCast(transform.position, detectionRadius, directionToPlayer, out hit, detectionRange))
+        if (Physics.SphereCast(transform.position, detectionSpherecastRadius, directionToPlayer, out hit, detectionRange))
         {
             if (hit.collider.gameObject.tag == "Player")
             {

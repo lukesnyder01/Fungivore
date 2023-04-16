@@ -33,6 +33,7 @@ public class PlayerStats : MonoBehaviour
 
     public static float healthRegen = 2f;
     public static float currentHealth { get; private set; }
+
     public static float healthPercent;
 
 
@@ -40,7 +41,7 @@ public class PlayerStats : MonoBehaviour
     public static float jumpHungerCost = 0.5f;
 
     public static float currentEnergy;
-    private static float energyPercent;
+    public static float energyPercent;
 
 
     [Header("References")]
@@ -148,7 +149,7 @@ public class PlayerStats : MonoBehaviour
 
         UpdatePlayerHealth();
 
-        //UpdateUI();
+        UpdateUI();
 
     }
 

@@ -22,9 +22,8 @@ public class ScreenDamageIndicator : MonoBehaviour
         startColor = screenDamageMaterial.color;
         startColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
 
-
-
         postProcessVolume = FindObjectOfType<PostProcessVolume>();
+
         postProcessVolume.profile.TryGetSettings(out vignette);
     }
 
