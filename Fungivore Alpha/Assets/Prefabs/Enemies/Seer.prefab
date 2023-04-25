@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6409592673757370764}
   - component: {fileID: 6409592673757370765}
-  - component: {fileID: 6409592673757370769}
+  - component: {fileID: -7040176248810247411}
   m_Layer: 0
   m_Name: Seer
   m_TagString: Wraith
@@ -50,7 +50,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &6409592673757370769
+--- !u!114 &-7040176248810247411
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,24 +59,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 6409592673757370767}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4412cf5c673c94d49a63c7250fdd2adf, type: 3}
+  m_Script: {fileID: 11500000, guid: a39610b113e1fbd4694ffb02bdab7059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 1
   thrust: 5
-  turnSpeed: 6
-  minimumDistance: 1
-  detectionRange: 12
+  turnSpeed: 3
+  minimumDistance: 1.5
+  detectionRange: 30
   detectionSpherecastRadius: 0.01
   raycastDistToFindEmpty: 4
-  despawnRange: 100
-  deathEffect: {fileID: 8160540889385062186, guid: 0b4fdd50e739de94298ee3138493e4ab,
+  despawnRange: 200
+  deathEffect: {fileID: 8160540889385062186, guid: 293821d393f048440b45d2b5005f10bf,
     type: 3}
   wanderSpeed: 2
-  chargeSpeed: 2
-  rapidEvasionSpeed: 10
-  collisionDamageDealt: 50
-  rotationSpeed: 10
+  chargeSpeed: 3
+  rapidEvasionSpeed: 15
+  collisionDamageDealt: 10
+  rotationSpeed: 0.5
   playerCamera: {fileID: 0}
   cameraTransform: {fileID: 0}
   player: {fileID: 0}
@@ -88,6 +88,8 @@ MonoBehaviour:
   rb: {fileID: 0}
   openDirection: []
   state: 0
+  tether: {fileID: 0}
+  maxDistFromTether: 2
 --- !u!1 &7419592877575668983
 GameObject:
   m_ObjectHideFlags: 0
@@ -5191,6 +5193,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689442574931992372, guid: e50785f950ca1cf47aa4664f94806585,
+        type: 3}
+      propertyPath: m_VersionIndex
+      value: 4301
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e50785f950ca1cf47aa4664f94806585, type: 3}

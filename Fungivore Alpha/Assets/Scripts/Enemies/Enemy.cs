@@ -280,8 +280,9 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void EvadePlayer()
     {
+        var speedScale = 1f - (distanceFromPlayer / minimumDistance);
         rb.AddForce(Vector3.up * thrust / 2.0f);
-        rb.AddForce(-directionToPlayer * rapidEvasionSpeed * rapidEvasionSpeed);
+        rb.AddForce(-directionToPlayer * rapidEvasionSpeed * rapidEvasionSpeed * speedScale);
     }
 
 

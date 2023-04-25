@@ -7,6 +7,8 @@ public class CuriousSpore : Enemy
     private Vector3 targetPosition;
     private Vector3 directionToTarget;
 
+    private float minDistFromTarget = 0.2f;
+
     public float targetDistance = 2;
 
     public override void UpdateStateMachine()
@@ -16,7 +18,12 @@ public class CuriousSpore : Enemy
 
         Spin(Random.Range(-rotationSpeed, rotationSpeed));
 
-        PointAtTarget();
+
+        if (DistanceFromTarget() > minDistFromTarget)
+        {
+            PointAtTarget();
+        }
+
 
         switch (state)
         {
@@ -76,7 +83,11 @@ public class CuriousSpore : Enemy
                         state = State.Idle;
                     }
 
-                    MoveTowardsTarget(chargeSpeed);
+                    if (DistanceFromTarget() > minDistFromTarget)
+                    {
+                        MoveTowardsTarget(chargeSpeed);
+                    }
+
                 }
 
                 if (!CanSeePlayer())
@@ -99,9 +110,16 @@ public class CuriousSpore : Enemy
         transform.forward = Vector3.Slerp(transform.forward, directionToTarget, Time.deltaTime * turnSpeed);
     }
 
+
     private void MoveTowardsTarget(float thrustMultiplier)
     {
         rb.AddForce(directionToTarget * thrust * thrustMultiplier);
+    }
+
+
+    private float DistanceFromTarget()
+    {
+        return Vector3.Distance(transform.position, targetPosition);
     }
 
 }

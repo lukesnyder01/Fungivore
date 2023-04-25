@@ -77,11 +77,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
-  thrust: 3
-  turnSpeed: 4
+  thrust: 2
+  turnSpeed: 5
   minimumDistance: 0.9
-  detectionRange: 10
-  detectionRadius: 0.01
+  detectionRange: 8
+  detectionSpherecastRadius: 0.01
   raycastDistToFindEmpty: 4
   despawnRange: 100
   deathEffect: {fileID: 8160540889385062186, guid: 0b4fdd50e739de94298ee3138493e4ab,
@@ -90,7 +90,7 @@ MonoBehaviour:
   chargeSpeed: 3
   rapidEvasionSpeed: 6
   collisionDamageDealt: 5
-  rotationSpeed: 2
+  rotationSpeed: 0.5
   playerCamera: {fileID: 0}
   cameraTransform: {fileID: 0}
   player: {fileID: 0}
