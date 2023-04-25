@@ -24,6 +24,9 @@ public class TetheredEnemy : Enemy
 
     public override void UpdateStateMachine()
     {
+
+        targetPosition = tether.position;
+
         dirToTether = (targetPosition - transform.position).normalized;
         distFromTether = DistanceFromTarget();
 

@@ -66,14 +66,14 @@ MonoBehaviour:
   thrust: 5
   turnSpeed: 3
   minimumDistance: 1.5
-  detectionRange: 30
+  detectionRange: 15
   detectionSpherecastRadius: 0.01
   raycastDistToFindEmpty: 4
   despawnRange: 200
   deathEffect: {fileID: 8160540889385062186, guid: 293821d393f048440b45d2b5005f10bf,
     type: 3}
-  wanderSpeed: 2
-  chargeSpeed: 3
+  wanderSpeed: 4
+  chargeSpeed: 5
   rapidEvasionSpeed: 15
   collisionDamageDealt: 10
   rotationSpeed: 0.5
@@ -89,7 +89,7 @@ MonoBehaviour:
   openDirection: []
   state: 0
   tether: {fileID: 0}
-  maxDistFromTether: 2
+  maxDistFromTether: 1
 --- !u!1 &7419592877575668983
 GameObject:
   m_ObjectHideFlags: 0
