@@ -1797,7 +1797,7 @@ MonoBehaviour:
   thrust: 20
   turnSpeed: 1
   minimumDistance: 12
-  detectionRange: 50
+  detectionRange: 100
   detectionSpherecastRadius: 0.01
   raycastDistToFindEmpty: 4
   despawnRange: 10000
@@ -1820,7 +1820,7 @@ MonoBehaviour:
   openDirection: []
   state: 0
   tether: {fileID: 0}
-  maxDistFromTether: 15
+  maxDistFromTether: 5
 --- !u!82 &-666301038260568315
 AudioSource:
   m_ObjectHideFlags: 0
