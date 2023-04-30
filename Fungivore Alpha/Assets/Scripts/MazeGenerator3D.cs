@@ -198,13 +198,18 @@ public class MazeGenerator3D : MonoBehaviour
 
             
 
-            //yield return new WaitForSeconds(timeBetweenSteps);
+           yield return null;
+
         }
         yield return null;
 
         //end the maze
 
     }
+
+
+
+
 
     void CheckDirection(Vector3Int cellCoords, int myMask, int adjacentMask, Vector3Int currentCellPos)
     {
@@ -237,7 +242,10 @@ public class MazeGenerator3D : MonoBehaviour
         }
         else if (cellToCheck.cellState == 2) //if the cell is occupied by a maze cell
         {
-
+            if (Random.value < chanceToCloseExterior)
+            {
+                mazeGrid[currentCellPos.x, currentCellPos.y, currentCellPos.z].bitmask &= ~myMask;
+            }
         }
     }
 

@@ -69,7 +69,7 @@ MonoBehaviour:
   detectionRange: 15
   detectionSpherecastRadius: 0.01
   raycastDistToFindEmpty: 4
-  despawnRange: 1000
+  despawnRange: 200
   deathEffect: {fileID: 8160540889385062186, guid: 293821d393f048440b45d2b5005f10bf,
     type: 3}
   wanderSpeed: 4
