@@ -108,20 +108,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combineMesh: {fileID: 0}
+  currentStep: 0
+  totalSteps: 0
   minSteps: 50
   maxSteps: 100
-  waitTime: 0
-  totalSteps: 0
-  currentStep: 0
+  waitTime: 0.005
   respawnCount: 10
   antSideLength: 1
   verticalSpawnOffset: 0
-  boxCenter: {x: 0, y: 0, z: 0}
-  halfExtents: {x: 0, y: 0, z: 0}
-  boxRotation: {x: 0, y: 0, z: 0}
   antMoveDistance: 0
   minPlayerDistance: 6
-  minPlayerDistancePad: 5
+  minPlayerDistancePad: 2
   playerDistance: 0
   respawnPrefab: {fileID: 4899378156460765924, guid: 6059560456f01674daa78248e0866c17,
     type: 3}
@@ -142,10 +139,10 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 1}
   spawnClimbers: 1
   climber: {fileID: 6385687563868456176, guid: 1b74e5991831bd943addc51a4223a3df, type: 3}
-  spawnDroppers: 1
+  spawnDroppers: 0
   dropper: {fileID: 6385687563868456176, guid: cd32aec2643a5cd49a1e2d42c146ba12, type: 3}
-  sphereCastRadius: 0.49
-  sphereCastDistance: 1.2
+  sphereCastRadius: 0.45
+  sphereCastDistance: 0.6
 --- !u!114 &5684648383107852681
 MonoBehaviour:
   m_ObjectHideFlags: 0

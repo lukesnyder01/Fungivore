@@ -32,6 +32,9 @@ public class RibAnt : Ant
         int back = (antDir + 2) % 4;
 
 
+
+
+
         if (SpaceIsEmpty(directionArray[forward]))
         {
             availablePositions.Add(antPos + directionArray[forward] * antMoveDistance);
@@ -100,21 +103,22 @@ public class RibAnt : Ant
         }
         else
         {
-            EndAnt();
+            noMovesLeft = true;
             return;
         }
 
-        if (spawnClimbers) {
+        if (spawnClimbers)
+        {
             AddClimber();
         }
+
 
         if (spawnDroppers)
         {
             AddDropper();
         }
-
-
     }
+
 
     public void AddClimber() 
     {
@@ -129,6 +133,7 @@ public class RibAnt : Ant
             }
         }
     }
+
 
     public void AddDropper()
     {

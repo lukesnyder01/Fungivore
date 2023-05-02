@@ -8,30 +8,25 @@ public class Ant : MonoBehaviour
     [HideInInspector]
     public CombineMesh combineMesh;
 
+    private bool antHasEnded = false;
+
+    public int currentStep = 0;
+    public int totalSteps;
+
+
     [Header("Ant Settings")]
     public int minSteps = 20;
     public int maxSteps = 25;
     public float waitTime = 0f;
-
-    [HideInInspector]
-    public int totalSteps;
-    [HideInInspector]
-    public int currentStep;
 
     public int respawnCount;
 
     public int antSideLength = 1;
 
 
-
     public int verticalSpawnOffset;
 
-    [HideInInspector]
-    public Vector3 boxCenter;
-    [HideInInspector]
-    public Vector3 halfExtents;
-    [HideInInspector]
-    public Vector3 boxRotation;
+
     [HideInInspector]
     public float antMoveDistance;
     [HideInInspector]
@@ -79,13 +74,32 @@ public class Ant : MonoBehaviour
         new Vector3(0f, 0f, 1f)
     };
 
+    private Coroutine iterateGrowthCoroutine;
 
-    public virtual void Start()
+
+    public virtual void Awake()
     {
         InitializeParameters();
-        //_antList.Add(gameObject);
-        StartCoroutine(IterateGrowth());
     }
+
+
+    private void OnEnable()
+    {
+        if (!antHasEnded)
+        {
+            iterateGrowthCoroutine = StartCoroutine(IterateGrowth());
+        }
+    }
+
+
+    private void OnDisable()
+    {
+        if (iterateGrowthCoroutine != null)
+        {
+            StopCoroutine(iterateGrowthCoroutine);
+        }
+    }
+
 
 
     public virtual void InitializeParameters()
@@ -97,9 +111,6 @@ public class Ant : MonoBehaviour
         //set antDir to object direction
         antDir = Mathf.RoundToInt(transform.rotation.y / 90) + 3 % 4;
 
-        //set hitbox half extents
-        var halfAntSide = antSideLength / 2;
-        halfExtents = new Vector3(halfAntSide, halfAntSide, halfAntSide);
 
 
         player = GameObject.Find("Player");
@@ -115,37 +126,39 @@ public class Ant : MonoBehaviour
 
     public IEnumerator IterateGrowth()
     {
-        for (int i = 0; i < totalSteps + 1; i++) 
+        for (int i = currentStep; i < totalSteps; i++)
         {
             yield return new WaitForSeconds(waitTime);
             yield return new WaitForFixedUpdate();
 
+            if (noMovesLeft == true)
+            {
+                EndAnt();
+            }
+
             Grow();
         }
+
+
+        if (currentStep >= totalSteps)
+        {
+            Debug.Log("currentStep >= totalSteps");
+            EndAnt();
+            yield return new WaitForFixedUpdate();
+        }
+
     }
+
 
     public virtual void Grow()
     {
-        if (currentStep < totalSteps)
+        currentStep++;
+
+        playerDistance = (antPos - player.transform.position).sqrMagnitude;
+
+        if (playerDistance > (minPlayerDistance * minPlayerDistance))
         {
-            currentStep++;
-
-            playerDistance = (antPos - player.transform.position).sqrMagnitude;
-
-            if (playerDistance > (minPlayerDistance * minPlayerDistance))
-            {
-                AddNewBlock();
-            }
-        }
-        else
-        {
-            if (noMovesLeft == false)
-            {
-                Respawn();
-            }
-
-            EndAnt();
-            return;
+            AddNewBlock();
         }
     }
 
@@ -210,14 +223,36 @@ public class Ant : MonoBehaviour
         }
         else
         {
-            //EndAnt();
+            noMovesLeft = true;
+            return;
         }
     }
 
-
+    /*
     public virtual bool SpaceIsEmpty(Vector3 direction)
     {
         return (!Physics.BoxCast(antPos, halfExtents, direction, out hit, Quaternion.identity, antMoveDistance));
+    }
+
+    public virtual bool SpaceIsEmpty(Vector3 direction)
+    {
+        Collider[] hitcolliders = Physics.OverlapBox(antPos + direction, halfExtents, Quaternion.identity);
+
+        if (hitcolliders.Length == 0)
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
+    }
+
+    */
+
+    public virtual bool SpaceIsEmpty(Vector3 direction)
+    {
+        return (!Physics.SphereCast(antPos, (antSideLength / 2) - 0.1f, direction, out hit, antMoveDistance));
     }
 
 
@@ -230,14 +265,24 @@ public class Ant : MonoBehaviour
             {
                 respawner.respawnsLeft = respawnCount - 1;
             }
+            newAnt.transform.parent = transform.parent;
         }
     }
 
 
     public virtual void EndAnt()
     {
+        antHasEnded = true;
+
+        Debug.Log("Ended Ant");
+
+        if (noMovesLeft == false)
+        {
+            Respawn();
+        }
+
         combineMesh.Combine(gameObject);
-        //combineMesh.MultiMaterialCombine(gameObject);
     }
+
 
 }

@@ -32,14 +32,12 @@ public class MazeAnt : Ant
     public GameObject[] mazeTurnRight;
 
 
-    public override void Start()
+    public override void Awake()
     {
         InitializeParameters();
 
         terminalDirection.Add(antDir);
         terminalPosition.Add(antPos);
-
-        StartCoroutine(IterateGrowth());
     }
 
 
@@ -265,6 +263,8 @@ public class MazeAnt : Ant
 
     public bool AntIsHittingSomething()
     {
+        var halfExtents = new Vector3(antSideLength / 2, antSideLength / 2, antSideLength / 2);
+
         Collider[] hitColliders = Physics.OverlapBox(antPos, halfExtents, Quaternion.identity);
 
         if (hitColliders.Length != 0)

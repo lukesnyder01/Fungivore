@@ -22,6 +22,8 @@ public class TriggerTerrainGrowth : MonoBehaviour
             {
                 ant.respawnCount = antRespawner.respawnsLeft;
             }
+
+            newAnt.transform.SetParent(target.transform.parent);
         }
     }
 }

@@ -12,55 +12,6 @@ public class CombineMesh : MonoBehaviour
     public bool meshIsLarge = true;
 
 
-    public void MultiMaterialCombine(GameObject combineParent)
-    {
-
-        //make a list of materials, we'll make a combine instance for each one
-        List<Material> materials = new List<Material>();
-
-        //make a list of meshes, one for each material
-        List<GameObject> perMatCombineParents = new List<GameObject>();
-
-
-        MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>(false);
-
-        //parent each mesh to combine to their corresponding perMaterialMeshes
-        for (int i = 0; i < renderers.Length; i++)
-        {
-            //get the first material of this renderer
-            Material localMat = renderers[i].sharedMaterials[0];
-
-            if (localMat)
-            {
-                //if the material is on the materials list, add the gameObject to the appropriate perMaterialMesh
-                if (materials.Contains(localMat))
-                {
-                    var matIndex = materials.IndexOf(localMat);
-                    renderers[i].gameObject.transform.parent = perMatCombineParents[matIndex].transform;
-                }
-                else //create a new perMaterialMesh and add the gameObject
-                {
-                    materials.Add(localMat);
-                    perMatCombineParents.Add(renderers[i].gameObject);
-                }
-            }
-
-        }
-
-        for (int i = 0; i < perMatCombineParents.Count; i++)
-        {
-            
-            Combine(perMatCombineParents[i]);
-            if (i > 0)
-            {
-                perMatCombineParents[i].transform.parent = perMatCombineParents[i - 1].transform;
-            }
-
-            Debug.Log("mesh material is: " + perMatCombineParents[i].GetComponent<MeshRenderer>().sharedMaterials[0]);
-        }
-    }
-
-
     public void Combine(GameObject combineParent)
     {
         //store parent object transform

@@ -23,8 +23,6 @@ public class EideticAnt : Ant
 
         antMoveDistance = antSideLength;
 
-        //halfExtents = new Vector3(antMoveDistance / 2 - 0.2f, antMoveDistance / 2 - 0.2f, antMoveDistance / 2 - 0.2f);
-        halfExtents = new Vector3(antMoveDistance / 2 + halfExtentSizeMod, antMoveDistance / 2 + halfExtentSizeMod, antMoveDistance / 2 + halfExtentSizeMod);
 
         minPlayerDistance = antSideLength + 1;
 
