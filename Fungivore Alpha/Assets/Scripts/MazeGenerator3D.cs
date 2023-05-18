@@ -230,8 +230,6 @@ public class MazeGenerator3D : MonoBehaviour
             {
                 mazeGrid[currentCellPos.x, currentCellPos.y, currentCellPos.z].bitmask &= ~myMask;
             }
-
-
         }
         else if (cellToCheck.cellState == 1) //if the cell is blocked
         {
