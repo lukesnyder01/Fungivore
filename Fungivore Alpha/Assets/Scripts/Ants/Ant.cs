@@ -274,7 +274,7 @@ public class Ant : MonoBehaviour
     {
         antHasEnded = true;
 
-        Debug.Log("Ended Ant");
+        //Debug.Log("Ended Ant");
 
         if (noMovesLeft == false)
         {
