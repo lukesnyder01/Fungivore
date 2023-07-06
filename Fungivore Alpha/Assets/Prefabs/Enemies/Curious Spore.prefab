@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4468911112632693740}
   - component: {fileID: 4468911112632693747}
   - component: {fileID: 6036586693285831847}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Curious Spore
   m_TagString: Wraith
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 5254797385589405768}
   - component: {fileID: 4209530079844391148}
   - component: {fileID: 6260911961877458861}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,6 +223,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tentacle
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798656525174589310, guid: 91f62e9c872e0c74692e4252cad4e70d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958858132863438474, guid: 91f62e9c872e0c74692e4252cad4e70d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 8107473969827051872, guid: 91f62e9c872e0c74692e4252cad4e70d,
         type: 3}

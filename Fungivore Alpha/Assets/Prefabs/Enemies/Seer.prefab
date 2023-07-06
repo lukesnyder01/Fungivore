@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6409592673757370764}
   - component: {fileID: 6409592673757370765}
   - component: {fileID: -7040176248810247411}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Seer
   m_TagString: Wraith
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 7419592877575668970}
   - component: {fileID: 7419592877575668981}
   - component: {fileID: 7419592877575668980}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Laughbehind Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5188,6 +5188,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Seer Face
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593020741850956103, guid: e50785f950ca1cf47aa4664f94806585,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 8689442574931992372, guid: e50785f950ca1cf47aa4664f94806585,
         type: 3}

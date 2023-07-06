@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 793777270994810156}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Sophont of Istrachill Tether
   m_TagString: Untagged
   m_Icon: {fileID: 0}

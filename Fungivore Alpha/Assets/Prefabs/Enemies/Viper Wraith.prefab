@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 468863979406712853}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Tentacles (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 4572362622540982873}
   - component: {fileID: 7602687744581711375}
   - component: {fileID: 4111161298196706940}
-  m_Layer: 2
+  m_Layer: 18
   m_Name: Tentacle Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 3514605294221447495}
   - component: {fileID: 5282601151867103649}
   - component: {fileID: 6397699054333370323}
-  m_Layer: 2
+  m_Layer: 18
   m_Name: Tentacle Model (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +562,7 @@ GameObject:
   - component: {fileID: 4468911112632693747}
   - component: {fileID: 4468911112632693743}
   - component: {fileID: 7269054712292516517}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Viper Wraith
   m_TagString: Wraith
   m_Icon: {fileID: 0}
@@ -631,29 +631,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4412cf5c673c94d49a63c7250fdd2adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 1
   thrust: 15
   turnSpeed: 2
-  followDistance: 2
+  minimumDistance: 1
   detectionRange: 40
-  detectionRadius: 0.01
+  detectionSpherecastRadius: 0.01
   raycastDistToFindEmpty: 4
   despawnRange: 200
   deathEffect: {fileID: 8160540889385062186, guid: 0b4fdd50e739de94298ee3138493e4ab,
     type: 3}
-  hitEffect: {fileID: 8160540889385062186, guid: 67b862e0a7fdd6142bbb95283fd022d5,
-    type: 3}
   wanderSpeed: 2
   chargeSpeed: 3
   rapidEvasionSpeed: 6
-  maxHitPoints: 50
-  currentHitPoints: 0
   collisionDamageDealt: 50
+  rotationSpeed: 1
+  playerCamera: {fileID: 0}
+  cameraTransform: {fileID: 0}
+  player: {fileID: 0}
+  playerTransform: {fileID: 0}
+  playerPosition: {x: 0, y: 0, z: 0}
+  distanceFromPlayer: 0
+  directionToPlayer: {x: 0, y: 0, z: 0}
+  canSeePlayer: 0
   rb: {fileID: 0}
   openDirection: []
-  shotTimer: 0
-  timeBeforeChargeAttack: 6000
-  continuousRotation: 1
-  rotationSpeed: 1
+  state: 0
 --- !u!114 &7269054712292516517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -682,7 +685,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9090927171466157259}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Tail Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -715,7 +718,7 @@ GameObject:
   - component: {fileID: 7593295499155399425}
   - component: {fileID: 2636940123805719078}
   - component: {fileID: 2456147844057641179}
-  m_Layer: 2
+  m_Layer: 18
   m_Name: Tentacle Model (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -972,7 +975,7 @@ GameObject:
   - component: {fileID: 5254797385589405768}
   - component: {fileID: 4209530079844391148}
   - component: {fileID: 6260911961877458861}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1049,7 +1052,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1462811470728987228}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Tentacles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1174,6 +1177,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tentacle (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798656525174589310, guid: 91f62e9c872e0c74692e4252cad4e70d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958858132863438474, guid: 91f62e9c872e0c74692e4252cad4e70d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 8107473969827051872, guid: 91f62e9c872e0c74692e4252cad4e70d,
         type: 3}
@@ -1355,6 +1368,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tentacle (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5798656525174589310, guid: 91f62e9c872e0c74692e4252cad4e70d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958858132863438474, guid: 91f62e9c872e0c74692e4252cad4e70d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 8107473969827051872, guid: 91f62e9c872e0c74692e4252cad4e70d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1534,6 +1557,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tentacle (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798656525174589310, guid: 91f62e9c872e0c74692e4252cad4e70d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958858132863438474, guid: 91f62e9c872e0c74692e4252cad4e70d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 8107473969827051872, guid: 91f62e9c872e0c74692e4252cad4e70d,
         type: 3}
@@ -1715,6 +1748,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tentacle (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5798656525174589310, guid: 91f62e9c872e0c74692e4252cad4e70d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958858132863438474, guid: 91f62e9c872e0c74692e4252cad4e70d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 8107473969827051872, guid: 91f62e9c872e0c74692e4252cad4e70d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1895,6 +1938,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tentacle (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5798656525174589310, guid: 91f62e9c872e0c74692e4252cad4e70d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958858132863438474, guid: 91f62e9c872e0c74692e4252cad4e70d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 8107473969827051872, guid: 91f62e9c872e0c74692e4252cad4e70d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2074,6 +2127,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tentacle (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798656525174589310, guid: 91f62e9c872e0c74692e4252cad4e70d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958858132863438474, guid: 91f62e9c872e0c74692e4252cad4e70d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 8107473969827051872, guid: 91f62e9c872e0c74692e4252cad4e70d,
         type: 3}

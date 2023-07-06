@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4468911112632693747}
   - component: {fileID: 3200251358637648289}
   - component: {fileID: 4482665156388387932}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Sophont Spine Segment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ MonoBehaviour:
   turnSpeed: 1
   minimumDistance: 0
   detectionRange: 0
-  detectionRadius: 0.7
+  detectionSpherecastRadius: 0.01
   raycastDistToFindEmpty: 4
   despawnRange: 10000
   deathEffect: {fileID: 8160540889385062186, guid: 0b4fdd50e739de94298ee3138493e4ab,
@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 3417876714249020420}
   - component: {fileID: 8761994341350799442}
   - component: {fileID: 2960888314735458337}
-  m_Layer: 2
+  m_Layer: 18
   m_Name: Tentacle Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -378,7 +378,7 @@ GameObject:
   - component: {fileID: 9189134517238906712}
   - component: {fileID: 2156677255394271096}
   - component: {fileID: 5427679310881406814}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Vertebrae
   m_TagString: Untagged
   m_Icon: {fileID: 0}
