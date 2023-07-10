@@ -6,7 +6,9 @@ public class TurretEnemy : Enemy
 {
     public float timeBetweenShots;
     public float bulletSpeed;
+    public float aimRandomness = 0.1f;
     private float shotTimer = 0;
+
 
     public Rigidbody bulletPrefab;
 
@@ -59,7 +61,7 @@ public class TurretEnemy : Enemy
     {
         //Debug.Log("shot at player");
         var newBullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
-        newBullet.velocity = transform.forward * bulletSpeed;
+        newBullet.velocity = (transform.forward + Random.insideUnitSphere * aimRandomness) * bulletSpeed;
 
     }
 

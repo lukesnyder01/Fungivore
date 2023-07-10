@@ -9,7 +9,7 @@ public class BulletController : MonoBehaviour
     public GameObject bulletImpact;
     float shotTimer;
     public float bulletLifespan = 2f;
-    float currentLifespan;
+    private float currentLifespan;
     public PlayerStats playerStats;
 
     public float bulletDamage = 1f;
