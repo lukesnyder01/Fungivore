@@ -17,7 +17,9 @@ public class TurretEnemy : Enemy
 
         shotTimer -= Time.deltaTime;
 
-        
+
+        Spin(Random.Range(-rotationSpeed, rotationSpeed));
+
 
         switch (state)
         {
@@ -35,18 +37,16 @@ public class TurretEnemy : Enemy
 
             case State.Hunt:
 
-                if (distanceFromPlayer > detectionRange)
+                if (distanceFromPlayer > detectionRange || !canSeePlayer)
                 {
                     state = State.Idle;
                 }
 
-                if (CanSeePlayer())
+
+                if (shotTimer <= 0)
                 {
-                    if (shotTimer <= 0)
-                    {
-                        shotTimer = timeBetweenShots;
-                        ShootAtPlayer();
-                    }
+                    shotTimer = timeBetweenShots;
+                    ShootAtPlayer();
                 }
 
                 break;
@@ -57,7 +57,7 @@ public class TurretEnemy : Enemy
 
     public void ShootAtPlayer()
     {
-        Debug.Log("shot at player");
+        //Debug.Log("shot at player");
         var newBullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
         newBullet.velocity = transform.forward * bulletSpeed;
 

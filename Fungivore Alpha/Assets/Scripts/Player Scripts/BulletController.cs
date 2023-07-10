@@ -17,9 +17,9 @@ public class BulletController : MonoBehaviour
     [HideInInspector]
     public bool hasCollided = false;
 
-    public GameObject dummySpine;
+    //public GameObject dummySpine;
 
-    private Transform dummySpineParent;
+    //private Transform dummySpineParent;
 
     void Awake()
     {
@@ -52,7 +52,7 @@ public class BulletController : MonoBehaviour
         {
             var hitPos = other.contacts[0].point;
 
-            dummySpineParent = other.gameObject.transform;
+            //dummySpineParent = other.gameObject.transform;
 
             hasCollided = true;
 
@@ -60,13 +60,13 @@ public class BulletController : MonoBehaviour
             {
                 hit.Damage(bulletDamage);
             }
-
+            /*
             var newDummySpine = Instantiate(dummySpine, hitPos, transform.rotation);
             if (other.collider.attachedRigidbody)
             {
                 newDummySpine.transform.SetParent(dummySpineParent, true);
             }
-    
+             */
 
             Instantiate(bulletImpact, hitPos, Quaternion.identity);
 
