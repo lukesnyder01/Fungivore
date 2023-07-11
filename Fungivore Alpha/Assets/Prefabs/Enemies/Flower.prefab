@@ -129,7 +129,7 @@ MonoBehaviour:
   turnSpeed: 100
   minimumDistance: 0
   detectionRange: 25
-  detectionSpherecastRadius: 0.01
+  detectionSpherecastRadius: 0.001
   raycastDistToFindEmpty: 4
   despawnRange: 1000
   deathEffect: {fileID: 8160540889385062186, guid: 0b4fdd50e739de94298ee3138493e4ab,
@@ -151,8 +151,8 @@ MonoBehaviour:
   openDirection: []
   state: 0
   timeBetweenShots: 1
-  bulletSpeed: 2
-  aimRandomness: 0.5
+  bulletSpeed: 4
+  aimRandomness: 0.2
   bulletPrefab: {fileID: 3964968406096466361, guid: ec962970b839f3e4584e598a861b2c69,
     type: 3}
 --- !u!1 &8550646966166955625

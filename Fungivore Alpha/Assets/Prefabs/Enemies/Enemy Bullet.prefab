@@ -403,7 +403,7 @@ MonoBehaviour:
   bulletLifespan: 8
   player: {fileID: 0}
   accelerationSpeed: 2
-  deathEffect: {fileID: 8160540889385062186, guid: a64c5b52495146c47943367f0ed92b6d,
+  deathEffect: {fileID: 8160540889385062186, guid: de4cf5a765127124aae35951c54ff742,
     type: 3}
 --- !u!54 &3964968406096466361
 Rigidbody:

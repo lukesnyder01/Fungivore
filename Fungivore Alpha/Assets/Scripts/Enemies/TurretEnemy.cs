@@ -27,28 +27,28 @@ public class TurretEnemy : Enemy
         {
             default:
 
-            case State.Idle:
-
-                if (distanceFromPlayer < detectionRange)
-                {
-                    state = State.Hunt;
-                }
-
-                break;
-
-
             case State.Hunt:
 
-                if (distanceFromPlayer > detectionRange || !canSeePlayer)
+                if (distanceFromPlayer > detectionRange)
                 {
                     state = State.Idle;
                 }
 
 
-                if (shotTimer <= 0)
+                if (shotTimer <= 0 && canSeePlayer)
                 {
                     shotTimer = timeBetweenShots;
                     ShootAtPlayer();
+                }
+
+                break;
+
+
+            case State.Idle:
+
+                if (distanceFromPlayer < detectionRange)
+                {
+                    state = State.Hunt;
                 }
 
                 break;

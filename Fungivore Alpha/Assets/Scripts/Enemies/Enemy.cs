@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour, IDamageable
         Charge,
     }
 
+    private LayerMask myLayerMask;
 
     public float thrust = 2f;
     public float turnSpeed = 2f;
@@ -87,6 +88,8 @@ public class Enemy : MonoBehaviour, IDamageable
 
         state = State.Idle;
 
+        myLayerMask = LayerMask.GetMask("Player", "Solid Block");
+
     }
 
 
@@ -102,6 +105,8 @@ public class Enemy : MonoBehaviour, IDamageable
         {
             gameObject.SetActive(false);
         }
+
+        canSeePlayer = CanSeePlayer();
 
         UpdateStateMachine();
 
@@ -140,7 +145,7 @@ public class Enemy : MonoBehaviour, IDamageable
                     state = State.Idle;
                 }
 
-                if (CanSeePlayer())
+                if (canSeePlayer)
                 {
                     state = State.MaintainDistance;
                 }
@@ -177,7 +182,7 @@ public class Enemy : MonoBehaviour, IDamageable
                     MoveTowardsPlayer(wanderSpeed);
                 }
 
-                if (!CanSeePlayer())
+                if (!canSeePlayer)
                 {
                     state = State.Hunt;
                 }
@@ -186,7 +191,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
             case State.Charge:
 
-                if (CanSeePlayer())
+                if (canSeePlayer)
                 {
                     MoveTowardsPlayer(chargeSpeed + (distanceFromPlayer / 3));
                 }
@@ -211,7 +216,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         RaycastHit hit;
 
-        if (Physics.SphereCast(transform.position, detectionSpherecastRadius, directionToPlayer, out hit, detectionRange))
+        if (Physics.SphereCast(transform.position, detectionSpherecastRadius, directionToPlayer, out hit, detectionRange, myLayerMask))
         {
             if (hit.collider.gameObject.tag == "Player")
             {

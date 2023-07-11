@@ -12,6 +12,8 @@ public class EnemyProjectile : MonoBehaviour
     public Transform player;
     public float accelerationSpeed = 1f;
 
+    public float timeBeforeAccelerating = 4f;
+
     public GameObject deathEffect;
 
 
@@ -42,7 +44,7 @@ public class EnemyProjectile : MonoBehaviour
 
         }
 
-        if (bulletLifespan - currentLifespan > 2)
+        if (bulletLifespan - currentLifespan > timeBeforeAccelerating)
         {
             // Calculate the direction to the player
             Vector3 directionToPlayer = player.position - transform.position;
