@@ -49,7 +49,7 @@ public class FogColorController : MonoBehaviour
         startColor = defaultColor;
         currentColor = defaultColor;
 
-        SetFogColor(colorPalette[0], 15f);
+        SetFogColor(colorPalette[0], 5f);
 
     }
 

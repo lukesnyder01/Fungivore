@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    public bool inputEnabledByDefault = true;
+
     public float xInput { get; private set; }
     public float zInput { get; private set; }
     public bool shootInput { get; private set; }
@@ -17,7 +19,15 @@ public class PlayerInput : MonoBehaviour
 
     void Awake()
     {
-        inputEnabled = false;
+        if (inputEnabledByDefault)
+        {
+            EnableInput();
+        }
+        else
+        {
+            DisableInput();
+        }
+
     }
 
     void Update()
