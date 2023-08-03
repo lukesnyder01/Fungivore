@@ -142,7 +142,6 @@ public class Ant : MonoBehaviour
 
         if (currentStep >= totalSteps)
         {
-            Debug.Log("currentStep >= totalSteps");
             EndAnt();
             yield return new WaitForFixedUpdate();
         }

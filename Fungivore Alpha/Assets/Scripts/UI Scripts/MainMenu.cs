@@ -17,9 +17,14 @@ public class MainMenu : MonoBehaviour
         //start a new game
         Debug.Log("Starting new game");
         playerInput.EnableInput();
+
+        FindObjectOfType<GameManager>().Invoke("Ritual", 2f);
+
+
+
         HideMainMenu();
 
-        SceneManager.LoadScene("Game");
+        //SceneManager.LoadSceneAsync(1);
 
     }
 

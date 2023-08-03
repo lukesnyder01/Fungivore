@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seed: 325nadsg
-  targetFrameRate: 240
-  cameraRenderDistance: 70
+  targetFrameRate: 480
+  cameraRenderDistance: 100
   centerScreenText: {fileID: 4355782494536047829, guid: 55cc5f54236f8da488ad2f33008f240c,
     type: 3}
   centerScreenTextLocation: {fileID: 0}

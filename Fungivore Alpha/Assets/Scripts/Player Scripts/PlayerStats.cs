@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerStats : MonoBehaviour
 {
     private Dictionary<string, float> stats = new Dictionary<string, float>();
-
-
 
     public static float verticalRecoil = -6;
     public static float horizontalRecoil = 2;
@@ -231,7 +230,10 @@ public class PlayerStats : MonoBehaviour
 
     public static void KillPlayer()
     {
-        Application.Quit();
+        //Loads the main menu
+        SceneManager.LoadSceneAsync(0);
+
+        //Application.Quit();
     }
 
 

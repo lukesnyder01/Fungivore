@@ -6,6 +6,8 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     public string seed;
     System.Random pseudoRandom;
     public int targetFrameRate = 240;
@@ -16,6 +18,17 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+
+
+
         pseudoRandom = new System.Random(seed.GetHashCode());
 
 
@@ -29,12 +42,12 @@ public class GameManager : MonoBehaviour
 
         SetCameraRenderDistance(cameraRenderDistance);
 
-        //Invoke("Ritual", 2f);
+        Invoke("Ritual", 2f);
     }
 
     public void Ritual()
     {
-        //FindObjectOfType<AudioManager>().Play("theme00");
+        FindObjectOfType<AudioManager>().Play("theme00");
         GameObject ritualText = Instantiate(centerScreenText, centerScreenTextLocation);
         ritualText.GetComponent<TextMeshPro>().text = "Ritual";
     }
