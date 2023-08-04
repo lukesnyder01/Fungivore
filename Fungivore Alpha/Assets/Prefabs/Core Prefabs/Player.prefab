@@ -613,6 +613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   promptTextUI: {fileID: 4184539402509385906}
+  centerScreenTextLocation: {fileID: 7458333785421708052}
 --- !u!114 &9187340029247936689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,6 +644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e55e8cf5a9bdbfb44ad8c43176091601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputEnabledByDefault: 1
 --- !u!114 &112416412
 MonoBehaviour:
   m_ObjectHideFlags: 0

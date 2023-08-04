@@ -7,4 +7,6 @@ public class PlayerUI : MonoBehaviour
 {
     public TextMeshPro promptTextUI;
 
+    public Transform centerScreenTextLocation;
+
 }

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public string seed;
+    public int seed;
+
     System.Random pseudoRandom;
     public int targetFrameRate = 240;
     public float cameraRenderDistance = 70f;
@@ -18,23 +20,20 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance != null)
+        if (instance == null)
         {
-            Destroy(gameObject);
+            instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            instance = this;
+            Destroy(gameObject);
         }
-
-
 
         pseudoRandom = new System.Random(seed.GetHashCode());
 
-
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
 
         QualitySettings.vSyncCount = 0;
 
@@ -42,14 +41,36 @@ public class GameManager : MonoBehaviour
 
         SetCameraRenderDistance(cameraRenderDistance);
 
-        Invoke("Ritual", 2f);
     }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            seed = UnityEngine.Random.Range(0, 10000000);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Log(seed);
+        }
+
+
+
+    }
+
 
     public void Ritual()
     {
         FindObjectOfType<AudioManager>().Play("theme00");
+
+        var player = GameObject.Find("Player").GetComponent<PlayerUI>().centerScreenTextLocation;
+
         GameObject ritualText = Instantiate(centerScreenText, centerScreenTextLocation);
         ritualText.GetComponent<TextMeshPro>().text = "Ritual";
+
+        SceneManager.LoadSceneAsync(1);
+
     }
 
     public void Fate()
