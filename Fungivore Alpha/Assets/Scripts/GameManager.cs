@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
 
     public int seed;
 
-    System.Random pseudoRandom;
     public int targetFrameRate = 240;
     public float cameraRenderDistance = 70f;
 
@@ -30,7 +29,11 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        pseudoRandom = new System.Random(seed.GetHashCode());
+
+        RandomUtility.InitializeGlobalSeed(seed);
+        Debug.Log(seed);
+
+
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -45,17 +48,12 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            seed = UnityEngine.Random.Range(0, 10000000);
-        }
-
         if (Input.GetKeyDown(KeyCode.P))
         {
+            seed++;
+            RandomUtility.InitializeGlobalSeed(seed);
             Debug.Log(seed);
         }
-
-
 
     }
 

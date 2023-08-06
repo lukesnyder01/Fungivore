@@ -119,8 +119,14 @@ public class Ant : MonoBehaviour
 
         minPlayerDistance = antSideLength + minPlayerDistancePad;
 
+        /*
         Random.InitState(transform.position.GetHashCode() % 100000);
         totalSteps = Random.Range(minSteps, maxSteps);
+        */
+
+
+        totalSteps = RandomUtility.Range(transform.position, minSteps, maxSteps);
+
     }
 
 
@@ -205,12 +211,10 @@ public class Ant : MonoBehaviour
 
         if (availablePositions.Count > 0)
         {
-            Random.InitState(antPos.GetHashCode() % 100000);
-            selectedMove = Random.Range(0, availablePositions.Count);
+            selectedMove = RandomUtility.Range(antPos, 0, availablePositions.Count);
 
-            GameObject randomPrefab = spawnPrefabs[Random.Range(0, spawnPrefabs.Length)];
-            Vector3 randomRotation = directionArray[Random.Range(0, directionArray.Length)];
-
+            GameObject randomPrefab = spawnPrefabs[RandomUtility.Range(antPos,0, spawnPrefabs.Length)];
+            Vector3 randomRotation = directionArray[RandomUtility.Range(antPos, 0, directionArray.Length)];
 
             GameObject newBlock = Instantiate(randomPrefab, antPos, Quaternion.identity);
             newBlock.transform.forward = randomRotation;
@@ -227,27 +231,6 @@ public class Ant : MonoBehaviour
         }
     }
 
-    /*
-    public virtual bool SpaceIsEmpty(Vector3 direction)
-    {
-        return (!Physics.BoxCast(antPos, halfExtents, direction, out hit, Quaternion.identity, antMoveDistance));
-    }
-
-    public virtual bool SpaceIsEmpty(Vector3 direction)
-    {
-        Collider[] hitcolliders = Physics.OverlapBox(antPos + direction, halfExtents, Quaternion.identity);
-
-        if (hitcolliders.Length == 0)
-        {
-            return true;
-        }
-        else 
-        {
-            return false;
-        }
-    }
-
-    */
 
     public virtual bool SpaceIsEmpty(Vector3 direction)
     {
@@ -272,8 +255,6 @@ public class Ant : MonoBehaviour
     public virtual void EndAnt()
     {
         antHasEnded = true;
-
-        //Debug.Log("Ended Ant");
 
         if (noMovesLeft == false)
         {

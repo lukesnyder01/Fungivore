@@ -166,6 +166,13 @@ public class PlayerController : MonoBehaviour
         AddBeamSpeed();
 
         characterController.Move(moveDirection * Time.deltaTime + velocity * Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            PlayerStats.KillPlayer();
+        }
+
+
     }
 
 

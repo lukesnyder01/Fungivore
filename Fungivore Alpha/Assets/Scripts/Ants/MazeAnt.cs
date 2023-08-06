@@ -112,10 +112,9 @@ public class MazeAnt : Ant
         if (availableMoves.Count == 0)
         {
 
-            if (canOpenDeadEnds && Random.Range(0, 100) < percentOpenDeadEnds)
+            if (canOpenDeadEnds && RandomUtility.Range(antPos, 0, 100) < percentOpenDeadEnds)
             {
-                Random.InitState(antPos.GetHashCode() % 100000);
-                GameObject randomPrefab = mazeBranchAll[Random.Range(0, mazeBranchAll.Length)];
+                GameObject randomPrefab = mazeBranchAll[RandomUtility.Range(antPos, 0, mazeBranchAll.Length)];
                 GameObject room = Instantiate(randomPrefab, antPos, Quaternion.identity);
 
                 room.transform.forward = directionArray[antDir];
@@ -126,8 +125,7 @@ public class MazeAnt : Ant
             }
             else
             {
-                Random.InitState(antPos.GetHashCode() % 100000);
-                GameObject randomPrefab = mazeDeadEnd[Random.Range(0, mazeDeadEnd.Length)];
+                GameObject randomPrefab = mazeDeadEnd[RandomUtility.Range(antPos, 0, mazeDeadEnd.Length)];
                 GameObject room = Instantiate(randomPrefab, antPos, Quaternion.identity);
 
                 room.transform.forward = directionArray[antDir];
@@ -145,15 +143,11 @@ public class MazeAnt : Ant
             return;
         }
 
-
-        Random.InitState(antPos.GetHashCode() % 100000);
-        selectedMove = Random.Range(0, availableMoves.Count);
-
+        selectedMove = RandomUtility.Range(antPos, 0, availableMoves.Count);
 
         if (availableMoves[selectedMove] == "moveStraight")
         {
-            Random.InitState(antPos.GetHashCode() % 100000);
-            GameObject randomPrefab = mazeStraight[Random.Range(0, mazeStraight.Length)];
+            GameObject randomPrefab = mazeStraight[RandomUtility.Range(antPos, 0, mazeStraight.Length)];
             GameObject room = Instantiate(randomPrefab, antPos, Quaternion.identity);
 
             room.transform.forward = directionArray[antDir];
@@ -165,8 +159,7 @@ public class MazeAnt : Ant
 
         if (availableMoves[selectedMove] == "turnRight")
         {
-            Random.InitState(antPos.GetHashCode() % 100000);
-            GameObject randomPrefab = mazeTurnRight[Random.Range(0, mazeTurnRight.Length)];
+            GameObject randomPrefab = mazeTurnRight[RandomUtility.Range(antPos, 0, mazeTurnRight.Length)];
             GameObject room = Instantiate(randomPrefab, antPos, Quaternion.identity);
 
             room.transform.forward = directionArray[antDir];
@@ -178,8 +171,7 @@ public class MazeAnt : Ant
 
         if (availableMoves[selectedMove] == "turnLeft")
         {
-            Random.InitState(antPos.GetHashCode() % 100000);
-            GameObject randomPrefab = mazeTurnLeft[Random.Range(0, mazeTurnLeft.Length)];
+            GameObject randomPrefab = mazeTurnLeft[RandomUtility.Range(antPos, 0, mazeTurnLeft.Length)];
             GameObject room = Instantiate(randomPrefab, antPos, Quaternion.identity);
 
             room.transform.forward = directionArray[antDir];
@@ -191,8 +183,7 @@ public class MazeAnt : Ant
 
         if (availableMoves[selectedMove] == "branchRight")
         {
-            Random.InitState(antPos.GetHashCode() % 100000);
-            GameObject randomPrefab = mazeBranchRight[Random.Range(0, mazeBranchRight.Length)];
+            GameObject randomPrefab = mazeBranchRight[RandomUtility.Range(antPos, 0, mazeBranchRight.Length)];
             GameObject room = Instantiate(randomPrefab, antPos, Quaternion.identity);
 
             room.transform.forward = directionArray[antDir];
@@ -207,8 +198,7 @@ public class MazeAnt : Ant
 
         if (availableMoves[selectedMove] == "branchLeft")
         {
-            Random.InitState(antPos.GetHashCode() % 100000);
-            GameObject randomPrefab = mazeBranchLeft[Random.Range(0, mazeBranchLeft.Length)];
+            GameObject randomPrefab = mazeBranchLeft[RandomUtility.Range(antPos, 0, mazeBranchLeft.Length)];
             GameObject room = Instantiate(randomPrefab, antPos, Quaternion.identity);
 
             room.transform.forward = directionArray[antDir];
@@ -223,8 +213,7 @@ public class MazeAnt : Ant
 
         if (availableMoves[selectedMove] == "branchMid")
         {
-            Random.InitState(antPos.GetHashCode() % 100000);
-            GameObject randomPrefab = mazeBranchMid[Random.Range(0, mazeBranchMid.Length)];
+            GameObject randomPrefab = mazeBranchMid[RandomUtility.Range(antPos, 0, mazeBranchMid.Length)];
             GameObject room = Instantiate(randomPrefab, antPos, Quaternion.identity);
 
             room.transform.forward = directionArray[antDir];
@@ -239,8 +228,7 @@ public class MazeAnt : Ant
 
         if (availableMoves[selectedMove] == "branchAll")
         {
-            Random.InitState(antPos.GetHashCode() % 100000);
-            GameObject randomPrefab = mazeBranchAll[Random.Range(0, mazeBranchAll.Length)];
+            GameObject randomPrefab = mazeBranchAll[RandomUtility.Range(antPos, 0, mazeBranchAll.Length)];
             GameObject room = Instantiate(randomPrefab, antPos, Quaternion.identity);
 
             room.transform.forward = directionArray[antDir];
@@ -285,13 +273,11 @@ public class MazeAnt : Ant
             antPos = terminalPosition[i];
             antDir = terminalDirection[i];
 
-            Random.InitState(antPos.GetHashCode() % 100000);
-            if (!AntIsHittingSomething() && Random.Range(0, 100) < 100)
+            if (!AntIsHittingSomething() && RandomUtility.Range(antPos, 0, 100) < 100)
             {
-                if (canOpenDeadEnds && Random.Range(0, 100) < percentOpenDeadEnds)
+                if (canOpenDeadEnds && RandomUtility.Range(antPos, 0, 100) < percentOpenDeadEnds)
                 {
-                    Random.InitState(antPos.GetHashCode() % 100000);
-                    GameObject randomPrefab = mazeBranchAll[Random.Range(0, mazeBranchAll.Length)];
+                    GameObject randomPrefab = mazeBranchAll[RandomUtility.Range(antPos, 0, mazeBranchAll.Length)];
                     GameObject room = Instantiate(randomPrefab, antPos, Quaternion.identity);
 
                     room.transform.forward = directionArray[antDir];
@@ -299,8 +285,7 @@ public class MazeAnt : Ant
                 }
                 else
                 {
-                    Random.InitState(antPos.GetHashCode() % 100000);
-                    GameObject randomPrefab = mazeDeadEnd[Random.Range(0, mazeDeadEnd.Length)];
+                    GameObject randomPrefab = mazeDeadEnd[RandomUtility.Range(antPos, 0, mazeDeadEnd.Length)];
                     GameObject room = Instantiate(randomPrefab, antPos, Quaternion.identity);
 
                     room.transform.forward = directionArray[antDir];

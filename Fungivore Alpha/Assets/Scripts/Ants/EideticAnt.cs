@@ -23,20 +23,16 @@ public class EideticAnt : Ant
 
         antMoveDistance = antSideLength;
 
-
         minPlayerDistance = antSideLength + 1;
 
-        Random.InitState(transform.position.GetHashCode() % 100000);
-        //totalSteps = Random.Range(minSteps, maxSteps);
 
         if (randomizeList)
         {
-            totalSteps = Random.Range(minSteps, maxSteps);
+            totalSteps = RandomUtility.Range(transform.position, minSteps, maxSteps);
 
             for (int i = 0; i < totalSteps + 1; i++)
             {
-                moveList.Add(Random.Range(0, 5));
-                //Debug.Log(moveList[i]);
+                moveList.Add(RandomUtility.Range(transform.position, 0, 5));
             }
         }
         else

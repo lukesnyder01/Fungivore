@@ -74,12 +74,10 @@ public class BuildingAnt : Ant
 
         if (availablePositions.Count != 0)
         {
-            Random.InitState(antPos.GetHashCode() % 100000);
-            selectedMove = Random.Range(0, availablePositions.Count);
+            selectedMove = RandomUtility.Range(antPos, 0, availablePositions.Count);
 
-            GameObject randomPrefab = spawnPrefabs[Random.Range(0, spawnPrefabs.Length)];
-            Vector3 randomRotation = directionArray[Random.Range(0, directionArray.Length)];
-
+            GameObject randomPrefab = spawnPrefabs[RandomUtility.Range(antPos, 0, spawnPrefabs.Length)];
+            Vector3 randomRotation = directionArray[RandomUtility.Range(antPos, 0, directionArray.Length)];
 
             GameObject newBlock = Instantiate(randomPrefab, antPos, Quaternion.identity);
             newBlock.transform.forward = randomRotation;

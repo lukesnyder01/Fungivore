@@ -56,8 +56,7 @@ public class DropperAnt : Ant
 
         if (availablePositions.Count != 0)
         {
-            Random.InitState(antPos.GetHashCode() % 100000);
-            selectedMove = Random.Range(0, availablePositions.Count);
+            selectedMove = RandomUtility.Range(antPos, 0, availablePositions.Count);
 
             var newBlock = ObjectPooler.current.GetPooledObject(1);
             newBlock.transform.position = antPos;

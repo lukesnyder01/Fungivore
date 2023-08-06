@@ -32,9 +32,6 @@ public class RibAnt : Ant
         int back = (antDir + 2) % 4;
 
 
-
-
-
         if (SpaceIsEmpty(directionArray[forward]))
         {
             availablePositions.Add(antPos + directionArray[forward] * antMoveDistance);
@@ -80,21 +77,11 @@ public class RibAnt : Ant
 
         if (availablePositions.Count > 0)
         {
-            Random.InitState(antPos.GetHashCode() % 100000);
-            selectedMove = Random.Range(0, availablePositions.Count);
-
+            selectedMove = RandomUtility.Range(antPos, 0, availablePositions.Count);
 
             var newBlock = ObjectPooler.current.GetPooledObject(1);
             newBlock.transform.position = antPos;
             newBlock.SetActive(true);
-
-
-            /*
-            GameObject randomPrefab = spawnPrefabs[Random.Range(0, spawnPrefabs.Length)];
-            Vector3 randomRotation = directionArray[Random.Range(0, directionArray.Length)];
-            GameObject newBlock = Instantiate(randomPrefab, antPos, Quaternion.identity);
-            newBlock.transform.forward = randomRotation;
-            */
 
             newBlock.transform.SetParent(this.transform);
 
@@ -122,9 +109,7 @@ public class RibAnt : Ant
 
     public void AddClimber() 
     {
-        Random.InitState(antPos.GetHashCode() % 100000);
-
-        if (Random.Range(0, 1000) <= 10)
+        if (RandomUtility.Range(antPos, 0, 1000) <= 10)
         {
             if (SpaceIsEmpty(Vector3.up))
             {
@@ -137,9 +122,7 @@ public class RibAnt : Ant
 
     public void AddDropper()
     {
-        Random.InitState(antPos.GetHashCode() % 100000);
-
-        if (Random.Range(0, 1000) <= 50)
+        if (RandomUtility.Range(antPos, 0, 1000) <= 50)
         {
             if (SpaceIsEmpty(-Vector3.up))
             {
