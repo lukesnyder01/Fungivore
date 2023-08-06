@@ -29,10 +29,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-
-        RandomUtility.InitializeGlobalSeed(seed);
-        Debug.Log(seed);
-
+        //RandomUtility.InitializeGlobalSeed(seed);
 
 
         Cursor.lockState = CursorLockMode.None;
@@ -50,9 +47,8 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            seed++;
-            RandomUtility.InitializeGlobalSeed(seed);
-            Debug.Log(seed);
+            seed = seed + 121;
+            RandomUtility.SetGlobalSeed(seed);
         }
 
     }
@@ -68,7 +64,7 @@ public class GameManager : MonoBehaviour
         ritualText.GetComponent<TextMeshPro>().text = "Ritual";
 
         SceneManager.LoadSceneAsync(1);
-
+        RandomUtility.SetGlobalSeed(seed);
     }
 
     public void Fate()

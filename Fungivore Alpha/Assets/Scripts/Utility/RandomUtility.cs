@@ -6,9 +6,10 @@ public static class RandomUtility
 {
     private static int globalSeed;
 
-    public static void InitializeGlobalSeed(int seed)
+    public static void SetGlobalSeed(int seed)
     {
         globalSeed = seed;
+        Debug.Log("global seed set in RandomUtility: " + globalSeed);
     }
 
     // Generate a random integer between min (inclusive) and max (exclusive) based on position hash and global seed
