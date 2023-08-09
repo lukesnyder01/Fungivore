@@ -63,9 +63,16 @@ public class GameManager : MonoBehaviour
         GameObject ritualText = Instantiate(centerScreenText, centerScreenTextLocation);
         ritualText.GetComponent<TextMeshPro>().text = "Ritual";
 
+    }
+
+    public void LoadMainScene()
+    {
         SceneManager.LoadSceneAsync(1);
         RandomUtility.SetGlobalSeed(seed);
     }
+
+
+
 
     public void Fate()
     {
