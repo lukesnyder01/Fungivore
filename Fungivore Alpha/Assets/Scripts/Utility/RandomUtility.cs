@@ -4,13 +4,20 @@ using UnityEngine;
 
 public static class RandomUtility
 {
-    private static int globalSeed;
+    private static int globalSeed = 0;
 
     public static void SetGlobalSeed(int seed)
     {
         globalSeed = seed;
         Debug.Log("global seed set in RandomUtility: " + globalSeed);
     }
+
+    public static void ResetGlobalSeed()
+    {
+        globalSeed = 0;
+        Debug.Log("reset RandomUtility globalSeed to 0");
+    }
+
 
     // Generate a random integer between min (inclusive) and max (exclusive) based on position hash and global seed
     public static int Range(Vector3 position, int min, int max)

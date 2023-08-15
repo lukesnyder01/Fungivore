@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Starting new game");
         playerInput.EnableInput();
 
-        FindObjectOfType<GameManager>().Invoke("Ritual", 2f);
+        FindObjectOfType<GameManager>().Invoke("Ritual", 1f);
 
         HideMainMenu();
 
@@ -26,8 +26,9 @@ public class MainMenu : MonoBehaviour
 
     public void OpenSettings()
     {
-        Debug.Log("Opening settings menu");
         //open the settings menu
+        Debug.Log("Opening settings menu");
+
     }
 
 

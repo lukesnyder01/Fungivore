@@ -9,13 +9,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public int seed;
-
     public int targetFrameRate = 240;
     public float cameraRenderDistance = 70f;
 
     public GameObject centerScreenText;
-    public Transform centerScreenTextLocation;
 
     void Awake()
     {
@@ -29,9 +26,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        //RandomUtility.InitializeGlobalSeed(seed);
-
-
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
@@ -43,45 +37,46 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void Update()
+    void Start()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            seed = seed + 121;
-            RandomUtility.SetGlobalSeed(seed);
-        }
+        WalkBetweenTheWaters();
+    }
 
+
+
+
+
+
+    public void WalkBetweenTheWaters()
+    {
+        FindObjectOfType<AudioManager>().Play("theme03WalkBetweenTheWaters");
     }
 
 
     public void Ritual()
     {
-        FindObjectOfType<AudioManager>().Play("theme00");
+        RandomUtility.ResetGlobalSeed();
 
-        var player = GameObject.Find("Player").GetComponent<PlayerUI>().centerScreenTextLocation;
-
-        GameObject ritualText = Instantiate(centerScreenText, centerScreenTextLocation);
-        ritualText.GetComponent<TextMeshPro>().text = "Ritual";
-
+        ShowCenterScreenText("Ritual");
     }
+
 
     public void LoadMainScene()
     {
+        FindObjectOfType<AudioManager>().FadeOut("theme03WalkBetweenTheWaters", 1);
         SceneManager.LoadSceneAsync(1);
-        RandomUtility.SetGlobalSeed(seed);
     }
-
 
 
 
     public void Fate()
     {
-        //FindObjectOfType<AudioManager>().FadeOut("theme00", 2);
-
-        //FindObjectOfType<AudioManager>().Play("theme02");
-        GameObject ritualText = Instantiate(centerScreenText, centerScreenTextLocation);
-        ritualText.GetComponent<TextMeshPro>().text = "Fate";
+        FindObjectOfType<AudioManager>().FadeOut("theme00", 2);
+        FindObjectOfType<AudioManager>().Play("theme02");
+        ShowCenterScreenText("Fate");
     }
+
+
 
     public void SetCameraRenderDistance(float distance)
     {
@@ -94,6 +89,15 @@ public class GameManager : MonoBehaviour
     }
 
 
+
+    public void ShowCenterScreenText(string text)
+    {
+        var centerScreenTextLocation = GameObject.Find("Player").GetComponent<PlayerUI>().centerScreenTextLocation;
+
+        GameObject ritualText = Instantiate(centerScreenText, centerScreenTextLocation);
+
+        ritualText.GetComponent<TextMeshPro>().text = text;
+    }
 
 
 }

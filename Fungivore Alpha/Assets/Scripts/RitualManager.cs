@@ -13,6 +13,10 @@ public class RitualManager : MonoBehaviour
     public Transform[] spawnLocations;
 
 
+    private int spikesToCompleteRitual = 3;
+    private int spikesActivated = 0;
+
+
     void Awake()
     {
         player = GameObject.Find("Player");
@@ -22,7 +26,26 @@ public class RitualManager : MonoBehaviour
     public void AddToCurrentSeed(int value)
     {
         currentSeed += Mathf.Abs(value);
+
+        RandomUtility.SetGlobalSeed(currentSeed);
+
+        spikesActivated++;
+
+        if (spikesActivated >= spikesToCompleteRitual)
+        {
+            spikesActivated = 0;
+
+            CompleteTheRitual();
+        }
     }
+
+
+
+    public void CompleteTheRitual()
+    {
+        FindObjectOfType<GameManager>().LoadMainScene();
+    }
+
 
 
     void OnTriggerEnter(Collider other)

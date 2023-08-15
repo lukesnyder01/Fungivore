@@ -32,15 +32,19 @@ public class RitualGate : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && playerTriggered == false)
         {
-            StartCoroutine(MoveAndDeactivate());
+            playerTriggered = true;
+            StartCoroutine(ActivateRitualSpike());
         }
     }
 
 
-    private IEnumerator MoveAndDeactivate()
+    private IEnumerator ActivateRitualSpike()
     {
+        //moves the spike upwards quickly, impaling the player
+
+
         float elapsedTime = 0;
 
         Vector3 targetPosition = initialPosition + transform.up * moveDistance;
