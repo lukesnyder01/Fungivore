@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     public void WalkBetweenTheWaters()
     {
-        FindObjectOfType<AudioManager>().Play("theme03WalkBetweenTheWaters");
+        AudioManager.Instance.Play("theme03WalkBetweenTheWaters");
     }
 
 
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadMainScene()
     {
-        FindObjectOfType<AudioManager>().FadeOut("theme03WalkBetweenTheWaters", 1);
+        AudioManager.Instance.FadeOut("theme03WalkBetweenTheWaters", 3);
         SceneManager.LoadSceneAsync(1);
     }
 
@@ -71,8 +71,8 @@ public class GameManager : MonoBehaviour
 
     public void Fate()
     {
-        FindObjectOfType<AudioManager>().FadeOut("theme00", 2);
-        FindObjectOfType<AudioManager>().Play("theme02");
+        AudioManager.Instance.FadeOut("theme00", 2);
+        AudioManager.Instance.Play("theme02");
         ShowCenterScreenText("Fate");
     }
 

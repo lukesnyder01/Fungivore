@@ -52,7 +52,7 @@ public class DistanceSpawnFancy : MonoBehaviour
 
                 if (spawnSound != null)
                 {
-                    FindObjectOfType<AudioManager>().Play(spawnSound);
+                    AudioManager.Instance.Play(spawnSound);
                 }
 
 

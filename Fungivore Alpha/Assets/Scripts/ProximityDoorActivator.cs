@@ -41,14 +41,14 @@ public class ProximityDoorActivator : MonoBehaviour
     private void CloseDoor()
     {
         door.SetActive(true);
-        FindObjectOfType<AudioManager>().Play("PlayerShoot");
+        AudioManager.Instance.Play("PlayerShoot");
     }
 
 
     private void OpenDoor()
     {
         door.SetActive(false);
-        FindObjectOfType<AudioManager>().Play("PlayerShoot");
+        AudioManager.Instance.Play("PlayerShoot");
     }
 
 

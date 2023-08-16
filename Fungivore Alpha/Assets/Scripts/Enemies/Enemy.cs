@@ -313,7 +313,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
                 Die();
 
-                FindObjectOfType<AudioManager>().Play("WraithSmash");
+                AudioManager.Instance.Play("WraithSmash");
                 var playerStats = other.gameObject.GetComponent<PlayerStats>();
                 playerStats.ApplyDamage(collisionDamageDealt);
             }
@@ -325,7 +325,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         Health -= damage;
 
-        FindObjectOfType<AudioManager>().Play("SpineHit");
+        AudioManager.Instance.Play("SpineHit");
 
         if (Health <= 0)
         {
@@ -338,7 +338,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         Destroy(gameObject);
         Instantiate(deathEffect, transform.position, transform.rotation);
-        FindObjectOfType<AudioManager>().Play("PlayerHurt");
+        AudioManager.Instance.Play("PlayerHurt");
     }
 
 

@@ -45,8 +45,6 @@ public class PlayerStats : MonoBehaviour
 
     [Header("References")]
 
-    AudioSource audioSource;
-    AudioManager audioManager;
 
     private ScreenDamageIndicator screenDamage;
     private PlayerController playerController;
@@ -67,11 +65,8 @@ public class PlayerStats : MonoBehaviour
     {
         InitializeStatsList();
 
-
         //recoilScript = transform.Find("CameraRotation/CameraRecoil").GetComponent<Recoil>();
         screenDamage = GetComponent<ScreenDamageIndicator>();
-        audioSource = GetComponent<AudioSource>();
-        audioManager = FindObjectOfType<AudioManager>();
 
         playerController = GetComponent<PlayerController>();
 
@@ -79,7 +74,6 @@ public class PlayerStats : MonoBehaviour
         currentEnergy = GetStatValue("Max Energy");
         currentSpines = GetStatValue("Max Spines");
     }
-
 
     private void InitializeStatsList()
     {
@@ -218,7 +212,7 @@ public class PlayerStats : MonoBehaviour
 
         float hurtSoundVolume = Mathf.Clamp(bloodAmount, 0.2f, 0.6f);
 
-        audioManager.PlayAtVolume("PlayerHurt", bloodAmount);
+        AudioManager.Instance.PlayAtVolume("PlayerHurt", bloodAmount);
 
 
         if (currentHealth <= 0f)

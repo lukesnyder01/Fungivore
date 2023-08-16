@@ -56,7 +56,7 @@ public class WeaponController : MonoBehaviour
 
         if (PlayerStats.currentSpines >= spinesPerShot)
         {
-            FindObjectOfType<AudioManager>().Play("SpineSwish");
+            AudioManager.Instance.Play("SpineSwish");
 
             for (int i = 0; i < spinesPerShot; i++)
             {
@@ -64,7 +64,7 @@ public class WeaponController : MonoBehaviour
                 PlayerStats.currentSpines--;
             }
 
-            FindObjectOfType<AudioManager>().Play("PlayerShoot");
+            AudioManager.Instance.Play("PlayerShoot");
         }
     }
 

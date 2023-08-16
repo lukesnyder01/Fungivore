@@ -502,11 +502,9 @@ MonoBehaviour:
   footStepDelay: 0.2
   gravity: -8
   lateralSprintSpeedPenalty: 0.75
-  audioSource: {fileID: 0}
   stepSound: {fileID: 8300000, guid: 4ac663f1304bb23458f99036bb6a6922, type: 3}
   headCheckPosition: {fileID: 4855019364738967106}
   groundCheckPosition: {fileID: 4855019364201197260}
-  audioManager: {fileID: 0}
   groundCheckRadius: 0.2
   headCheckRadius: 0.1
   groundMask:
@@ -990,7 +988,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4855019364879170818
 Transform:
   m_ObjectHideFlags: 0

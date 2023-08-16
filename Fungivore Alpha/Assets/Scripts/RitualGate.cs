@@ -69,10 +69,10 @@ public class RitualGate : MonoBehaviour
 
     private void SlicePlayer()
     {
-        FindObjectOfType<AudioManager>().Play("DoorSlam");
+        AudioManager.Instance.Play("DoorSlam");
 
-        var playerStats = player.GetComponent<PlayerStats>();
-        playerStats.ApplyDamage(10);
+        //var playerStats = player.GetComponent<PlayerStats>();
+        //playerStats.ApplyDamage(10);
 
         var camTransform = Camera.main.transform;
 

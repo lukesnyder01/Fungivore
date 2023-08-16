@@ -35,7 +35,7 @@ public class SporeShrine : InteractableObject, IDamageable
 
             Instantiate(spawnPrefab, targetPos, transform.rotation);
             Instantiate(spawnParticleEffect, targetPos, transform.rotation);
-            FindObjectOfType<AudioManager>().Play(spawnSound);
+            AudioManager.Instance.Play(spawnSound);
 
             Destroy(this.gameObject);
         }

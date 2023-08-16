@@ -15,7 +15,7 @@ public class Mushroom : InteractableObject
     {
         PlayerStats.sporesInventory++;
 
-        FindObjectOfType<AudioManager>().Play("MushroomScream");
+        AudioManager.Instance.Play("MushroomScream");
         Instantiate(mushroomDeathEffect, transform.position - new Vector3(0f, 0.3f, 0f), Quaternion.identity);
 
         Destroy(gameObject);

@@ -85,7 +85,7 @@ public class EnemyProjectile : MonoBehaviour
             {
                 collidedWithPlayer = true;
 
-                FindObjectOfType<AudioManager>().Play("WraithSmash");
+                AudioManager.Instance.Play("WraithSmash");
                 var playerStats = other.gameObject.GetComponent<PlayerStats>();
                 playerStats.ApplyDamage(damage);
             }

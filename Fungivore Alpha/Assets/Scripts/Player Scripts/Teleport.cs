@@ -29,7 +29,7 @@ public class Teleport : MonoBehaviour
             //player.transform.position = target.transform.position;
             player.GetComponent<CharacterController>().enabled = true;
 
-            FindObjectOfType<AudioManager>().Play("Teleport");
+            AudioManager.Instance.Play("Teleport");
 
             if (activationTarget != null)
             {

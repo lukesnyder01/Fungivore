@@ -55,7 +55,7 @@ public class ViperWraithBodySegment : Enemy
 
         Instantiate(deathEffect, transform.position, transform.rotation);
 
-        FindObjectOfType<AudioManager>().Play("PlayerHurt");
+        AudioManager.Instance.Play("PlayerHurt");
 
     }
 

@@ -20,12 +20,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
 
-    public AudioSource audioSource;
+    //public AudioSource audioSource;
     public AudioClip stepSound;
     public Transform headCheckPosition;
     public Transform groundCheckPosition;
-    public AudioManager audioManager;
-
 
     private CharacterController characterController;
     private Transform cameraTransform;
@@ -79,10 +77,9 @@ public class PlayerController : MonoBehaviour
     {
         screenDamage = GetComponent<ScreenDamageIndicator>();
         characterController = GetComponent<CharacterController>();
-        audioSource = GetComponent<AudioSource>();
         playerStats = GetComponent<PlayerStats>();
         playerInput = GetComponent<PlayerInput>();
-        audioManager = FindObjectOfType<AudioManager>();
+
         cameraTransform = Camera.main.transform;
         recoilScript = transform.GetComponent<Recoil>();
     }
@@ -141,7 +138,7 @@ public class PlayerController : MonoBehaviour
         if (playerInput.jumpInput && isGrounded)
         {
             velocity.y += jumpForce;
-            audioManager.Play("PlayerJump");
+            AudioManager.Instance.Play("PlayerJump");
             doubleJumpCount = 0;
             playerStats.IncreaseHungerFromJumping();
             recoilScript.RecoilJump(jumpRecoilAmount);
@@ -151,7 +148,7 @@ public class PlayerController : MonoBehaviour
         else if (playerInput.jumpInput && doubleJumpCount < playerStats.GetStatValue("Double Jumps"))
         {
             velocity.y += jumpForce;
-            audioManager.Play("PlayerDoubleJump");
+            AudioManager.Instance.Play("PlayerDoubleJump");
             doubleJumpCount ++;
             playerStats.IncreaseHungerFromJumping();
             recoilScript.RecoilJump(jumpRecoilAmount);
@@ -195,7 +192,7 @@ public class PlayerController : MonoBehaviour
         if (velocity.y < -1f)
         {
             float playbackVolume = Mathf.Clamp(-velocity.y / 10 + 0.3f, 0.5f, 1f);
-            audioManager.PlayAtVolume("PlayerLanding", playbackVolume);
+            AudioManager.Instance.PlayAtVolume("PlayerLanding", playbackVolume);
             recoilScript.RecoilJump(landRecoilAmount);
         }
 
@@ -250,7 +247,7 @@ public class PlayerController : MonoBehaviour
 
             if (timeUntilNextFootstep <= 0f)
             {
-                audioManager.Play("PlayerStep");
+                AudioManager.Instance.Play("PlayerStep");
                 timeUntilNextFootstep = footStepDelay + 0.25f / moveSpeed;
             }
         }
@@ -334,7 +331,7 @@ public class PlayerController : MonoBehaviour
             maxBeamSpeed = beam.beamSpeed;
 
             var beamPitch = 0.5f + (maxBeamSpeed / 200);
-            audioManager.StartLoop("Conveyor", beamPitch);
+            AudioManager.Instance.StartLoop("Conveyor", beamPitch);
 
             SetBeamDirection(beam.beamOrientation);
             beamOrientation = beam.beamOrientation;
@@ -351,7 +348,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("ConveyorBeam"))
         {
             beamRings.SetActive(false);
-            audioManager.FadeOut("Conveyor", 0.2f);
+            AudioManager.Instance.FadeOut("Conveyor", 0.2f);
 
             playerInConveyorBeam = false;
         }
