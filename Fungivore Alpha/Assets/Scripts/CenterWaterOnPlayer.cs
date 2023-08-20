@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CenterWaterOnPlayer : MonoBehaviour
 {
-    public Transform player;
+    private Transform player;
 
 
     void Awake()

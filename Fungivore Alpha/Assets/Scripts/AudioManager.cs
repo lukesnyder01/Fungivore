@@ -33,7 +33,7 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
-
+	
 	private void InitializeAudioSources()
 	{
 		foreach (Sound s in sounds)

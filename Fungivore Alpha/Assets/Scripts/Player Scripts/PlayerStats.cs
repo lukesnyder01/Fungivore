@@ -225,9 +225,7 @@ public class PlayerStats : MonoBehaviour
     public static void KillPlayer()
     {
         //Loads the main menu
-        SceneManager.LoadSceneAsync(0);
-
-        //Application.Quit();
+        GameManager.Instance.WalkBetweenTheWaters();
     }
 
 

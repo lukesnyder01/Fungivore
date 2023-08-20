@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    public static GameManager Instance;
 
     public int targetFrameRate = 240;
     public float cameraRenderDistance = 70f;
@@ -16,9 +16,9 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -35,20 +35,21 @@ public class GameManager : MonoBehaviour
 
         SetCameraRenderDistance(cameraRenderDistance);
 
+
+
     }
+
+
 
     void Start()
     {
-        WalkBetweenTheWaters();
+        AudioManager.Instance.Play("theme03WalkBetweenTheWaters");
     }
-
-
-
-
 
 
     public void WalkBetweenTheWaters()
     {
+        SceneManager.LoadSceneAsync(0);
         AudioManager.Instance.Play("theme03WalkBetweenTheWaters");
     }
 
@@ -56,7 +57,6 @@ public class GameManager : MonoBehaviour
     public void Ritual()
     {
         RandomUtility.ResetGlobalSeed();
-
         ShowCenterScreenText("Ritual");
     }
 

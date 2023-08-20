@@ -340,6 +340,10 @@ public class PlayerController : MonoBehaviour
             beamRings.transform.position = targetRingPos;
             beamRings.SetActive(true);
         }
+        else if (other.CompareTag("KillPlayer"))
+        {
+            PlayerStats.KillPlayer();
+        }
     }
 
 

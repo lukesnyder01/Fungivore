@@ -18,6 +18,7 @@ TagManager:
   - Eidetic Ant Spawner
   - Trigger Spawner
   - ConveyorBeam
+  - KillPlayer
   layers:
   - Default
   - TransparentFX
