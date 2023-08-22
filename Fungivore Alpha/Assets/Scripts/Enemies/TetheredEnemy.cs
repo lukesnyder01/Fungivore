@@ -30,6 +30,8 @@ public class TetheredEnemy : Enemy
         dirToTether = (targetPosition - transform.position).normalized;
         distFromTether = DistanceFromTarget();
 
+        MoveTowardsTarget(wanderSpeed * distFromTether);
+
         Spin(rotationSpeed);
         PointAtPlayer();
 
@@ -38,8 +40,6 @@ public class TetheredEnemy : Enemy
             default:
 
             case State.Idle:
-
-                MoveTowardsTarget(wanderSpeed);
 
                 if (distanceFromPlayer < detectionRange)
                 {
@@ -71,7 +71,7 @@ public class TetheredEnemy : Enemy
                     }
                     else
                     {
-                        MoveTowardsTarget(wanderSpeed);
+                        MoveTowardsTarget(rapidEvasionSpeed);
                     }
                 }
 
@@ -79,7 +79,6 @@ public class TetheredEnemy : Enemy
 
 
             case State.MaintainDistance:
-
 
 
                 if (!CanSeePlayer())
@@ -99,7 +98,7 @@ public class TetheredEnemy : Enemy
                     }
                     else
                     {
-                        MoveTowardsTarget(wanderSpeed);
+                        MoveTowardsTarget(rapidEvasionSpeed);
                     }
 
                     if (distanceFromPlayer > detectionRange)

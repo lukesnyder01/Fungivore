@@ -32,4 +32,15 @@ public static class RandomUtility
         return random.Next(min, max);
     }
 
+    public static System.Random NewRandom(Vector3 position)
+    {
+        // Combine entity's position hash with the global seed
+        int combinedSeed = Mathf.RoundToInt(position.GetHashCode() + globalSeed) % 100000;
+
+        // Use the combined seed to create a random instance
+        System.Random random = new System.Random(combinedSeed);
+
+        return random;
+    }
+
 }

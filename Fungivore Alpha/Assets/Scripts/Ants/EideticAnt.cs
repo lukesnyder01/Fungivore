@@ -30,9 +30,11 @@ public class EideticAnt : Ant
         {
             totalSteps = RandomUtility.Range(transform.position, minSteps, maxSteps);
 
+            System.Random random = RandomUtility.NewRandom(transform.position);
+
             for (int i = 0; i < totalSteps + 1; i++)
             {
-                moveList.Add(RandomUtility.Range(transform.position, 0, 5));
+                moveList.Add(random.Next(0, 5));
             }
         }
         else

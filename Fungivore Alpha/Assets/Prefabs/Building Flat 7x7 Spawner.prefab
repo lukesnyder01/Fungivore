@@ -13,11 +13,10 @@ GameObject:
   - component: {fileID: -4616772542814966996}
   - component: {fileID: 8060442662772930978}
   - component: {fileID: 6582496508314016630}
-  - component: {fileID: 12027840629348544}
   - component: {fileID: -3930017974176615471}
   m_Layer: 8
   m_Name: Building Flat 7x7 Spawner
-  m_TagString: Solid Block
+  m_TagString: Trigger Spawner
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -112,25 +111,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &12027840629348544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4899378156460765924}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c979eafd5cc20de4ea0dd4c0c2e8257f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPrefab: {fileID: 6385687563868456176, guid: 7e6f6128a09c95a44856bb883d78e8f3,
-    type: 3}
-  mustBeClicked: 0
-  minPlayerDistance: 100
-  timeBetweenSteps: 1
-  destroyWhenFarAway: 0
-  destroyDistance: 0
 --- !u!114 &-3930017974176615471
 MonoBehaviour:
   m_ObjectHideFlags: 0

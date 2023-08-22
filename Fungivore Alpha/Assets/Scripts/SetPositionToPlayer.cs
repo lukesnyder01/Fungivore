@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class SetPositionToPlayer : MonoBehaviour
 {
-    private GameObject player;
+    private Transform playerTransform;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("Player");
+        playerTransform = GameObject.Find("Player").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = player.transform.position;
+        transform.position = playerTransform.position;
     }
 }
