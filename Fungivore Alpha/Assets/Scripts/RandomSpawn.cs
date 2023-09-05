@@ -34,14 +34,14 @@ public class RandomSpawn : MonoBehaviour
 
         Random.InitState(transform.position.GetHashCode() % 100000);
 
-        if (Random.Range(0, 100) < spawnChance)
+        if (RandomUtility.Range(transform.position, 0, 100) < spawnChance)
         {
-            var selectedPrefab = spawnPrefab[(Random.Range(0, spawnPrefab.Length))];
+            var selectedPrefab = spawnPrefab[(RandomUtility.Range(transform.position, 0, spawnPrefab.Length))];
             GameObject newSpawnedObject = Instantiate(selectedPrefab, transform.position, transform.rotation);
 
             if (randomizeRotation)
             {
-                newSpawnedObject.transform.forward = directionArray[Random.Range(0, 4)];
+                newSpawnedObject.transform.forward = directionArray[RandomUtility.Range(transform.position, 0, 4)];
             }
 
             if (!makePrefabChild)

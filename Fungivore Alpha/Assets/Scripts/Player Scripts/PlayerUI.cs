@@ -9,4 +9,6 @@ public class PlayerUI : MonoBehaviour
 
     public Transform centerScreenTextLocation;
 
+    public TextMeshPro npcTextUI;
+
 }

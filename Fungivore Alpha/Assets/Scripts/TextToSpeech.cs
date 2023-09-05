@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TextToSpeech : MonoBehaviour
 {
@@ -13,14 +14,23 @@ public class TextToSpeech : MonoBehaviour
     public float shortPauseLength;
     public float longPauseLength;
 
+    public TextMeshPro textMesh;
+
     public AudioClip[] sound;
 
     public GameObject player;
+
+    private string currentText = "";
+
+
 
 
     void Start()
     {
         player = GameObject.Find("Player");
+
+        textMesh = player.GetComponent<PlayerUI>().npcTextUI;
+
     }
 
     void Update()
@@ -38,6 +48,9 @@ public class TextToSpeech : MonoBehaviour
     {
         foreach (char c in text)
         {
+
+            AddLetterToDisplayText(c);
+
             if (c == ' ' || c == ',')
             {
                 yield return new WaitForSeconds(shortPauseLength / speechSpeed);
@@ -63,6 +76,12 @@ public class TextToSpeech : MonoBehaviour
                 yield return new WaitForSeconds(duration * letterSoundLength);
             }
         }
+    }
+
+    void AddLetterToDisplayText(char letter)
+    {
+        currentText = currentText + letter.ToString();
+        textMesh.text = currentText;
     }
 
 
