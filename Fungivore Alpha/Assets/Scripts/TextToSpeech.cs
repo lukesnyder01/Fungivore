@@ -20,9 +20,18 @@ public class TextToSpeech : MonoBehaviour
 
     public GameObject player;
 
-    private string currentText = "";
+
+    public string[] dialogueText;
+    private int currentTextIndex = 0;
 
 
+    private string currentDisplayText = "";
+    private bool currentlySpeaking = false;
+
+    private Coroutine speechCoroutine;
+
+    public float textTimeout = 3;
+    private float hideTextTimer = 0;
 
 
     void Start()
@@ -31,24 +40,45 @@ public class TextToSpeech : MonoBehaviour
 
         textMesh = player.GetComponent<PlayerUI>().npcTextUI;
 
+        textMesh.text = "";
+
     }
+
 
     void Update()
     {
         if (Input.GetKeyDown("q"))
         {
-            string testString = "I am the Sophont of Istrachill. Grovel before me you filthy worm, you Morld-Cologi depraved.";
+            if (currentlySpeaking == false)
+            {
+                currentlySpeaking = true;
+                speechCoroutine = StartCoroutine(ReadString(dialogueText[currentTextIndex]));
+            }
+            else
+            {
+                if (speechCoroutine != null)
+                {
+                    StopCoroutine(speechCoroutine);
+                }    
 
-            StartCoroutine(ReadString(testString));
+                textMesh.text = dialogueText[currentTextIndex];
+                currentlySpeaking = false;
+
+                GoToNextDialogueText();
+            }
         }
+
+        HideTextAfterTime();
+
     }
 
 
     IEnumerator ReadString(string text)
     {
+        currentDisplayText = "";
+
         foreach (char c in text)
         {
-
             AddLetterToDisplayText(c);
 
             if (c == ' ' || c == ',')
@@ -76,14 +106,47 @@ public class TextToSpeech : MonoBehaviour
                 yield return new WaitForSeconds(duration * letterSoundLength);
             }
         }
+
+        GoToNextDialogueText();
+        currentlySpeaking = false;
     }
+
+
+    void GoToNextDialogueText()
+    {
+        currentTextIndex++;
+
+        if (currentTextIndex >= dialogueText.Length)
+        {
+            currentTextIndex = 0;
+        }
+    }
+
+
 
     void AddLetterToDisplayText(char letter)
     {
-        currentText = currentText + letter.ToString();
-        textMesh.text = currentText;
+        currentDisplayText = currentDisplayText + letter.ToString();
+        textMesh.text = currentDisplayText;
     }
 
+
+    void HideTextAfterTime()
+    {
+        if (currentlySpeaking == false)
+        {
+            hideTextTimer += Time.deltaTime;
+
+            if (hideTextTimer >= textTimeout)
+            {
+                textMesh.text = "";
+            }
+        }
+        else
+        {
+            hideTextTimer = 0;
+        }
+    }
 
 
 }
