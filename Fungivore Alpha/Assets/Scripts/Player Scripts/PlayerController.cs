@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public float gravity;
     public float lateralSprintSpeedPenalty = 0.75f;
 
+    public float groundDrag = 1f;
+
 
     [Header("References")]
 
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private Recoil recoilScript;
 
     private PlayerInput playerInput;
+    private Rigidbody rb;
 
 
     [Header("Other")]
@@ -79,11 +82,16 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         playerStats = GetComponent<PlayerStats>();
         playerInput = GetComponent<PlayerInput>();
+        rb = GetComponent<Rigidbody>();
 
         cameraTransform = Camera.main.transform;
         recoilScript = transform.GetComponent<Recoil>();
     }
 
+    void FixedUpdate()
+    {
+        MovePlayer();
+    }
 
     void Update()
     {
@@ -101,9 +109,11 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
+            rb.drag = groundDrag;
+
             PlayerHitsGround();
 
-            if (!playerInConveyorBeam) 
+            if (!playerInConveyorBeam)
             {
                 PlayFootsteps();
             }
@@ -112,10 +122,10 @@ public class PlayerController : MonoBehaviour
             doubleJumpCount = 0;
 
             //allows player to climb stairs
-            characterController.stepOffset = 0.2f;          
+            characterController.stepOffset = 0.2f;
         }
 
-   
+
         moveDirection = transform.right * playerInput.xInput * moveSpeed * lateralSprintSpeedPenalty + transform.forward * playerInput.zInput * moveSpeed;
 
 
@@ -126,18 +136,21 @@ public class PlayerController : MonoBehaviour
 
         if (!isGrounded)
         {
+            rb.drag = 0;
+
             velocity.y += gravity * Time.deltaTime;
 
             timeUntilNextFootstep = footStepDelay;
 
             //prevents player from catching on edges when jumping up near them
-            characterController.stepOffset = 0.0001f;       
+            characterController.stepOffset = 0.0001f;
         }
 
 
         if (playerInput.jumpInput && isGrounded)
         {
-            velocity.y += jumpForce;
+            Jump();
+
             AudioManager.Instance.Play("PlayerJump");
             doubleJumpCount = 0;
             playerStats.IncreaseHungerFromJumping();
@@ -147,22 +160,19 @@ public class PlayerController : MonoBehaviour
         }
         else if (playerInput.jumpInput && doubleJumpCount < playerStats.GetStatValue("Double Jumps"))
         {
-            velocity.y += jumpForce;
+            Jump();
+
             AudioManager.Instance.Play("PlayerDoubleJump");
-            doubleJumpCount ++;
+            doubleJumpCount++;
             playerStats.IncreaseHungerFromJumping();
             recoilScript.RecoilJump(jumpRecoilAmount);
         }
 
-        //clamp maximum vertical speed from jumping
-        if (velocity.y > jumpForce)
-        {
-            velocity.y = jumpForce;
-        }
+
 
         AddBeamSpeed();
 
-        characterController.Move(moveDirection * Time.deltaTime + velocity * Time.deltaTime);
+
 
         if (Input.GetKeyDown(KeyCode.O))
         {
@@ -172,6 +182,24 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void MovePlayer()
+    {
+
+        rb.AddForce(moveDirection * 10f, ForceMode.Force);
+    }
+
+
+    void Jump()
+    {
+        //clamp maximum vertical speed from jumping
+        if (rb.velocity.y > jumpForce)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+        }
+
+        AudioManager.Instance.Play("PlayerJump");
+        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    }
 
     void GetPlayerStats()
     {
