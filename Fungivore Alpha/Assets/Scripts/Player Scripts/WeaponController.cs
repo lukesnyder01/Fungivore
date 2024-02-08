@@ -9,7 +9,7 @@ public class WeaponController : MonoBehaviour
 
     public GameObject shotParticleEffect;
 
-    CharacterController playerChar;
+    Rigidbody playerRigidbody;
 
     private float spread;
     private float shotTimer;
@@ -23,7 +23,7 @@ public class WeaponController : MonoBehaviour
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
-        playerChar = GameObject.Find("Player").GetComponent<CharacterController>();
+        playerRigidbody = GameObject.Find("Player").GetComponent<Rigidbody>();
         recoilScript = transform.GetComponent<Recoil>();
         playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
         //recoilScript = transform.Find("CameraRotation/CameraRecoil").GetComponent<Recoil>();
@@ -93,7 +93,7 @@ public class WeaponController : MonoBehaviour
         var rb = bullet.GetComponent<Rigidbody>();
         bullet.GetComponent<BulletController>().hasCollided = false;
 
-        rb.velocity = (playerChar.velocity + directionWithSpread * playerStats.GetStatValue("Spine Speed"));
+        rb.velocity = (playerRigidbody.velocity + directionWithSpread * playerStats.GetStatValue("Spine Speed"));
 
     }
 

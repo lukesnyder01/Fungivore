@@ -516,7 +516,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4855019364282867773}
-  - component: {fileID: 4855019364282867762}
   - component: {fileID: 5432992126021226428}
   - component: {fileID: 4855019364282867763}
   - component: {fileID: 4855019364282867760}
@@ -557,24 +556,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &4855019364282867762
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4855019364282867774}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Height: 0.2
-  m_Radius: 0.2
-  m_SlopeLimit: 20
-  m_StepOffset: 0.2
-  m_SkinWidth: 0.05
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &5432992126021226428
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -604,7 +585,8 @@ MonoBehaviour:
   footStepDelay: 0.2
   gravity: -8
   lateralSprintSpeedPenalty: 0.75
-  groundDrag: 3
+  groundDrag: 5
+  airDrag: 2
   stepSound: {fileID: 8300000, guid: 4ac663f1304bb23458f99036bb6a6922, type: 3}
   headCheckPosition: {fileID: 4855019364738967106}
   groundCheckPosition: {fileID: 4855019364201197260}
