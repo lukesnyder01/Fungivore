@@ -528,7 +528,6 @@ GameObject:
   - component: {fileID: 9187340029247936689}
   - component: {fileID: 3060073390335926168}
   - component: {fileID: 112416412}
-  - component: {fileID: 104922775}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -566,7 +565,7 @@ CharacterController:
   m_GameObject: {fileID: 4855019364282867774}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Height: 0.2
   m_Radius: 0.2
@@ -604,7 +603,6 @@ MonoBehaviour:
   footStepDelay: 0.2
   gravity: -8
   lateralSprintSpeedPenalty: 0.75
-  groundDrag: 3
   stepSound: {fileID: 8300000, guid: 4ac663f1304bb23458f99036bb6a6922, type: 3}
   headCheckPosition: {fileID: 4855019364738967106}
   groundCheckPosition: {fileID: 4855019364201197260}
@@ -788,22 +786,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 881beef8eda071748bdf7c03c7f9823a, type: 2}
   - {fileID: 11400000, guid: c00820112006ba94a958885e0e5d7b59, type: 2}
   draftPool: []
---- !u!54 &104922775
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4855019364282867774}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 112
-  m_CollisionDetection: 1
 --- !u!1 &4855019364364768012
 GameObject:
   m_ObjectHideFlags: 0
