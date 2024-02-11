@@ -17,8 +17,7 @@ public class PlayerController : MonoBehaviour
     public float gravity;
     public float lateralSprintSpeedPenalty = 0.75f;
 
-    public float groundDrag = 5f;
-    public float airDrag = 2f;
+    public float groundDrag = 1f;
 
 
     [Header("References")]
@@ -28,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public Transform headCheckPosition;
     public Transform groundCheckPosition;
 
+    private CharacterController characterController;
     private Transform cameraTransform;
     private ScreenDamageIndicator screenDamage;
     private PlayerStats playerStats;
@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         screenDamage = GetComponent<ScreenDamageIndicator>();
+        characterController = GetComponent<CharacterController>();
         playerStats = GetComponent<PlayerStats>();
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
@@ -102,8 +103,6 @@ public class PlayerController : MonoBehaviour
 
         SetPlayerMoveSpeed();
 
-        LimitFlatSpeed();
-
         isGrounded = Physics.CheckSphere(groundCheckPosition.position, groundCheckRadius, groundMask);
         hitHead = Physics.CheckSphere(headCheckPosition.position, headCheckRadius, groundMask);
 
@@ -122,6 +121,8 @@ public class PlayerController : MonoBehaviour
             //reset double jumps
             doubleJumpCount = 0;
 
+            //allows player to climb stairs
+            characterController.stepOffset = 0.2f;
         }
 
 
@@ -135,12 +136,14 @@ public class PlayerController : MonoBehaviour
 
         if (!isGrounded)
         {
-            rb.drag = airDrag;
+            rb.drag = 0;
 
             velocity.y += gravity * Time.deltaTime;
 
             timeUntilNextFootstep = footStepDelay;
 
+            //prevents player from catching on edges when jumping up near them
+            characterController.stepOffset = 0.0001f;
         }
 
 
@@ -165,25 +168,19 @@ public class PlayerController : MonoBehaviour
             recoilScript.RecoilJump(jumpRecoilAmount);
         }
 
+
+
         AddBeamSpeed();
+
+
 
         if (Input.GetKeyDown(KeyCode.O))
         {
             PlayerStats.KillPlayer();
         }
+
+
     }
-
-    private void LimitFlatSpeed()
-    {
-        Vector3 flatVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        if (flatVelocity.magnitude > moveSpeed)
-        {
-            Vector3 limitedVelocity = flatVelocity.normalized * moveSpeed;
-            rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z);
-        }
-    }
-
 
     void MovePlayer()
     {
@@ -204,16 +201,17 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
-
     void GetPlayerStats()
     {
         walkSpeed = playerStats.GetStatValue("Move Speed");
 
         runSpeed = walkSpeed * playerStats.GetStatValue("Run Multiplier");
 
+
         minSafeFallSpeed = playerStats.GetStatValue("Safe Fall Speed");
 
         jumpForce = playerStats.GetStatValue("Jump Force");
+
     }
 
 
