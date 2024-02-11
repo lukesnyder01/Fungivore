@@ -127,12 +127,6 @@ public class PlayerController : MonoBehaviour
 
         moveDirection = transform.right * playerInput.xInput * moveSpeed * lateralSprintSpeedPenalty + transform.forward * playerInput.zInput * moveSpeed;
 
-        //makes the player less agile if in the air
-        if (!isGrounded)
-        {
-            moveDirection = moveDirection / 5;
-        }
-
 
         if (hitHead && velocity.y > 0)
         {
@@ -143,10 +137,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.drag = airDrag;
 
-            rb.AddForce(Vector3.down * gravity, ForceMode.Force);
-
-
-            //velocity.y += gravity * Time.deltaTime;
+            velocity.y += gravity * Time.deltaTime;
 
             timeUntilNextFootstep = footStepDelay;
 

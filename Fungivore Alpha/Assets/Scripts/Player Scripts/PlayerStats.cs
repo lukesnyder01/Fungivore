@@ -93,7 +93,7 @@ public class PlayerStats : MonoBehaviour
 
         stats.Add("Double Jumps", 0f);
         stats.Add("Safe Fall Speed", 7f);
-        stats.Add("Jump Force", 5f);
+        stats.Add("Jump Force", 8f);
 
         stats.Add("Base Metabolism", 0.1f);
         stats.Add("Incubator Efficiency", 1f);
