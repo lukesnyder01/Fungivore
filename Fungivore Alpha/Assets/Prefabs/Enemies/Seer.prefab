@@ -42,8 +42,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6409592673757370767}
   serializedVersion: 2
-  m_Mass: 5
-  m_Drag: 3
+  m_Mass: 7
+  m_Drag: 2
   m_AngularDrag: 0.5
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -63,8 +63,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1
-  thrust: 5
-  turnSpeed: 3
+  thrust: 2
+  turnSpeed: 2
   minimumDistance: 1.5
   detectionRange: 15
   detectionSpherecastRadius: 0.01
@@ -72,9 +72,9 @@ MonoBehaviour:
   despawnRange: 200
   deathEffect: {fileID: 8160540889385062186, guid: 293821d393f048440b45d2b5005f10bf,
     type: 3}
-  wanderSpeed: 4
-  chargeSpeed: 5
-  rapidEvasionSpeed: 15
+  wanderSpeed: 3
+  chargeSpeed: 4
+  rapidEvasionSpeed: 6
   collisionDamageDealt: 10
   rotationSpeed: 0.5
   playerCamera: {fileID: 0}
@@ -89,7 +89,7 @@ MonoBehaviour:
   openDirection: []
   state: 0
   tether: {fileID: 0}
-  maxDistFromTether: 1
+  maxDistFromTether: 3
 --- !u!1 &7419592877575668983
 GameObject:
   m_ObjectHideFlags: 0

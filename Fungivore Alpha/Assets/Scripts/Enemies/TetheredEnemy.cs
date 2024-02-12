@@ -20,6 +20,7 @@ public class TetheredEnemy : Enemy
     {
         tetherPosition = tether.position;
         targetPosition = tetherPosition;
+        transform.parent = transform.parent.parent;
     }
 
     public override void UpdateStateMachine()

@@ -59,10 +59,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 dashDirection;
 
     private float currentDashSpeed = 0;
-    private float dashAcceleration = 1.1f;
-    private float maxDashSpeed = 15f;
+    private float dashAcceleration = 1.2f;
+    private float maxDashSpeed = 10f;
 
-    private float dashTimeLength = 0.2f;
+    private float dashTimeLength = 0.1f;
     private float dashTimer;
 
     private float dashCooldown = 0.5f;
@@ -223,6 +223,13 @@ public class PlayerController : MonoBehaviour
             if (dashCooldownTimer <= 0 && playerInput.dashInput)
             {
                 dashDirection = transform.right * playerInput.xInput + transform.forward * playerInput.zInput;
+
+                //defaults the dash to forward if the player isn't touching wasd
+                if (dashDirection.magnitude < 0.2)
+                {
+                    dashDirection = transform.forward;
+                }
+
                 currentDashSpeed = 1;
                 playerIsDashing = true;
 
@@ -279,7 +286,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //slowly push player down so they keep in contact with the ground
-        if (fallSpeed < 0f)
+        if (fallSpeed <= 0.01f)
         {
             currentVerticalSpeed = -0.2f;         
         }
