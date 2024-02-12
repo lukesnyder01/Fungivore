@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
     private int doubleJumpCount = 0;
     private bool hitHead;
     private Vector3 velocity;
+    private float currentVerticalSpeed;
 
     private float jumpRecoilAmount = 15;
     private float landRecoilAmount = -10;
@@ -136,26 +137,46 @@ public class PlayerController : MonoBehaviour
    
         moveDirection = transform.right * playerInput.xInput * moveSpeed * lateralSprintSpeedPenalty + transform.forward * playerInput.zInput * moveSpeed;
 
+        HandleJumping();
 
-        if (hitHead && velocity.y > 0)
+        AddBeamSpeed();
+
+        HandleDashing();
+
+        characterController.Move(moveDirection * Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.O))
         {
-            velocity.y = -0.1f;
+            PlayerStats.KillPlayer();
         }
+
+        Debug.Log(characterController.velocity.y);
+
+
+    }
+
+    void HandleJumping()
+    {
+        if (hitHead && currentVerticalSpeed > 0)
+        {
+            currentVerticalSpeed = -0.1f;
+        }
+
 
         if (!isGrounded)
         {
-            velocity.y += gravity * Time.deltaTime;
+            currentVerticalSpeed += gravity * Time.deltaTime;
 
             timeUntilNextFootstep = footStepDelay;
 
             //prevents player from catching on edges when jumping up near them
-            characterController.stepOffset = 0.0001f;       
+            characterController.stepOffset = 0.0001f;
         }
 
 
         if (playerInput.jumpInput && isGrounded)
         {
-            velocity.y += jumpForce;
+            currentVerticalSpeed += jumpForce;
             AudioManager.Instance.Play("PlayerJump");
             doubleJumpCount = 0;
             playerStats.IncreaseHungerFromJumping();
@@ -165,32 +186,23 @@ public class PlayerController : MonoBehaviour
         }
         else if (playerInput.jumpInput && doubleJumpCount < playerStats.GetStatValue("Double Jumps"))
         {
-            velocity.y += jumpForce;
+            currentVerticalSpeed += jumpForce;
             AudioManager.Instance.Play("PlayerDoubleJump");
-            doubleJumpCount ++;
+            doubleJumpCount++;
             playerStats.IncreaseHungerFromJumping();
             recoilScript.RecoilJump(jumpRecoilAmount);
         }
 
         //clamp maximum vertical speed from jumping
-        if (velocity.y > jumpForce)
+        if (currentVerticalSpeed > jumpForce)
         {
-            velocity.y = jumpForce;
+            currentVerticalSpeed = jumpForce;
         }
 
-
-        AddBeamSpeed();
-
-        HandleDashing();
-
-        characterController.Move(moveDirection * Time.deltaTime + velocity * Time.deltaTime);
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            PlayerStats.KillPlayer();
-        }
+        moveDirection.y += currentVerticalSpeed;
 
     }
+
 
     void HandleDashing()
     {
@@ -210,16 +222,14 @@ public class PlayerController : MonoBehaviour
 
             if (dashCooldownTimer <= 0 && playerInput.dashInput)
             {
-                Debug.Log("Dash");
-
-                dashDirection = cameraTransform.forward;
+                dashDirection = transform.right * playerInput.xInput + transform.forward * playerInput.zInput;
                 currentDashSpeed = 1;
                 playerIsDashing = true;
+
+                
                 dashTimer = dashTimeLength;
                 dashCooldownTimer = dashCooldown;
             }
-
-
         }
 
 
@@ -232,7 +242,6 @@ public class PlayerController : MonoBehaviour
         }
 
         moveDirection += dashDirection * currentDashSpeed;
-
     }
 
 
@@ -252,26 +261,30 @@ public class PlayerController : MonoBehaviour
 
     void PlayerHitsGround()
     {
-        if (velocity.y < -1f)
+        float fallSpeed = characterController.velocity.y;
+
+        if (fallSpeed < -1f)
         {
-            float playbackVolume = Mathf.Clamp(-velocity.y / 10 + 0.3f, 0.5f, 1f);
+            float playbackVolume = Mathf.Clamp(-fallSpeed / 10 + 0.3f, 0.5f, 1f);
             AudioManager.Instance.PlayAtVolume("PlayerLanding", playbackVolume);
             recoilScript.RecoilJump(landRecoilAmount);
         }
 
         //fall damage calculation
-        if (velocity.y < -minSafeFallSpeed)                
+        if (fallSpeed < -minSafeFallSpeed)                
         {
-            float fallDamage = Mathf.Ceil((-velocity.y - minSafeFallSpeed) * (-velocity.y - minSafeFallSpeed));
+            float fallDamage = Mathf.Ceil((-fallSpeed - minSafeFallSpeed) * (-fallSpeed - minSafeFallSpeed));
 
             playerStats.ApplyDamage(2 * fallDamage);
         }
 
         //slowly push player down so they keep in contact with the ground
-        if (velocity.y < 0f)
+        if (fallSpeed < 0f)
         {
-            velocity.y = -0.2f;         
+            currentVerticalSpeed = -0.2f;         
         }
+
+
     }
 
 
@@ -304,7 +317,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 moveInput = new Vector3(playerInput.xInput, 0, playerInput.zInput);
 
-        if (moveInput != new Vector3(0f, 0f, 0f) && Mathf.Abs(velocity.y) < 0.52)
+        if (moveInput != new Vector3(0f, 0f, 0f) && Mathf.Abs(characterController.velocity.y) < 0.52)
         {
             timeUntilNextFootstep -= Time.deltaTime;
 
