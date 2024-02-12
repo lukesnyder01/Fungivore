@@ -107,18 +107,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602002b58cf2fa643a3f80ee3954ff14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combineMesh: {fileID: 0}
+  currentStep: 0
+  totalSteps: 0
   minSteps: 50
   maxSteps: 100
   waitTime: 0
-  totalSteps: 0
-  currentStep: 0
-  multipleRespawns: 0
   respawnCount: 0
   antSideLength: 1
   verticalSpawnOffset: 0
-  boxCenter: {x: 0, y: 0, z: 0}
-  halfExtents: {x: 0, y: 0, z: 0}
-  boxRotation: {x: 0, y: 0, z: 0}
   antMoveDistance: 0
   minPlayerDistance: 0
   minPlayerDistancePad: 1
@@ -142,7 +139,7 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 1}
   moveList: 
   randomizeList: 1
-  totalLoops: 10
+  totalLoops: 3
   currentLoop: 0
   halfExtentSizeMod: -0.2
 --- !u!114 &6895814605559630567

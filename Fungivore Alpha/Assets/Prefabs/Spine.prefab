@@ -126,15 +126,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8395fa672984484fbd3bbfd319b597b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: 0.5
+  gravity: 0.2
   bulletImpact: {fileID: 8160540889385062186, guid: 5d75219e9aa1e6e4295f666474aadd9c,
     type: 3}
-  bulletLifespan: 4
+  bulletLifespan: 5
   playerStats: {fileID: 0}
   bulletDamage: 1
   hasCollided: 0
-  dummySpine: {fileID: 4344953998712860487, guid: 48d8aecec8879144c977580aba34e389,
-    type: 3}
 --- !u!135 &2882202414493796476
 SphereCollider:
   m_ObjectHideFlags: 0

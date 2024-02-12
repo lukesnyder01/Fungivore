@@ -71,8 +71,8 @@ public class WeaponController : MonoBehaviour
 
     void ShootBullet()
     {
-        //recoilScript.RecoilFire(PlayerStats.verticalRecoil, PlayerStats.horizontalRecoil);
-        recoilScript.TranslationRecoil();
+        recoilScript.RecoilFire(PlayerStats.verticalRecoil, PlayerStats.horizontalRecoil);
+        //recoilScript.TranslationRecoil();
 
         Vector3 directionWithoutSpread = bulletSpawn.transform.forward;
 

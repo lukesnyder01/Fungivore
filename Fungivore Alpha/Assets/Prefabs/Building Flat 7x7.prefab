@@ -111,8 +111,8 @@ MonoBehaviour:
   combineMesh: {fileID: 0}
   currentStep: 0
   totalSteps: 0
-  minSteps: 100
-  maxSteps: 150
+  minSteps: 50
+  maxSteps: 60
   waitTime: 0.05
   respawnCount: 10
   antSideLength: 7

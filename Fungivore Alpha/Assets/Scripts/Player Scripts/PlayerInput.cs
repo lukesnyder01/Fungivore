@@ -11,6 +11,7 @@ public class PlayerInput : MonoBehaviour
     public bool shootInput { get; private set; }
     public bool jumpInput { get; private set; }
     public bool sprintInput { get; private set; }
+    public bool dashInput { get; private set; }
     public bool interactInput { get; private set; }
     public Vector2 mouseRawInput { get; private set; }
     public bool pauseButton { get; private set; }
@@ -40,6 +41,7 @@ public class PlayerInput : MonoBehaviour
             zInput = Input.GetAxis("Vertical");
             shootInput = Input.GetMouseButton(0);
             jumpInput = Input.GetButtonDown("Jump");
+            dashInput = Input.GetKey(KeyCode.LeftControl);
             sprintInput = Input.GetKey(KeyCode.LeftShift);
             interactInput = Input.GetKeyDown(KeyCode.E);
             mouseRawInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
@@ -51,6 +53,7 @@ public class PlayerInput : MonoBehaviour
             shootInput = false;
             jumpInput = false;
             sprintInput = false;
+            dashInput = false;
             interactInput = false;
             mouseRawInput = Vector2.zero;
         }

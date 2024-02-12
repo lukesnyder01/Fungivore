@@ -16,6 +16,10 @@ public class Recoil : MonoBehaviour
     [SerializeField] private float snappiness = 6;
     [SerializeField] private float returnSpeed = 5;
 
+    [SerializeField] private float translateSpeed = 20f;
+
+    [SerializeField] private float maxDisplacement = 0.05f;
+
     private Vector3 currentPosition;
     private Vector3 targetPosition;
 
@@ -32,15 +36,15 @@ public class Recoil : MonoBehaviour
     {
         if (!PauseMenu.gameIsPaused)
         {
-            //UpdateRotation();
-            UpdateTranslation();
+            UpdateRotation();
+            //UpdateTranslation();
+
         }
     }
 
 
     void UpdateRotation()
     {
-
         targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
         currentRotation = Vector3.Lerp(currentRotation, targetRotation, snappiness * Time.fixedDeltaTime);
         recoilTarget.localRotation = Quaternion.Euler(currentRotation);
@@ -50,13 +54,15 @@ public class Recoil : MonoBehaviour
 
     void UpdateTranslation()
     {
-        targetPosition = Vector3.Lerp(targetPosition, playerCam.position, returnSpeed * Time.deltaTime);
-        currentPosition = Vector3.Lerp(currentPosition, targetPosition, snappiness * Time.fixedDeltaTime);
+
+
+
+        targetPosition = Vector3.Lerp(targetPosition, playerCam.position, translateSpeed * Time.deltaTime);
+        currentPosition = Vector3.Lerp(currentPosition, targetPosition, translateSpeed * Time.fixedDeltaTime);
 
         var difference = playerCam.position - targetPosition;
         var direction = difference.normalized;
         var distance = Mathf.Min(0.01f, difference.magnitude);
-
 
         recoilTarget.position = currentPosition + direction * distance;
     }
@@ -80,19 +86,10 @@ public class Recoil : MonoBehaviour
         targetRotation.y = y;
     }
 
+
     public void TranslationRecoil()
     {
-        //Debug.Log(recoilTarget.forward);
-
         targetPosition = playerCam.position + (recoilTarget.forward * -0.01f);
-
-        //Debug.Log(targetPosition);
-    }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(targetPosition, 0.1f);
     }
 
 }

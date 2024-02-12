@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public float lateralSprintSpeedPenalty = 0.75f;
 
 
+
     [Header("References")]
 
     //public AudioSource audioSource;
@@ -47,11 +48,26 @@ public class PlayerController : MonoBehaviour
 
     private float maxBeamSpeed = 20f;
     private float beamAcceleration = 1.03f;
-    private float beamDeceleration = 0.97f;
+    private float beamDeceleration = 0.96f;
 
     private bool playerInConveyorBeam;
     private Vector3 beamPushForce;
     private Vector3 beamDirection;
+
+    private bool playerIsDashing;
+
+    private Vector3 dashDirection;
+
+    private float currentDashSpeed = 0;
+    private float dashAcceleration = 1.1f;
+    private float maxDashSpeed = 15f;
+
+    private float dashTimeLength = 0.2f;
+    private float dashTimer;
+
+    private float dashCooldown = 0.5f;
+    private float dashCooldownTimer;
+
 
 
     private GameObject beamRings;
@@ -87,6 +103,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
+
         GetPlayerStats();
 
         KillPlayerBelowWorldLimit();
@@ -160,7 +178,10 @@ public class PlayerController : MonoBehaviour
             velocity.y = jumpForce;
         }
 
+
         AddBeamSpeed();
+
+        HandleDashing();
 
         characterController.Move(moveDirection * Time.deltaTime + velocity * Time.deltaTime);
 
@@ -169,6 +190,48 @@ public class PlayerController : MonoBehaviour
             PlayerStats.KillPlayer();
         }
 
+    }
+
+    void HandleDashing()
+    {
+        dashCooldownTimer -= Time.deltaTime;
+        dashTimer -= Time.deltaTime;
+
+        if (dashTimer <= 0)
+        {
+            playerIsDashing = false;
+            dashTimer = 0;
+        }
+
+
+        if (!playerIsDashing)
+        {
+            currentDashSpeed *= beamDeceleration;
+
+            if (dashCooldownTimer <= 0 && playerInput.dashInput)
+            {
+                Debug.Log("Dash");
+
+                dashDirection = cameraTransform.forward;
+                currentDashSpeed = 1;
+                playerIsDashing = true;
+                dashTimer = dashTimeLength;
+                dashCooldownTimer = dashCooldown;
+            }
+
+
+        }
+
+
+        if (playerIsDashing)
+        {
+            if (currentDashSpeed <= maxDashSpeed)
+            {
+                currentDashSpeed *= dashAcceleration;
+            }
+        }
+
+        moveDirection += dashDirection * currentDashSpeed;
 
     }
 

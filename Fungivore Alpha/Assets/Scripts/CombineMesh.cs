@@ -60,10 +60,7 @@ public class CombineMesh : MonoBehaviour
         meshFilter.mesh.CombineMeshes(combineInstances, true, true);
 
 
-        //these might not be necessary
-        meshFilter.mesh.RecalculateBounds();
-        meshFilter.mesh.RecalculateNormals();
-        meshFilter.mesh.Optimize();
+
 
         //if the combine parent had a collider, update it to the new mesh
         if (collider)
@@ -103,6 +100,11 @@ public class CombineMesh : MonoBehaviour
         transform.rotation = oldRotation;
         transform.position = oldPosition;
         transform.localScale = oldScale;
+
+        //these might not be necessary
+        meshFilter.mesh.RecalculateBounds();
+        meshFilter.mesh.RecalculateNormals();
+        meshFilter.mesh.Optimize();
     }
 
 }
