@@ -6,6 +6,9 @@ using UnityEngine;
 // from https://medium.com/@adamy1558/building-a-high-performance-voxel-engine-in-unity-a-step-by-step-guide-part-1-voxels-chunks-86275c079fb8
 public class World : MonoBehaviour
 {
+    public Transform playerTransform;
+
+
     public int worldSize = 5; // Size of the world in number of chunks
     private int chunkSize = 16; // Assuming chunk size is 16x16x16
 

@@ -19,6 +19,8 @@ public class Chunk : MonoBehaviour
     private MeshRenderer meshRenderer;
     private MeshCollider meshCollider;
 
+    public LayerMask chunkLayer;
+
 
 
     void Start()
@@ -28,12 +30,17 @@ public class Chunk : MonoBehaviour
         meshRenderer = gameObject.AddComponent<MeshRenderer>();
         meshCollider = gameObject.AddComponent<MeshCollider>();
 
+        //add the solid block layer to the chunks
+        chunkLayer = LayerMask.NameToLayer("Solid Block");
+        gameObject.layer = chunkLayer;
+
         // Call this to generate the chunk mesh
         GenerateMesh();
     }
 
     private void GenerateMesh()
     {
+
         IterateVoxels(); // Make sure this processes all voxels
 
         Mesh mesh = new Mesh();
@@ -49,7 +56,6 @@ public class Chunk : MonoBehaviour
         // Apply a material or texture if needed
         // meshRenderer.material = ...;
         meshRenderer.material = World.Instance.VoxelMaterial;
-
     }
 
 
@@ -89,7 +95,7 @@ public class Chunk : MonoBehaviour
 
         //Debug.Log(noiseValue);
 
-        if (noiseValue > threshold)
+        if (noiseValue > threshold && y < 30)
             return Voxel.VoxelType.Grass; // Solid voxel
         else
             return Voxel.VoxelType.Air; // Air voxel

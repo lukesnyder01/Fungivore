@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour
             PlayerStats.KillPlayer();
         }
 
-        Debug.Log(characterController.velocity.y);
+        //Debug.Log(characterController.velocity.y);
 
 
     }
