@@ -33,10 +33,18 @@ public class World : MonoBehaviour
 
     void Start()
     {
-        chunks = new Dictionary<Vector3, Chunk>();
 
+
+        chunks = new Dictionary<Vector3, Chunk>();
         GenerateWorld();
     }
+
+    void Update()
+    { 
+        //update player position
+        //update chunks around the player
+    }
+
 
 
     private void GenerateWorld()

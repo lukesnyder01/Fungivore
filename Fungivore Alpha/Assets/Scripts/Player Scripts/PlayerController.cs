@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
 
     private PlayerInput playerInput;
 
+    public GameObject beamRings;
 
     [Header("Other")]
 
@@ -45,6 +46,8 @@ public class PlayerController : MonoBehaviour
     //------------------------------------------------------------------------------
     //Private variables
     //------------------------------------------------------------------------------
+    private ConveyorBeam currentBeam;
+    private Vector3 currentBeamPos;
 
     private float maxBeamSpeed = 20f;
     private float beamAcceleration = 1.03f;
@@ -70,7 +73,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    private GameObject beamRings;
+
     private Vector3 beamOrientation;
     private Vector3 targetRingPos;
 
@@ -104,8 +107,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
-
         GetPlayerStats();
 
         KillPlayerBelowWorldLimit();
@@ -134,14 +135,13 @@ public class PlayerController : MonoBehaviour
             characterController.stepOffset = 0.2f;          
         }
 
-   
         moveDirection = transform.right * playerInput.xInput * moveSpeed * lateralSprintSpeedPenalty + transform.forward * playerInput.zInput * moveSpeed;
 
         HandleJumping();
 
-        AddBeamSpeed();
-
         HandleDashing();
+
+        HandleConveyorBeams();
 
         characterController.Move(moveDirection * Time.deltaTime);
 
@@ -149,9 +149,6 @@ public class PlayerController : MonoBehaviour
         {
             PlayerStats.KillPlayer();
         }
-
-        //Debug.Log(characterController.velocity.y);
-
 
     }
 
@@ -336,7 +333,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void AddBeamSpeed()
+    void HandleConveyorBeams()
     {
         if (playerInConveyorBeam)
         {
@@ -345,10 +342,7 @@ public class PlayerController : MonoBehaviour
                 beamPushForce *= beamAcceleration;
             }
 
-            SetTargetBeamRingPosition();
-
-            var beamSpeed = 50f;
-            beamRings.transform.position = Vector3.Lerp(beamRings.transform.position, targetRingPos, beamSpeed * Time.deltaTime);
+            HandleConveyorBeamRing();
         }
         else
         {
@@ -359,19 +353,24 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void SetTargetBeamRingPosition()
+    void HandleConveyorBeamRing()
     {
-        targetRingPos = new Vector3(transform.position.x, beamRings.transform.position.y, transform.position.z);
 
         //if the beam is oriented in the z axis
         if (beamOrientation.z >= 0.5f)
         {
-            targetRingPos.x = beamRings.transform.position.x;
+            targetRingPos = new Vector3(currentBeamPos.x, beamRings.transform.position.y, transform.position.z);
         }
         else
         {
-            targetRingPos.z = beamRings.transform.position.z;
+            targetRingPos = new Vector3(transform.position.x, beamRings.transform.position.y, currentBeamPos.z);
         }
+
+        beamRings.transform.forward = beamOrientation;
+        beamRings.transform.position = targetRingPos;
+
+        //var smoothing = 100f;
+        //beamRings.transform.position = Vector3.Lerp(beamRings.transform.position, targetRingPos, smoothing * Time.deltaTime);
     }
 
 
@@ -409,18 +408,20 @@ public class PlayerController : MonoBehaviour
         {
             playerInConveyorBeam = true;
 
-            var beam = other.GetComponent<ConveyorBeam>();
-            beamRings = beam.beamRingParticles;
-            maxBeamSpeed = beam.beamSpeed;
+            currentBeam = other.GetComponent<ConveyorBeam>();
+            currentBeamPos = currentBeam.transform.position;
+
+            maxBeamSpeed = currentBeam.beamSpeed;
 
             var beamPitch = 0.5f + (maxBeamSpeed / 200);
             AudioManager.Instance.StartLoop("Conveyor", beamPitch);
 
-            SetBeamDirection(beam.beamOrientation);
-            beamOrientation = beam.beamOrientation;
+            SetBeamDirection(currentBeam.beamOrientation);
+            beamOrientation = currentBeam.beamOrientation;
 
-            SetTargetBeamRingPosition();
+            HandleConveyorBeamRing();
             beamRings.transform.position = targetRingPos;
+            beamRings.transform.forward = beamOrientation;
             beamRings.SetActive(true);
         }
         else if (other.CompareTag("KillPlayer"))
