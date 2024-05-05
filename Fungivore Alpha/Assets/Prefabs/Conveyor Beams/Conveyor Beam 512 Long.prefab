@@ -359,7 +359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beamRingParticles: {fileID: 0}
   beamOrientation: {x: 0, y: 0, z: 0}
-  beamSpeed: 50
+  beamSpeed: 25
 --- !u!1 &9081191174077040709
 GameObject:
   m_ObjectHideFlags: 0

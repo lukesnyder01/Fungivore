@@ -93,4 +93,14 @@ public class BuildingAnt : Ant
         }
     }
 
+    public override bool SpaceIsEmpty(Vector3 direction)
+    {
+        // Calculate half dimensions of the box based on the side length of the ant
+        Vector3 halfSize = new Vector3((antSideLength / 2) - 0.1f, (antSideLength / 2) - 0.1f, (antSideLength / 2) - 0.1f);
+
+        // Perform a BoxCast in the specified direction
+        return (!Physics.BoxCast(antPos, halfSize, direction, out hit, Quaternion.identity, antMoveDistance));
+    }
+
+
 }
