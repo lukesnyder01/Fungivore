@@ -37,7 +37,7 @@ public class TurretEnemy : Enemy
 
                 if (shotTimer <= 0 && canSeePlayer)
                 {
-                    shotTimer = timeBetweenShots;
+                    shotTimer = timeBetweenShots + Random.Range(0,0.1f);
                     ShootAtPlayer();
                 }
 
@@ -60,8 +60,9 @@ public class TurretEnemy : Enemy
     public void ShootAtPlayer()
     {
         //Debug.Log("shot at player");
-        var newBullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
-        newBullet.velocity = (transform.forward + Random.insideUnitSphere * aimRandomness) * bulletSpeed;
+        var spawnLocation = transform.position + transform.forward;
+        var newBullet = Instantiate(bulletPrefab, spawnLocation, transform.rotation);
+        newBullet.velocity = (Vector3.up + Random.insideUnitSphere * aimRandomness) * bulletSpeed;
 
     }
 

@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
 
     public float footStepDelay = 0.2f;
     public float gravity;
+    private float currentGravity;
     public float lateralSprintSpeedPenalty = 0.75f;
 
 
@@ -102,6 +103,7 @@ public class PlayerController : MonoBehaviour
 
         cameraTransform = Camera.main.transform;
         recoilScript = transform.GetComponent<Recoil>();
+        currentGravity = gravity;
     }
 
 
@@ -137,6 +139,8 @@ public class PlayerController : MonoBehaviour
 
         moveDirection = transform.right * playerInput.xInput * moveSpeed * lateralSprintSpeedPenalty + transform.forward * playerInput.zInput * moveSpeed;
 
+        HandleGravity();
+
         HandleJumping();
 
         HandleDashing();
@@ -152,25 +156,32 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void HandleJumping()
+    void HandleGravity()
     {
-        if (hitHead && currentVerticalSpeed > 0)
+        if (hitHead && moveDirection.y > 0)
         {
             currentVerticalSpeed = -0.1f;
         }
 
-
         if (!isGrounded)
         {
-            currentVerticalSpeed += gravity * Time.deltaTime;
-
+            currentVerticalSpeed += currentGravity * Time.deltaTime;
             timeUntilNextFootstep = footStepDelay;
-
-            //prevents player from catching on edges when jumping up near them
-            characterController.stepOffset = 0.0001f;
+            characterController.stepOffset = 0.0001f; // prevents player from catching on edges when jumping up near them
         }
 
+        if (isGrounded)
+        {
+            currentVerticalSpeed = -0.2f; // slowly push player down so they keep in contact with the ground
+        }
 
+        moveDirection.y += currentVerticalSpeed;
+    }
+
+
+
+    void HandleJumping()
+    {
         if (playerInput.jumpInput && isGrounded)
         {
             currentVerticalSpeed += jumpForce;
@@ -179,6 +190,10 @@ public class PlayerController : MonoBehaviour
             playerStats.IncreaseHungerFromJumping();
             recoilScript.RecoilJump(jumpRecoilAmount);
 
+            if (currentVerticalSpeed > jumpForce)
+            {
+                currentVerticalSpeed = jumpForce;
+            }
 
         }
         else if (playerInput.jumpInput && doubleJumpCount < playerStats.GetStatValue("Double Jumps"))
@@ -188,12 +203,11 @@ public class PlayerController : MonoBehaviour
             doubleJumpCount++;
             playerStats.IncreaseHungerFromJumping();
             recoilScript.RecoilJump(jumpRecoilAmount);
-        }
 
-        //clamp maximum vertical speed from jumping
-        if (currentVerticalSpeed > jumpForce)
-        {
-            currentVerticalSpeed = jumpForce;
+            if (currentVerticalSpeed > jumpForce)
+            {
+                currentVerticalSpeed = jumpForce;
+            }
         }
 
         moveDirection.y += currentVerticalSpeed;
@@ -275,7 +289,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //fall damage calculation
-        if (fallSpeed < -minSafeFallSpeed)                
+        if (fallSpeed < -minSafeFallSpeed && !playerInConveyorBeam)                
         {
             float fallDamage = Mathf.Ceil((-fallSpeed - minSafeFallSpeed) * (-fallSpeed - minSafeFallSpeed));
 
@@ -287,8 +301,6 @@ public class PlayerController : MonoBehaviour
         {
             currentVerticalSpeed = -0.2f;         
         }
-
-
     }
 
 
@@ -343,61 +355,67 @@ public class PlayerController : MonoBehaviour
             }
 
             HandleConveyorBeamRing();
+
+            // Modify currentVerticalSpeed
+            if (beamOrientation.y > 0.5f)
+            {
+                currentVerticalSpeed = 0f;
+            }
+
         }
         else
         {
             beamPushForce *= beamDeceleration;
         }
 
-        moveDirection += beamPushForce;
+
+        // Apply the horizontal components of the beam push force to moveDirection
+        moveDirection += new Vector3(beamPushForce.x, beamPushForce.y, beamPushForce.z);
     }
 
 
     void HandleConveyorBeamRing()
     {
-
-        //if the beam is oriented in the z axis
-        if (beamOrientation.z >= 0.5f)
+        // Check if the beam is oriented vertically
+        if (beamOrientation.y >= 0.5f || beamOrientation.y <= -0.5f)
         {
-            targetRingPos = new Vector3(currentBeamPos.x, beamRings.transform.position.y, transform.position.z);
+            targetRingPos = new Vector3(currentBeamPos.x, transform.position.y, currentBeamPos.z);
         }
         else
         {
-            targetRingPos = new Vector3(transform.position.x, beamRings.transform.position.y, currentBeamPos.z);
+            // Beam is oriented horizontally
+            if (beamOrientation.z >= 0.5f)
+            {
+                targetRingPos = new Vector3(currentBeamPos.x, beamRings.transform.position.y, transform.position.z);
+            }
+            else
+            {
+                targetRingPos = new Vector3(transform.position.x, beamRings.transform.position.y, currentBeamPos.z);
+            }
         }
 
         beamRings.transform.forward = beamOrientation;
         beamRings.transform.position = targetRingPos;
 
-        //var smoothing = 100f;
-        //beamRings.transform.position = Vector3.Lerp(beamRings.transform.position, targetRingPos, smoothing * Time.deltaTime);
     }
 
 
     void SetBeamDirection(Vector3 beamOrientation)
     {
-        var playerDirection = transform.forward;
+        // Get the forward direction of the transform (assumed to be the player's orientation)
+        Vector3 playerDirection = cameraTransform.forward.normalized;
 
-        if (playerDirection.x > 0)
-        {
-            playerDirection.x = 1;
-        }
-        else
-        {
-            playerDirection.x = -1;
-        }
+        // Calculate the beam direction based on player's orientation and beamOrientation
+        Vector3 beamDirection = new Vector3(
+            Mathf.Sign(playerDirection.x) * Mathf.Abs(beamOrientation.x),
+            Mathf.Sign(playerDirection.y + 0.8f) * Mathf.Abs(beamOrientation.y),
+            Mathf.Sign(playerDirection.z) * Mathf.Abs(beamOrientation.z)
+        );
 
-        if (playerDirection.z > 0)
-        {
-            playerDirection.z = 1;
-        }
-        else
-        {
-            playerDirection.z = -1;
-        }
+        // Normalize beamDirection to ensure consistent magnitude
+        beamDirection = beamDirection.normalized;
 
-        beamDirection = new Vector3 (playerDirection.x * beamOrientation.x, 0f , playerDirection.z * beamOrientation.z);
-
+        // Assign beamDirection to some beam variable (assuming 'beamPushForce' is a class-level variable)
         beamPushForce = beamDirection;
     }
 
@@ -419,6 +437,11 @@ public class PlayerController : MonoBehaviour
             SetBeamDirection(currentBeam.beamOrientation);
             beamOrientation = currentBeam.beamOrientation;
 
+            if (beamOrientation.y > 0.5f)
+            {
+                currentGravity = 0f;
+            }
+
             HandleConveyorBeamRing();
             beamRings.transform.position = targetRingPos;
             beamRings.transform.forward = beamOrientation;
@@ -437,6 +460,8 @@ public class PlayerController : MonoBehaviour
         {
             beamRings.SetActive(false);
             AudioManager.Instance.FadeOut("Conveyor", 0.2f);
+
+            currentGravity = gravity;
 
             playerInConveyorBeam = false;
         }

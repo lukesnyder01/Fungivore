@@ -10,21 +10,22 @@ public class EnemyProjectile : MonoBehaviour
     private float currentLifespan;
 
     public Transform player;
-    public float accelerationSpeed = 1f;
-
-    public float timeBeforeAccelerating = 4f;
+    private CharacterController playerController;
 
     public GameObject deathEffect;
-
-
     private Rigidbody rb;
 
+    public float accelerationSpeed = 1f;
+    public float timeBeforeAccelerating = 4f;
+
+    public float predictionTime = 1f;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
 
         player = GameObject.FindWithTag("Player").transform;
+        playerController = player.GetComponent<CharacterController>();
 
         currentLifespan = bulletLifespan;
 
@@ -32,29 +33,33 @@ public class EnemyProjectile : MonoBehaviour
     }
 
 
-    private void Update()
+    private void FixedUpdate()
     {
-        currentLifespan -= Time.deltaTime;
-
+        currentLifespan -= Time.fixedDeltaTime;
         transform.forward = rb.velocity;
 
         if (currentLifespan <= 0)
         {
             Die();
-
+            return;
         }
 
         if (bulletLifespan - currentLifespan > timeBeforeAccelerating)
         {
-            // Calculate the direction to the player
-            Vector3 directionToPlayer = player.position - transform.position;
-            directionToPlayer.Normalize();
+            Vector3 randomDeviation = new Vector3(
+                Random.Range(-0.2f, 0.2f),
+                Random.Range(-0.2f, 0.2f),
+                Random.Range(-0.21f, 0.2f)
+            );
 
-            //accelerate towards player
-            rb.AddForce(directionToPlayer * accelerationSpeed);
+            Vector3 predictedPlayerOffset = playerController.velocity * predictionTime;
+            Vector3 predictedPlayerPosition = player.position + predictedPlayerOffset + randomDeviation;
+            Vector3 directionToTarget = predictedPlayerPosition - transform.position;
+
+            rb.AddForce(directionToTarget * accelerationSpeed);
         }
-
     }
+
 
 
 

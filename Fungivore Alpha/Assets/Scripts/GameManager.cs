@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        AudioManager.Instance.Play("theme03WalkBetweenTheWaters");
+        //AudioManager.Instance.Play("theme03WalkBetweenTheWaters");
     }
 
 

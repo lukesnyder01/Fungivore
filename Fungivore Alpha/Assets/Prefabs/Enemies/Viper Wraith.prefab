@@ -638,7 +638,7 @@ MonoBehaviour:
   detectionRange: 40
   detectionSpherecastRadius: 0.01
   raycastDistToFindEmpty: 4
-  despawnRange: 200
+  despawnRange: 1000
   deathEffect: {fileID: 8160540889385062186, guid: 0b4fdd50e739de94298ee3138493e4ab,
     type: 3}
   wanderSpeed: 2
@@ -672,8 +672,8 @@ MonoBehaviour:
   segmentPrefab: {fileID: 4468911112632693745, guid: a01f3969898c0b944a9a60cc7e213f11,
     type: 3}
   tailStart: {fileID: 9090927171466157259}
-  numberOfSegments: 40
-  spawnSeparation: 0.3
+  numberOfSegments: 15
+  spawnSeparation: 0.4
   tailSegmentPrefabs: []
   tailSegments: []
 --- !u!1 &7250309454792434589

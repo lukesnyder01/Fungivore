@@ -10,6 +10,11 @@ public class ConveyorBeam : MonoBehaviour
 
     void Awake()
     {
-        beamOrientation = new Vector3(Mathf.Abs(transform.forward.x), 0, Mathf.Abs(transform.forward.z));
+        beamOrientation = new Vector3
+            (
+                Mathf.Abs(transform.forward.x),
+                Mathf.Abs(transform.forward.y), 
+                Mathf.Abs(transform.forward.z)
+            );
     }
 }

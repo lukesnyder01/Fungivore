@@ -77,9 +77,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  thrust: 4
+  thrust: 5
   turnSpeed: 2
-  minimumDistance: 1
+  minimumDistance: 2
   detectionRange: 40
   detectionSpherecastRadius: 0.01
   raycastDistToFindEmpty: 4
@@ -196,7 +196,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1462811470728987228
 Transform:
   m_ObjectHideFlags: 0

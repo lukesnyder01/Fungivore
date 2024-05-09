@@ -128,7 +128,7 @@ MonoBehaviour:
   thrust: 0
   turnSpeed: 100
   minimumDistance: 0
-  detectionRange: 25
+  detectionRange: 15
   detectionSpherecastRadius: 0.001
   raycastDistToFindEmpty: 4
   despawnRange: 1000
@@ -150,9 +150,9 @@ MonoBehaviour:
   rb: {fileID: 0}
   openDirection: []
   state: 0
-  timeBetweenShots: 1
-  bulletSpeed: 4
-  aimRandomness: 0.2
+  timeBetweenShots: 0.5
+  bulletSpeed: 3
+  aimRandomness: 0.6
   bulletPrefab: {fileID: 3964968406096466361, guid: ec962970b839f3e4584e598a861b2c69,
     type: 3}
 --- !u!1 &8550646966166955625
