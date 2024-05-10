@@ -92,7 +92,7 @@ public class PlayerStats : MonoBehaviour
         stats.Add("Spine Speed", 10f);
 
         stats.Add("Double Jumps", 0f);
-        stats.Add("Safe Fall Speed", 7f);
+        stats.Add("Safe Fall Speed", 10f);
         stats.Add("Jump Force", 5f);
 
         stats.Add("Base Metabolism", 0.1f);

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ConveyorBeam : MonoBehaviour
 {
-    public GameObject beamRingParticles;
     public Vector3 beamOrientation;
     public float beamSpeed = 10f;
 

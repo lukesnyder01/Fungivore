@@ -94,6 +94,11 @@ public class PlayerController : MonoBehaviour
     //private float strafeRecoilAmount = 3;
 
 
+    private float[] fallSpeedBuffer = new float[5];
+    private int fallSpeedBufferIndex = 0;
+    private float currentFallSpeed;
+
+
     void Awake()
     {
         screenDamage = GetComponent<ScreenDamageIndicator>();
@@ -138,10 +143,8 @@ public class PlayerController : MonoBehaviour
         }
 
         moveDirection = transform.right * playerInput.xInput * moveSpeed * lateralSprintSpeedPenalty + transform.forward * playerInput.zInput * moveSpeed;
-
+        
         HandleGravity();
-
-        HandleJumping();
 
         HandleDashing();
 
@@ -158,6 +161,13 @@ public class PlayerController : MonoBehaviour
 
     void HandleGravity()
     {
+        //keep a buffer of the player's fall speed, find the max value, and use that for fall damage
+        fallSpeedBuffer[fallSpeedBufferIndex] = characterController.velocity.y;
+        fallSpeedBufferIndex = (fallSpeedBufferIndex + 1) % fallSpeedBuffer.Length;
+        currentFallSpeed = Mathf.Max(fallSpeedBuffer);
+
+        Debug.Log(currentFallSpeed);
+
         if (hitHead && moveDirection.y > 0)
         {
             currentVerticalSpeed = -0.1f;
@@ -175,9 +185,10 @@ public class PlayerController : MonoBehaviour
             currentVerticalSpeed = -0.2f; // slowly push player down so they keep in contact with the ground
         }
 
+        HandleJumping();
+
         moveDirection.y += currentVerticalSpeed;
     }
-
 
 
     void HandleJumping()
@@ -189,12 +200,6 @@ public class PlayerController : MonoBehaviour
             doubleJumpCount = 0;
             playerStats.IncreaseHungerFromJumping();
             recoilScript.RecoilJump(jumpRecoilAmount);
-
-            if (currentVerticalSpeed > jumpForce)
-            {
-                currentVerticalSpeed = jumpForce;
-            }
-
         }
         else if (playerInput.jumpInput && doubleJumpCount < playerStats.GetStatValue("Double Jumps"))
         {
@@ -203,15 +208,12 @@ public class PlayerController : MonoBehaviour
             doubleJumpCount++;
             playerStats.IncreaseHungerFromJumping();
             recoilScript.RecoilJump(jumpRecoilAmount);
-
-            if (currentVerticalSpeed > jumpForce)
-            {
-                currentVerticalSpeed = jumpForce;
-            }
         }
 
-        moveDirection.y += currentVerticalSpeed;
-
+        if (currentVerticalSpeed > jumpForce && !playerInConveyorBeam)
+        {
+            currentVerticalSpeed = jumpForce;
+        }
     }
 
 
@@ -279,28 +281,30 @@ public class PlayerController : MonoBehaviour
 
     void PlayerHitsGround()
     {
-        float fallSpeed = characterController.velocity.y;
 
-        if (fallSpeed < -1f)
+
+        if (currentFallSpeed < -1f)
         {
-            float playbackVolume = Mathf.Clamp(-fallSpeed / 10 + 0.3f, 0.5f, 1f);
+            float playbackVolume = Mathf.Clamp(-currentFallSpeed / 10 + 0.3f, 0.5f, 1f);
             AudioManager.Instance.PlayAtVolume("PlayerLanding", playbackVolume);
             recoilScript.RecoilJump(landRecoilAmount);
         }
 
         //fall damage calculation
-        if (fallSpeed < -minSafeFallSpeed && !playerInConveyorBeam)                
+        if (currentFallSpeed < -minSafeFallSpeed && !playerInConveyorBeam)                
         {
-            float fallDamage = Mathf.Ceil((-fallSpeed - minSafeFallSpeed) * (-fallSpeed - minSafeFallSpeed));
+            float fallDamage = Mathf.Ceil((-currentFallSpeed - minSafeFallSpeed) * (-currentFallSpeed - minSafeFallSpeed));
 
             playerStats.ApplyDamage(2 * fallDamage);
         }
 
         //slowly push player down so they keep in contact with the ground
-        if (fallSpeed <= 0.01f)
+        if (currentFallSpeed <= 0.01f)
         {
             currentVerticalSpeed = -0.2f;         
         }
+
+
     }
 
 
