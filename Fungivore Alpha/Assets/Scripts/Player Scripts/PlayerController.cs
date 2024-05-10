@@ -51,8 +51,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 currentBeamPos;
 
     private float maxBeamSpeed = 20f;
-    private float beamAcceleration = 1.03f;
-    private float beamDeceleration = 0.96f;
+    private float beamAcceleration = 1.04f;
+    private float beamDeceleration = 0.98f;
 
     private bool playerInConveyorBeam;
     private Vector3 beamPushForce;
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
     private float[] fallSpeedBuffer = new float[5];
     private int fallSpeedBufferIndex = 0;
-    private float currentFallSpeed;
+    private float measuredVerticalSpeed;
 
 
     void Awake()
@@ -164,11 +164,11 @@ public class PlayerController : MonoBehaviour
         //keep a buffer of the player's fall speed, find the max value, and use that for fall damage
         fallSpeedBuffer[fallSpeedBufferIndex] = characterController.velocity.y;
         fallSpeedBufferIndex = (fallSpeedBufferIndex + 1) % fallSpeedBuffer.Length;
-        currentFallSpeed = Mathf.Max(fallSpeedBuffer);
+        measuredVerticalSpeed = Mathf.Min(fallSpeedBuffer);
 
-        Debug.Log(currentFallSpeed);
+        
 
-        if (hitHead && moveDirection.y > 0)
+        if (hitHead && measuredVerticalSpeed > 0)
         {
             currentVerticalSpeed = -0.1f;
         }
@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
-            currentVerticalSpeed = -0.2f; // slowly push player down so they keep in contact with the ground
+            //currentVerticalSpeed = -0.2f; // slowly push player down so they keep in contact with the ground
         }
 
         HandleJumping();
@@ -281,29 +281,39 @@ public class PlayerController : MonoBehaviour
 
     void PlayerHitsGround()
     {
-
-
-        if (currentFallSpeed < -1f)
+        if (currentVerticalSpeed < -1f)
         {
-            float playbackVolume = Mathf.Clamp(-currentFallSpeed / 10 + 0.3f, 0.5f, 1f);
+            Debug.Log("Measured fall speed - " + measuredVerticalSpeed + " Current vertical speed - " + currentVerticalSpeed);
+
+            float playbackVolume = Mathf.Clamp(-measuredVerticalSpeed / 10 + 0.3f, 0.5f, 1f);
             AudioManager.Instance.PlayAtVolume("PlayerLanding", playbackVolume);
             recoilScript.RecoilJump(landRecoilAmount);
-        }
 
-        //fall damage calculation
-        if (currentFallSpeed < -minSafeFallSpeed && !playerInConveyorBeam)                
-        {
-            float fallDamage = Mathf.Ceil((-currentFallSpeed - minSafeFallSpeed) * (-currentFallSpeed - minSafeFallSpeed));
+            if (!playerInConveyorBeam)
+            {
+                beamPushForce = Vector3.zero;
+            }
 
-            playerStats.ApplyDamage(2 * fallDamage);
+            currentVerticalSpeed = -0.2f;
+
+            //fall damage calculation
+            if (measuredVerticalSpeed < -minSafeFallSpeed && !playerInConveyorBeam)
+            {
+                float excessFallSpeed = Mathf.Abs(measuredVerticalSpeed) - minSafeFallSpeed;
+
+                float fallDamage = Mathf.Ceil(excessFallSpeed * excessFallSpeed);
+
+                playerStats.ApplyDamage(fallDamage);
+
+                Debug.Log("Fall Damage = " + fallDamage);
+            }
         }
 
         //slowly push player down so they keep in contact with the ground
-        if (currentFallSpeed <= 0.01f)
+        if (currentVerticalSpeed <= 0.01f)
         {
-            currentVerticalSpeed = -0.2f;         
+            currentVerticalSpeed = -0.2f;
         }
-
 
     }
 
@@ -363,7 +373,7 @@ public class PlayerController : MonoBehaviour
             // Modify currentVerticalSpeed
             if (beamOrientation.y > 0.5f)
             {
-                currentVerticalSpeed = 0f;
+                currentVerticalSpeed = -0.5f;
             }
 
         }
@@ -373,7 +383,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        // Apply the horizontal components of the beam push force to moveDirection
+        // Apply the beam push force to moveDirection
         moveDirection += new Vector3(beamPushForce.x, beamPushForce.y, beamPushForce.z);
     }
 
