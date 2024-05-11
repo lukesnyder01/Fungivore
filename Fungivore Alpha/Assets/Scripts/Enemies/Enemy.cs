@@ -279,7 +279,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void MoveTowardsPlayer(float thrustMultiplier)
     {
-        rb.AddForce(directionToPlayer + Vector3.up * thrust * thrustMultiplier);
+        rb.AddForce(directionToPlayer * thrust * thrustMultiplier);
     }
 
 

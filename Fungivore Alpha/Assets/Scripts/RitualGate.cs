@@ -75,8 +75,9 @@ public class RitualGate : MonoBehaviour
         //playerStats.ApplyDamage(10);
 
         var camTransform = Camera.main.transform;
+        var bloodSplatterPos = camTransform.position + Vector3.down * 0.5f;
 
-        var particleSpatter = Instantiate(bloodSpatter, camTransform.position, camTransform.rotation);
+        var particleSpatter = Instantiate(bloodSpatter, bloodSplatterPos, Quaternion.Euler(Vector3.up));
         particleSpatter.transform.parent = transform.root;
     }
 

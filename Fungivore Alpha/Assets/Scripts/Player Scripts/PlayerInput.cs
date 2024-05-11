@@ -40,7 +40,7 @@ public class PlayerInput : MonoBehaviour
             xInput = Input.GetAxis("Horizontal");
             zInput = Input.GetAxis("Vertical");
             shootInput = Input.GetMouseButton(0);
-            jumpInput = Input.GetButton("Jump");
+            jumpInput = Input.GetButtonDown("Jump");
             dashInput = Input.GetKey(KeyCode.LeftControl);
             sprintInput = Input.GetKey(KeyCode.LeftShift);
             interactInput = Input.GetKeyDown(KeyCode.E);

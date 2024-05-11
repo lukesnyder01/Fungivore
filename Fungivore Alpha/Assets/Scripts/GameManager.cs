@@ -43,7 +43,15 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //AudioManager.Instance.Play("theme03WalkBetweenTheWaters");
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+
+        if (sceneName == "main_menu")
+        {
+            AudioManager.Instance.Play("theme03WalkBetweenTheWaters");
+        }
+
+
     }
 
 

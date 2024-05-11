@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MazeAnt : Ant
 {
-    
     private List<Vector3> terminalPosition = new List<Vector3>();
     private List<int> terminalDirection = new List<int>();
 
@@ -50,7 +49,6 @@ public class MazeAnt : Ant
         if (currentStep == totalSteps)
         {
             Respawn();
-
             CloseMazeEnds();
         }
 
@@ -248,10 +246,20 @@ public class MazeAnt : Ant
 
     }
 
+    public override bool SpaceIsEmpty(Vector3 direction)
+    {
+        // Calculate half dimensions of the box based on the side length of the ant
+        Vector3 halfSize = new Vector3((antSideLength / 2) - 0.1f, (antSideLength / 2) - 0.1f, (antSideLength / 2) - 0.1f);
+
+        // Perform a BoxCast in the specified direction
+        return (!Physics.BoxCast(antPos, halfSize, direction, out hit, Quaternion.identity, antMoveDistance));
+    }
+
+
 
     public bool AntIsHittingSomething()
     {
-        var halfExtents = new Vector3(antSideLength / 2, antSideLength / 2, antSideLength / 2);
+        var halfExtents = new Vector3(antSideLength / 2.1f, antSideLength / 2.1f, antSideLength / 2.1f);
 
         Collider[] hitColliders = Physics.OverlapBox(antPos, halfExtents, Quaternion.identity);
 

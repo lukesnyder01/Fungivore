@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
 
     private float maxBeamSpeed = 20f;
     private float beamAcceleration = 1.04f;
-    private float beamDeceleration = 0.98f;
+    private float playerDeceleration = 0.95f;
 
     private bool playerInConveyorBeam;
     private Vector3 beamPushForce;
@@ -159,6 +159,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+
     void HandleGravity()
     {
         //keep a buffer of the player's fall speed, find the max value, and use that for fall damage
@@ -231,7 +232,7 @@ public class PlayerController : MonoBehaviour
 
         if (!playerIsDashing)
         {
-            currentDashSpeed *= beamDeceleration;
+            currentDashSpeed *= playerDeceleration;
 
             if (dashCooldownTimer <= 0 && playerInput.dashInput)
             {
@@ -379,7 +380,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            beamPushForce *= beamDeceleration;
+            beamPushForce *= playerDeceleration;
         }
 
 

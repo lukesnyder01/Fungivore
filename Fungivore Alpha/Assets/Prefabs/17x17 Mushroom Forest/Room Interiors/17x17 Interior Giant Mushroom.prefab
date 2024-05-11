@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5172893071992995124}
   m_Layer: 0
-  m_Name: Room Interior Level 01 Forest
+  m_Name: 17x17 Interior Giant Mushroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -304,6 +304,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346284, guid: 60c9ef0ecd1d04640b830aa4856c21ef,
+        type: 3}
+      propertyPath: spawnPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 4899378156460765924, guid: 6059560456f01674daa78248e0866c17,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c9ef0ecd1d04640b830aa4856c21ef, type: 3}
 --- !u!4 &1247441410110357164 stripped
@@ -465,6 +471,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346284, guid: 60c9ef0ecd1d04640b830aa4856c21ef,
+        type: 3}
+      propertyPath: spawnPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 4899378156460765924, guid: 6059560456f01674daa78248e0866c17,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c9ef0ecd1d04640b830aa4856c21ef, type: 3}
 --- !u!4 &1962185531846670670 stripped
@@ -728,6 +740,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346284, guid: 60c9ef0ecd1d04640b830aa4856c21ef,
+        type: 3}
+      propertyPath: spawnPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 4899378156460765924, guid: 6059560456f01674daa78248e0866c17,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c9ef0ecd1d04640b830aa4856c21ef, type: 3}
 --- !u!4 &8624372666572250409 stripped
@@ -900,6 +918,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346284, guid: 60c9ef0ecd1d04640b830aa4856c21ef,
+        type: 3}
+      propertyPath: spawnPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 4899378156460765924, guid: 6059560456f01674daa78248e0866c17,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c9ef0ecd1d04640b830aa4856c21ef, type: 3}
 --- !u!4 &5089273449660402550 stripped
@@ -975,6 +999,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346284, guid: 60c9ef0ecd1d04640b830aa4856c21ef,
+        type: 3}
+      propertyPath: spawnPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 4899378156460765924, guid: 6059560456f01674daa78248e0866c17,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c9ef0ecd1d04640b830aa4856c21ef, type: 3}
 --- !u!4 &5675658255402486832 stripped
@@ -1050,6 +1080,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2684491439875346284, guid: 60c9ef0ecd1d04640b830aa4856c21ef,
+        type: 3}
+      propertyPath: spawnPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 4899378156460765924, guid: 6059560456f01674daa78248e0866c17,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c9ef0ecd1d04640b830aa4856c21ef, type: 3}
 --- !u!4 &6363029798463526214 stripped

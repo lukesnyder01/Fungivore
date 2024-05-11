@@ -91,7 +91,7 @@ public class PlayerStats : MonoBehaviour
         stats.Add("Max Spines", 10f);
         stats.Add("Spine Speed", 10f);
 
-        stats.Add("Double Jumps", 0f);
+        stats.Add("Double Jumps", 1f);
         stats.Add("Safe Fall Speed", 7f);
         stats.Add("Jump Force", 5f);
 
