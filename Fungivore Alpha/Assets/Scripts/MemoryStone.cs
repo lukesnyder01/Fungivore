@@ -4,8 +4,10 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using TMPro;
 
-public class MemoryStone : InteractableObject
+public class MemoryStone : MonoBehaviour, IInteractable
 {
+
+
 
     string death = "d̶̖̏ḙ̴͋ă̴͙t̷̘̚h̶͇͝";
 
@@ -96,6 +98,7 @@ public class MemoryStone : InteractableObject
     public int maxStringLength = 20;
 
 
+    public string PromptText { get; set; } = "E";
 
     // Start is called before the first frame update
     void Start()
@@ -149,8 +152,17 @@ public class MemoryStone : InteractableObject
     }
     */
 
+    public void StartFocus()
+    {
 
-    public override void Interact()
+    }
+
+    public void LoseFocus()
+    {
+
+    }
+
+    public void Interact()
     {
         AddStats();
 

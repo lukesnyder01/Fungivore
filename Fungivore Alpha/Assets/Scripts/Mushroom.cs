@@ -3,15 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Mushroom : InteractableObject
+public class Mushroom : MonoBehaviour, IInteractable
 {
+
     public GameObject mushroomDeathEffect;
 
     private GameObject audioPrefab;
     private AudioSource audioSource;
 
+    public string PromptText { get; set; } = "E";
 
-    public override void Interact() 
+    public void StartFocus()
+    {
+
+    }
+
+    public void LoseFocus()
+    {
+
+    }
+
+    public void Interact() 
     {
         PlayerStats.sporesInventory++;
 
@@ -20,6 +32,7 @@ public class Mushroom : InteractableObject
 
         Destroy(gameObject);
     }
+
 
 
 }

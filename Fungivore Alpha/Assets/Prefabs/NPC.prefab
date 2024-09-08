@@ -32,7 +32,7 @@ Transform:
   m_LocalScale: {x: 0.27837086, y: 0.27837086, z: 0.27837086}
   m_Children: []
   m_Father: {fileID: 4326433279729299084}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 3.5830002, y: 0, z: 0}
 --- !u!114 &661165718600140265
 MonoBehaviour:
@@ -9031,7 +9031,7 @@ Transform:
   m_Children:
   - {fileID: 8767738079162281605}
   m_Father: {fileID: 4326433279729299084}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 187.295}
 --- !u!1 &802647044668357442
 GameObject:
@@ -9640,7 +9640,7 @@ Transform:
   m_Children:
   - {fileID: 134366861331198373}
   m_Father: {fileID: 4326433279729299084}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 166.50002}
 --- !u!1 &5272513964501232899
 GameObject:
@@ -9910,6 +9910,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4326433279729299084}
   - component: {fileID: 9026373362422292077}
+  - component: {fileID: 7507888334753503636}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -9928,9 +9929,9 @@ Transform:
   m_LocalPosition: {x: -0.27967173, y: -25, z: -17.940125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 464838067627785228}
   - {fileID: 100925926688925740}
   - {fileID: 1572760051443092648}
-  - {fileID: 464838067627785228}
   - {fileID: 7872339790585940497}
   - {fileID: 1399162192286490854}
   m_Father: {fileID: 0}
@@ -9950,6 +9951,19 @@ CapsuleCollider:
   m_Height: 0.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.27, z: 0}
+--- !u!114 &7507888334753503636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5545508228878818342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f0c7046c11b4d4449afac25ce1521f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  promptText: '[Speak]'
 --- !u!1 &5633854834198322963
 GameObject:
   m_ObjectHideFlags: 0

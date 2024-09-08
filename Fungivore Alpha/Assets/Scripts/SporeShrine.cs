@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SporeShrine : InteractableObject, IDamageable
+public class SporeShrine : MonoBehaviour, IInteractable, IDamageable
 {
     [SerializeField] private float _health = 5f;
 
@@ -12,14 +12,24 @@ public class SporeShrine : InteractableObject, IDamageable
     public GameObject spawnParticleEffect;
     public string spawnSound;
 
-
+    public string PromptText { get; set; } = "E";
 
     void Start()
     {
         Health = _health;
     }
 
-    public override void Interact()
+    public void StartFocus()
+    {
+
+    }
+
+    public void LoseFocus()
+    {
+
+    }
+
+    public void Interact()
     {
         Damage(1f);
     }

@@ -18,7 +18,7 @@ public class Recoil : MonoBehaviour
 
     [SerializeField] private float translateSpeed = 20f;
 
-    [SerializeField] private float maxDisplacement = 0.05f;
+    //[SerializeField] private float maxDisplacement = 0.05f;
 
     private Vector3 currentPosition;
     private Vector3 targetPosition;

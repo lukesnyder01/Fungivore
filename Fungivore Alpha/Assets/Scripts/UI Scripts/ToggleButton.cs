@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToggleButton : InteractableObject
+public class ToggleButton : MonoBehaviour, IInteractable
 {
     public GameObject targetObject;
 
@@ -13,25 +13,38 @@ public class ToggleButton : InteractableObject
 
     void Awake()
     {
-        promptText = toggleOnText;
+        PromptText = toggleOnText;
     }
 
+    public string PromptText { get; set; } = "E";
 
-    public override void Interact()
+    public void StartFocus()
+    {
+
+    }
+
+    public void LoseFocus()
+    {
+
+    }
+
+    public void Interact()
     {
         if (toggleIsOn)
         {
             toggleIsOn = false;
             targetObject.SetActive(false);
-            promptText = toggleOffText;
+            PromptText = toggleOffText;
         }
         else
         {
             toggleIsOn = true;
             targetObject.SetActive(true);
-            promptText = toggleOnText;
+            PromptText = toggleOnText;
         }
     }
+
+
 
 
 

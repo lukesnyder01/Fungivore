@@ -11,7 +11,7 @@ public class PlayerInteract : MonoBehaviour
     LayerMask mask = 0;
 
     private Transform cameraTransform;
-    private InteractableObject currentTarget;
+    private IInteractable currentTarget;
     private TextMeshPro textMesh;
     private PlayerInput playerInput;
 
@@ -34,17 +34,17 @@ public class PlayerInteract : MonoBehaviour
 
         if (Physics.Raycast(ray, out hitInfo, interactDist, mask))
         {
-            if (hitInfo.transform.TryGetComponent(out InteractableObject interactable))
+            if (hitInfo.transform.TryGetComponent(out IInteractable interactable))
             {
                 if (currentTarget == null)
                 {
                     currentTarget = interactable;
                     currentTarget.StartFocus();
-                    textMesh.text = interactable.promptText;
+                    textMesh.text = interactable.PromptText;
                 }
                 else
                 {
-                    textMesh.text = interactable.promptText;
+                    textMesh.text = interactable.PromptText;
                 }
             }
             else //didn't hit an interactable
