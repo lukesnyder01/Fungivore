@@ -5,21 +5,21 @@ using TMPro;
 
 public class TextToSpeech : MonoBehaviour
 {
-    public float speechSpeed;
 
-    public float letterSoundLength;
+    public DialogueVoice[] voices;
 
-    public float clipVolume;
+    private DialogueVoice dialogueVoice;
 
-    public float shortPauseLength;
-    public float longPauseLength;
-
-    public TextMeshPro textMesh;
-
-    public AudioClip[] sound;
+    private float _speechSpeed;
+    private float _letterSoundLength;
+    private float _clipVolume;
+    private float _shortPauseLength;
+    private float _longPauseLength;
+    private AudioClip[] _sounds;
 
     public GameObject player;
 
+    public TextMeshPro textMesh;
 
     public string[] dialogueText;
     private int currentTextIndex = 0;
@@ -48,29 +48,49 @@ public class TextToSpeech : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown("q"))
-        {
-            if (currentlySpeaking == false)
-            {
-                currentlySpeaking = true;
-                speechCoroutine = StartCoroutine(ReadString(dialogueText[currentTextIndex]));
-            }
-            else
-            {
-                if (speechCoroutine != null)
-                {
-                    StopCoroutine(speechCoroutine);
-                }    
-
-                textMesh.text = dialogueText[currentTextIndex];
-                currentlySpeaking = false;
-
-                GoToNextDialogueText();
-            }
+        { 
+            StartSpeech(dialogueText[currentTextIndex], 0);
         }
 
         HideTextAfterTime();
 
     }
+
+
+    public void StartSpeech(string text, int voiceIndex)
+    {
+        LoadVoice(voiceIndex);
+
+
+        if (currentlySpeaking == false)
+        {
+            currentlySpeaking = true;
+            speechCoroutine = StartCoroutine(ReadString(text));
+        }
+        else
+        {
+            if (speechCoroutine != null)
+            {
+                StopCoroutine(speechCoroutine);
+            }
+
+            textMesh.text = text;
+            currentlySpeaking = false;
+
+            GoToNextDialogueText();
+        }
+    }
+
+    void LoadVoice(int i)
+    {
+        _speechSpeed = voices[i].speechSpeed;
+        _letterSoundLength = voices[i].letterSoundLength;
+        _clipVolume = voices[i].clipVolume;
+        _shortPauseLength = voices[i].shortPauseLength;
+        _longPauseLength = voices[i].longPauseLength;
+        _sounds = voices[i].sounds;
+}
+
 
 
     IEnumerator ReadString(string text)
@@ -83,33 +103,36 @@ public class TextToSpeech : MonoBehaviour
 
             if (c == ' ' || c == ',')
             {
-                yield return new WaitForSeconds(shortPauseLength / speechSpeed);
+                yield return new WaitForSeconds(_shortPauseLength / _speechSpeed);
             }
             else if (c == '.')
             {
-                yield return new WaitForSeconds(longPauseLength / speechSpeed);
+                yield return new WaitForSeconds(_longPauseLength / _speechSpeed);
             }
             else
             {
                 int index = (int)char.ToLower(c) - 97; // get the index of the corresponding AudioClip
+                index = index % _sounds.Length;
+
 
                 float duration = 0.1f;
 
-                if (index >= 0 && index < sound.Length) // make sure the index is within bounds
+                if (index >= 0)
                 {
-                    duration = sound[index].length / speechSpeed;
+                    duration = _sounds[index].length / _speechSpeed;
 
                     // play the AudioClip at the position of the GameObject
-                    AudioSource.PlayClipAtPoint(sound[index], player.transform.position, clipVolume);
+                    AudioSource.PlayClipAtPoint(_sounds[index], player.transform.position, _clipVolume);
                 }
 
-                yield return new WaitForSeconds(duration * letterSoundLength);
+                yield return new WaitForSeconds(duration * _letterSoundLength);
             }
         }
 
         GoToNextDialogueText();
         currentlySpeaking = false;
     }
+
 
 
     void GoToNextDialogueText()

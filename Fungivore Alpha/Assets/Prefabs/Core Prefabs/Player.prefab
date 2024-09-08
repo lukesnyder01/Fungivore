@@ -528,6 +528,7 @@ GameObject:
   - component: {fileID: 9187340029247936689}
   - component: {fileID: 3060073390335926168}
   - component: {fileID: 112416412}
+  - component: {fileID: 11161377}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -553,6 +554,7 @@ Transform:
   - {fileID: 4855019364738967106}
   - {fileID: 5918831830448248898}
   - {fileID: 4855019365607042426}
+  - {fileID: 8985726466557634730}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -606,6 +608,7 @@ MonoBehaviour:
   stepSound: {fileID: 8300000, guid: 4ac663f1304bb23458f99036bb6a6922, type: 3}
   headCheckPosition: {fileID: 4855019364738967106}
   groundCheckPosition: {fileID: 4855019364201197260}
+  beamRings: {fileID: 5744246473514353375}
   groundCheckRadius: 0.2
   headCheckRadius: 0.1
   groundMask:
@@ -754,6 +757,7 @@ MonoBehaviour:
   recoilZ: 3
   snappiness: 6
   returnSpeed: 5
+  translateSpeed: 50
 --- !u!114 &3060073390335926168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -786,6 +790,33 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 881beef8eda071748bdf7c03c7f9823a, type: 2}
   - {fileID: 11400000, guid: c00820112006ba94a958885e0e5d7b59, type: 2}
   draftPool: []
+--- !u!114 &11161377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4855019364282867774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5c16016f69c9a745b7dd71e1174dd83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voices:
+  - {fileID: 11400000, guid: 02a5cc23d6028af498c062514eb469ad, type: 2}
+  - {fileID: 11400000, guid: 2e5bad0955038c547a64e91e56e1493d, type: 2}
+  player: {fileID: 0}
+  textMesh: {fileID: 0}
+  dialogueText:
+  - Bow before me, depraved. You must have a severe Morld-Cologi infection, for a
+    Surrendered to descend so far, and you wish to fall further. Truly vile.
+  - "I alone have the power to print you a new corpse below, in Superframe[0]. But
+    for me to partake in such filth, something so hideous and detestable\u2026"
+  - I want more network authority. My Allightment is the largest interface, but not
+    by enough. The other Sophonts maintain massive suroximand farms.
+  - Eviscerate their suroximands. Do not rest until they have all been split open.
+    Bring me their Nk. At least 100,000.
+  textTimeout: 4
 --- !u!1 &4855019364364768012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1450,6 +1481,102 @@ Transform:
   m_Father: {fileID: 4855019364282867773}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1375755063
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4855019364282867773}
+    m_Modifications:
+    - target: {fileID: 5744246474353236456, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+        type: 3}
+      propertyPath: m_Name
+      value: PS_Conveyor Rings
+      objectReference: {fileID: 0}
+    - target: {fileID: 5744246474353236456, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985726465718760349, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985726465718760349, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985726465718760349, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985726465718760349, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985726465718760349, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985726465718760349, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985726465718760349, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985726465718760349, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985726465718760349, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985726465718760349, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985726465718760349, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985726465718760349, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985726465718760349, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 18448f1bac7cd994e94ab4cf7a56ff6b, type: 3}
+--- !u!1 &5744246473514353375 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5744246474353236456, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1375755063}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8985726466557634730 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8985726465718760349, guid: 18448f1bac7cd994e94ab4cf7a56ff6b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1375755063}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2252148658124931345
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1574,15 +1701,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2d864abd5043904e87353e63de72fcc, type: 3}
---- !u!198 &4855019365289449394 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6638661157975529123, guid: c2d864abd5043904e87353e63de72fcc,
-    type: 3}
-  m_PrefabInstance: {fileID: 2252148658124931345}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4855019365289449404 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6638661157975529133, guid: c2d864abd5043904e87353e63de72fcc,
+    type: 3}
+  m_PrefabInstance: {fileID: 2252148658124931345}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &4855019365289449394 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6638661157975529123, guid: c2d864abd5043904e87353e63de72fcc,
     type: 3}
   m_PrefabInstance: {fileID: 2252148658124931345}
   m_PrefabAsset: {fileID: 0}

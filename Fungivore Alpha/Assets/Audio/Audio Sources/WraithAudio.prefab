@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8710508540891095019}
   - component: {fileID: 8710508540891095016}
   - component: {fileID: -191840273797804864}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: WraithAudio
   m_TagString: AudioSource
   m_Icon: {fileID: 0}

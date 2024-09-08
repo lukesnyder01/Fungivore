@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43aedd8e332d0042b85907efb0deafd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptText: '[E] Harvest'
   mushroomDeathEffect: {fileID: 8160540889385062186, guid: a64c5b52495146c47943367f0ed92b6d,
     type: 3}
 --- !u!135 &2882202414493796476
@@ -93,7 +92,7 @@ PrefabInstance:
     - target: {fileID: 576895138002370246, guid: eb01fbeab31471d4f896c5a8290cac7c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.02
       objectReference: {fileID: 0}
     - target: {fileID: 576895138002370246, guid: eb01fbeab31471d4f896c5a8290cac7c,
         type: 3}

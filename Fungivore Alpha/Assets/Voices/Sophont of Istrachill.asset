@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c229f9e6ca75147b17c1000fb662ab, type: 3}
+  m_Name: Sophont of Istrachill
+  m_EditorClassIdentifier: 
+  speechSpeed: 7
+  letterSoundLength: 0.8
+  clipVolume: 0.5
+  shortPauseLength: 0.3
+  longPauseLength: 0.6
+  sounds:
+  - {fileID: 8300000, guid: 6994abbe66c5889458db46279f6648c4, type: 3}
+  - {fileID: 8300000, guid: 3250683fb01b66d42ac4e25b28d3efb4, type: 3}
+  - {fileID: 8300000, guid: 4f64943e08461e141bf3f6979c989739, type: 3}
+  - {fileID: 8300000, guid: 221ab782d6fb7524aa0ab59778b31b54, type: 3}
+  - {fileID: 8300000, guid: 7e522d1ba16ea854b84bbe279e10421b, type: 3}
+  - {fileID: 8300000, guid: ce35aea0609b6c441882fd0ee512f7f5, type: 3}
+  - {fileID: 8300000, guid: f2a0669659a8da14892effc69374aec7, type: 3}
+  - {fileID: 8300000, guid: 2a92b4f24c0247c4799ace81b2ac4523, type: 3}
+  - {fileID: 8300000, guid: 9418fec116fe2654f97ca2fbb546393b, type: 3}
+  - {fileID: 8300000, guid: 81b303b85e58ed54cae7fbbb141fb222, type: 3}
+  - {fileID: 8300000, guid: 95c30df0076d4344ca00ac062ee41e34, type: 3}
+  - {fileID: 8300000, guid: c1125af145e52854aa10399df8cf6bb4, type: 3}
+  - {fileID: 8300000, guid: d6f3f19750898d3469139cd5f42a4d3f, type: 3}
+  - {fileID: 8300000, guid: 39c7038676c6153479b2cd2a3862c6ce, type: 3}
+  - {fileID: 8300000, guid: 2d583bcab11c4b64492cd2e31d524204, type: 3}
+  - {fileID: 8300000, guid: 4715dc1490c567c4ba137f02e694bd18, type: 3}
+  - {fileID: 8300000, guid: f57d2cfde1d9b1e4aa84f2486c7381f0, type: 3}
+  - {fileID: 8300000, guid: 2b65a55826a1d89419107295af670dc1, type: 3}
+  - {fileID: 8300000, guid: ca9d3c55759e53c40a1fa98061b1694e, type: 3}
+  - {fileID: 8300000, guid: 24af0ec241e54b8409e46318b42f5705, type: 3}
+  - {fileID: 8300000, guid: 9c968b9ecf3ddfa46a3fb351cadb1325, type: 3}
+  - {fileID: 8300000, guid: e20f2c84b924ab245ba67f14aedc8b7b, type: 3}
+  - {fileID: 8300000, guid: 6901f70ed61619340a0c86d3e9145fc8, type: 3}
+  - {fileID: 8300000, guid: 4b089e5c7efdb64448f94357bc340912, type: 3}
+  - {fileID: 8300000, guid: 744d8430af22ec141894d67c2f2dab35, type: 3}
+  - {fileID: 8300000, guid: 107115adf8d0d524c8d2eb385c34fa02, type: 3}

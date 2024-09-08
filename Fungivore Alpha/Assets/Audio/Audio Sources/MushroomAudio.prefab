@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8710508540891095019}
   - component: {fileID: 8710508540891095016}
   - component: {fileID: -191840273797804864}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MushroomAudio
   m_TagString: AudioSource
   m_Icon: {fileID: 0}
@@ -45,8 +45,8 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 8aee168640763544ba80d026146748b7, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.34
-  m_Pitch: 0.3
+  m_Volume: 0.428
+  m_Pitch: 0.48
   Loop: 1
   Mute: 0
   Spatialize: 0
@@ -54,7 +54,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 8
+  MaxDistance: 20
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -140,7 +140,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.050277777
       inSlope: 0
       outSlope: 0
       tangentMode: 0

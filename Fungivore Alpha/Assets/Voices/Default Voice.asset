@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c229f9e6ca75147b17c1000fb662ab, type: 3}
+  m_Name: Default Voice
+  m_EditorClassIdentifier: 
+  speechSpeed: 20
+  letterSoundLength: 1
+  clipVolume: 0.5
+  shortPauseLength: 0.3
+  longPauseLength: 1
+  sounds:
+  - {fileID: 8300000, guid: a2c895c224c21ca4d9c04018c4895624, type: 3}
+  - {fileID: 8300000, guid: a852911325de4cd42907dc968b1784ba, type: 3}
+  - {fileID: 8300000, guid: a8e487367b6e41c4f8b7155c07eaaccf, type: 3}
+  - {fileID: 8300000, guid: 52402be379f42e549abe100ca6188474, type: 3}
+  - {fileID: 8300000, guid: 12f6d9e53236f39429390b4c1a1eb5be, type: 3}
+  - {fileID: 8300000, guid: 1998cac4ceac70948a89071605e8a7de, type: 3}
+  - {fileID: 8300000, guid: d83eea58b7541614d9485f2165e64bbf, type: 3}
+  - {fileID: 8300000, guid: d683540a1dd2d99429c565040d387445, type: 3}
+  - {fileID: 8300000, guid: 16efa1af09067dd4ab8ce69da53a23f9, type: 3}
+  - {fileID: 8300000, guid: 9fb4422e5149db74f9f8ba15775e7716, type: 3}
+  - {fileID: 8300000, guid: 8ab150e4faa071a4ea7d0aa8748b22da, type: 3}
