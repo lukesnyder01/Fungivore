@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c229f9e6ca75147b17c1000fb662ab, type: 3}
   m_Name: Default Voice
   m_EditorClassIdentifier: 
-  speechSpeed: 20
-  letterSoundLength: 1
-  clipVolume: 0.5
-  shortPauseLength: 0.3
-  longPauseLength: 1
+  speechSpeed: 8
+  letterSoundLength: 0.2
+  clipVolume: 0.15
+  shortPauseLength: 1
+  longPauseLength: 1.5
   sounds:
   - {fileID: 8300000, guid: a2c895c224c21ca4d9c04018c4895624, type: 3}
   - {fileID: 8300000, guid: a852911325de4cd42907dc968b1784ba, type: 3}
@@ -29,3 +29,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 16efa1af09067dd4ab8ce69da53a23f9, type: 3}
   - {fileID: 8300000, guid: 9fb4422e5149db74f9f8ba15775e7716, type: 3}
   - {fileID: 8300000, guid: 8ab150e4faa071a4ea7d0aa8748b22da, type: 3}
+  - {fileID: 8300000, guid: 90f0ffb932bfdec4e9075cb7b9605eb9, type: 3}
+  - {fileID: 8300000, guid: b5c7bd9da4f6ad6438bd75e205cd4c3e, type: 3}
+  - {fileID: 8300000, guid: 89b7d1d83efc0324f8f9ed47e39b0549, type: 3}
+  - {fileID: 8300000, guid: 62f6e0da08117574390d435df8c4a2f3, type: 3}
+  - {fileID: 8300000, guid: 998d4032fd29bb745affecf9ddf6f106, type: 3}

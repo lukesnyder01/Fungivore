@@ -49,7 +49,7 @@ public class TextToSpeech : MonoBehaviour
     {
         if (Input.GetKeyDown("q"))
         { 
-            StartSpeech(dialogueText[currentTextIndex], 0);
+            StartSpeech(dialogueText[currentTextIndex], 1);
         }
 
         HideTextAfterTime();

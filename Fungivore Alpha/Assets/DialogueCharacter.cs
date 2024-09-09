@@ -32,7 +32,7 @@ public class DialogueCharacter : MonoBehaviour, IInteractable
     public void Interact()
     {
         
-        textToSpeech.StartSpeech(dialogueText, 1);
+        textToSpeech.StartSpeech(dialogueText, 0);
 
     }
 

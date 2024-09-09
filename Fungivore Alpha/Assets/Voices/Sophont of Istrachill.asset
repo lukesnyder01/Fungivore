@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c229f9e6ca75147b17c1000fb662ab, type: 3}
   m_Name: Sophont of Istrachill
   m_EditorClassIdentifier: 
-  speechSpeed: 7
-  letterSoundLength: 0.8
-  clipVolume: 0.5
-  shortPauseLength: 0.3
-  longPauseLength: 0.6
+  speechSpeed: 10
+  letterSoundLength: 0.4
+  clipVolume: 0.2
+  shortPauseLength: 0.6
+  longPauseLength: 1.2
   sounds:
   - {fileID: 8300000, guid: 6994abbe66c5889458db46279f6648c4, type: 3}
   - {fileID: 8300000, guid: 3250683fb01b66d42ac4e25b28d3efb4, type: 3}
