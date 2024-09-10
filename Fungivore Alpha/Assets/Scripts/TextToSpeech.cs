@@ -24,9 +24,12 @@ public class TextToSpeech : MonoBehaviour
     public string[] dialogueText;
     private int currentTextIndex = 0;
 
+    private string currentFullDialogueText;
 
     private string currentDisplayText = "";
-    private bool currentlySpeaking = false;
+    public bool textIsHidden = true;
+
+    public bool currentlySpeaking = false;
 
     private Coroutine speechCoroutine;
 
@@ -53,33 +56,16 @@ public class TextToSpeech : MonoBehaviour
         }
 
         HideTextAfterTime();
-
     }
 
 
     public void StartSpeech(string text, int voiceIndex)
     {
+        currentlySpeaking = true;
         LoadVoice(voiceIndex);
-
-
-        if (currentlySpeaking == false)
-        {
-            currentlySpeaking = true;
-            speechCoroutine = StartCoroutine(ReadString(text));
-        }
-        else
-        {
-            if (speechCoroutine != null)
-            {
-                StopCoroutine(speechCoroutine);
-            }
-
-            textMesh.text = text;
-            currentlySpeaking = false;
-
-            GoToNextDialogueText();
-        }
+        speechCoroutine = StartCoroutine(ReadString(text));
     }
+
 
     void LoadVoice(int i)
     {
@@ -89,15 +75,29 @@ public class TextToSpeech : MonoBehaviour
         _shortPauseLength = voices[i].shortPauseLength;
         _longPauseLength = voices[i].longPauseLength;
         _sounds = voices[i].sounds;
-}
+    }
 
+
+    public void CancelReadingAndDisplayFullText()
+    {
+        if (speechCoroutine != null)
+        {
+            StopCoroutine(speechCoroutine);
+        }
+
+        textMesh.text = currentFullDialogueText;
+        currentlySpeaking = false;
+    }
 
 
     IEnumerator ReadString(string text)
     {
+        currentFullDialogueText = text;
+        textIsHidden = false;
+
         currentDisplayText = "";
 
-        foreach (char c in text)
+        foreach (char c in currentFullDialogueText)
         {
             AddLetterToDisplayText(c);
 
@@ -114,7 +114,6 @@ public class TextToSpeech : MonoBehaviour
                 int index = (int)char.ToLower(c) - 97; // get the index of the corresponding AudioClip
                 index = index % _sounds.Length;
 
-
                 float duration = 0.1f;
 
                 if (index >= 0)
@@ -129,22 +128,8 @@ public class TextToSpeech : MonoBehaviour
             }
         }
 
-        GoToNextDialogueText();
         currentlySpeaking = false;
     }
-
-
-
-    void GoToNextDialogueText()
-    {
-        currentTextIndex++;
-
-        if (currentTextIndex >= dialogueText.Length)
-        {
-            currentTextIndex = 0;
-        }
-    }
-
 
 
     void AddLetterToDisplayText(char letter)
@@ -163,6 +148,7 @@ public class TextToSpeech : MonoBehaviour
             if (hideTextTimer >= textTimeout)
             {
                 textMesh.text = "";
+                textIsHidden = true;
             }
         }
         else

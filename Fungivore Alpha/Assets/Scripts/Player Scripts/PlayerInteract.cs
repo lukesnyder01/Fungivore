@@ -14,6 +14,7 @@ public class PlayerInteract : MonoBehaviour
     private IInteractable currentTarget;
     private TextMeshPro textMesh;
     private PlayerInput playerInput;
+    private TextToSpeech textToSpeech;
 
 
     void Awake()
@@ -22,6 +23,7 @@ public class PlayerInteract : MonoBehaviour
         cameraTransform = Camera.main.transform;
         textMesh.text = null;
         playerInput = GetComponent<PlayerInput>();
+        textToSpeech = GetComponent<TextToSpeech>();
     }
 
 
@@ -76,6 +78,15 @@ public class PlayerInteract : MonoBehaviour
             if (currentTarget != null)
             {
                 currentTarget.Interact();
+            }
+            else
+            {
+                // if the player isn't looking at an interactable, the E button
+                // will stop the current speaker and show the full text
+                if (textToSpeech.textIsHidden == false)
+                {
+                    textToSpeech.CancelReadingAndDisplayFullText();
+                }
             }
         }
     }

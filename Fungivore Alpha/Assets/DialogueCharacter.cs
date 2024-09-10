@@ -12,10 +12,12 @@ public class DialogueCharacter : MonoBehaviour, IInteractable
     private float hoverFrequency = 3f;
     private float hoverAmplitude = 0.1f;
 
-    public string dialogueText = "Test text";
+    public string[] dialogueText;
 
     private bool turningTowardsPlayer;
     private Vector3 startingPosition;
+
+    private int currentTextIndex = 0;
 
 
     public string PromptText { get; set; } = "[E] Talk";
@@ -31,10 +33,17 @@ public class DialogueCharacter : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        
-        textToSpeech.StartSpeech(dialogueText, 0);
-
+        if (textToSpeech.currentlySpeaking == true)
+        {
+            textToSpeech.CancelReadingAndDisplayFullText();
+        }
+        else
+        {
+            textToSpeech.StartSpeech(dialogueText[currentTextIndex], 0);
+            GoToNextDialogueText();
+        }
     }
+
 
     public void LoseFocus()
     {
@@ -46,6 +55,18 @@ public class DialogueCharacter : MonoBehaviour, IInteractable
         turningTowardsPlayer = true;
     }
 
+
+    void GoToNextDialogueText()
+    {
+        currentTextIndex++;
+
+        if (currentTextIndex >= dialogueText.Length)
+        {
+            currentTextIndex = 0;
+        }
+    }
+
+
     public void PointAtPlayer()
     {
         Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
@@ -53,6 +74,7 @@ public class DialogueCharacter : MonoBehaviour, IInteractable
         Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer, transform.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
     }
+
 
     public void Hover()
     {
