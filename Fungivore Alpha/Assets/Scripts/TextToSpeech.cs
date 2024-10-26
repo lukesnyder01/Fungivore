@@ -44,17 +44,11 @@ public class TextToSpeech : MonoBehaviour
         textMesh = player.GetComponent<PlayerUI>().npcTextUI;
 
         textMesh.text = "";
-
     }
 
 
     void Update()
     {
-        if (Input.GetKeyDown("q"))
-        { 
-            StartSpeech(dialogueText[currentTextIndex], 1);
-        }
-
         HideTextAfterTime();
     }
 
