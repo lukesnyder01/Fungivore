@@ -1,17 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+//using UnityEngine.Rendering.PostProcessing;
 
 public class ScreenDamageIndicator : MonoBehaviour
 {
-    public PostProcessVolume postProcessVolume;
+    //public PostProcessVolume postProcessVolume;
     public Material screenDamageMaterial;
 
     private float bloodFadeSpeed = 0.005f;
     private float maximumOpacity = 0.5f;
 
-    private Vignette vignette;
+    //private Vignette vignette;
     private Color targetColor;
     private float targetOpacity;
     private Color startColor;
@@ -22,9 +22,9 @@ public class ScreenDamageIndicator : MonoBehaviour
         startColor = screenDamageMaterial.color;
         startColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
 
-        postProcessVolume = FindObjectOfType<PostProcessVolume>();
+        //postProcessVolume = FindObjectOfType<PostProcessVolume>();
 
-        postProcessVolume.profile.TryGetSettings(out vignette);
+       // postProcessVolume.profile.TryGetSettings(out vignette);
     }
 
 
