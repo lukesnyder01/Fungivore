@@ -1,5 +1,9 @@
 using UnityEngine;
 using UnityEditor;
+
+
+// From https://web.archive.org/web/20130514114424/http://wiki.unity3d.com/index.php/FindMissingScripts
+
 public class FindMissingScriptsRecursively : EditorWindow
 {
     static int go_count = 0, components_count = 0, missing_count = 0;
