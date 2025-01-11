@@ -46,7 +46,7 @@ public class PlayerStats : MonoBehaviour
     [Header("References")]
 
 
-    private ScreenDamageIndicator screenDamage;
+    public ScreenDamageIndicator screenDamage;
     private PlayerController playerController;
 
     public Image healthBar;
@@ -66,7 +66,7 @@ public class PlayerStats : MonoBehaviour
         InitializeStatsList();
 
         //recoilScript = transform.Find("CameraRotation/CameraRecoil").GetComponent<Recoil>();
-        screenDamage = GetComponent<ScreenDamageIndicator>();
+        //screenDamage = GetComponent<ScreenDamageIndicator>();
 
         playerController = GetComponent<PlayerController>();
 

@@ -520,7 +520,6 @@ GameObject:
   - component: {fileID: 4855019364282867763}
   - component: {fileID: 4855019364282867760}
   - component: {fileID: 4855019364282867767}
-  - component: {fileID: 4855019365525246569}
   - component: {fileID: 4958094084062408467}
   - component: {fileID: 104922762}
   - component: {fileID: 4209480250165353046}
@@ -625,6 +624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6066cf2dbf0ef3147baeb4046702fe73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screenDamage: {fileID: 0}
   healthBar: {fileID: 0}
   hungerBar: {fileID: 0}
   spinesBar: {fileID: 0}
@@ -675,20 +675,6 @@ MonoBehaviour:
   - {r: 0.501958, g: 0.7307922, b: 0.754717, a: 0}
   ps: {fileID: 4855019365289449394}
   cam: {fileID: 4855019364407952552}
---- !u!114 &4855019365525246569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4855019364282867774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9649ebd520464bd4aaff2ac62588be88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  screenDamageMaterial: {fileID: 2100000, guid: f9089ac52d54df04db048e60aafbba69,
-    type: 2}
 --- !u!114 &4958094084062408467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1482,6 +1468,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_MaxParticleSize
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6638661157975529122, guid: c2d864abd5043904e87353e63de72fcc,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6638661157975529123, guid: c2d864abd5043904e87353e63de72fcc,
         type: 3}
