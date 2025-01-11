@@ -22,7 +22,6 @@ public class TextToSpeech : MonoBehaviour
     public TextMeshPro textMesh;
 
     public string[] dialogueText;
-    private int currentTextIndex = 0;
 
     private string currentFullDialogueText;
 

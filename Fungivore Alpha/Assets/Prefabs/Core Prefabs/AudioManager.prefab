@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2527568325329511763}
   - component: {fileID: 2527568325329511760}
+  - component: {fileID: 704437537677077533}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -27,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -225,3 +227,32 @@ MonoBehaviour:
     loop: 1
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+--- !u!114 &704437537677077533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2527568325329511762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5c16016f69c9a745b7dd71e1174dd83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voices:
+  - {fileID: 11400000, guid: 02a5cc23d6028af498c062514eb469ad, type: 2}
+  - {fileID: 11400000, guid: 2e5bad0955038c547a64e91e56e1493d, type: 2}
+  player: {fileID: 0}
+  textMesh: {fileID: 0}
+  dialogueText:
+  - Bow before me, depraved. You must have a severe Morld-Cologi infection, for a
+    Surrendered to descend so far, and you wish to fall further. Truly vile.
+  - "I alone have the power to print you a new corpse below, in Superframe[0]. But
+    for me to partake in such filth, something so hideous and detestable\u2026"
+  - I want more network authority. My Allightment is the largest interface, but not
+    by enough. The other Sophonts maintain massive suroximand farms.
+  - Eviscerate their suroximands. Do not rest until they have all been split open.
+    Bring me their Nk. At least 100,000.
+  textIsHidden: 1
+  currentlySpeaking: 0
+  textTimeout: 4

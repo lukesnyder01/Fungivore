@@ -26,7 +26,7 @@ public class DialogueCharacter : MonoBehaviour, IInteractable
     void Start()
     {
         player = GameObject.Find("Player");
-        textToSpeech = player.GetComponent<TextToSpeech>();
+        textToSpeech = GameObject.Find("AudioManager").GetComponent<TextToSpeech>();
         startingPosition = transform.position;
     }
 

@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -43,9 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18610a0d91090024aa50623cedafdc62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seed: 325nadsg
-  targetFrameRate: 480
+  targetFrameRate: 1000
   cameraRenderDistance: 100
   centerScreenText: {fileID: 4355782494536047829, guid: 55cc5f54236f8da488ad2f33008f240c,
     type: 3}
-  centerScreenTextLocation: {fileID: 0}
