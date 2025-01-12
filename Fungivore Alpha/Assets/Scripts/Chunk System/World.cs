@@ -21,6 +21,13 @@ public class World : MonoBehaviour
     public int unloadRadius = 7;
 
 
+    private Vector3Int lastPlayerChunkCoordinates;
+    private int chunksMovedCount = 0;
+    public int chunkUpdateThreshold = 5; // Update every 5 chunks
+    private bool JustStarted = true;
+
+
+
     void Awake()
     {
         if (Instance == null)
@@ -37,8 +44,11 @@ public class World : MonoBehaviour
 
     void Start()
     {
+
         playerController = FindObjectOfType<PlayerController>();
         chunks = new Dictionary<Vector3, Chunk>();
+        lastPlayerChunkCoordinates = Vector3Int.zero;
+        ChunkPoolManager.Instance.PopulateInitialPool();
         GenerateWorld();
     }
 
@@ -90,19 +100,29 @@ public class World : MonoBehaviour
         return null;
     }
 
-
     void UpdateChunks(Vector3 playerPosition)
     {
-        // Determine the chunk coordinates for the player's position
         Vector3Int playerChunkCoordinates = new Vector3Int(
             Mathf.FloorToInt(playerPosition.x / chunkSize),
             Mathf.FloorToInt(playerPosition.y / chunkSize),
             Mathf.FloorToInt(playerPosition.z / chunkSize));
 
-        // Load and unload chunks based on the player's position
-        LoadChunksAround(playerChunkCoordinates);
-        UnloadDistantChunks(playerChunkCoordinates);
+        // Check if player has moved to a new chunk
+        if (!playerChunkCoordinates.Equals(lastPlayerChunkCoordinates))
+        {
+            if (chunksMovedCount >= chunkUpdateThreshold || JustStarted)
+            {
+                LoadChunksAround(playerChunkCoordinates);
+                UnloadDistantChunks(playerChunkCoordinates);
+                JustStarted = false;
+                chunksMovedCount = 0;
+            }
+
+            lastPlayerChunkCoordinates = playerChunkCoordinates;
+            chunksMovedCount++;
+        }
     }
+
 
     void LoadChunksAround(Vector3Int centerChunkCoordinates)
     {
@@ -114,14 +134,12 @@ public class World : MonoBehaviour
                 Vector3 chunkPosition = new Vector3(chunkCoordinates.x * chunkSize, 0, chunkCoordinates.z * chunkSize);
                 if (!chunks.ContainsKey(chunkPosition))
                 {
-                    GameObject chunkObject = new GameObject($"Chunk_{chunkCoordinates.x}_{chunkCoordinates.z}");
+                    Chunk chunkObject = ChunkPoolManager.Instance.GetChunk();
                     chunkObject.transform.position = chunkPosition;
                     chunkObject.transform.parent = this.transform; // Optional, for organizational purposes
-
-                    Chunk newChunk = chunkObject.AddComponent<Chunk>();
-                    newChunk.Initialize(chunkSize); // Initialize the chunk with its size
-
-                    chunks.Add(chunkPosition, newChunk); // Add the chunk to the dictionary
+                    chunkObject.Initialize(chunkSize); // Initialize the chunk with its size
+                    chunks.Add(chunkPosition, chunkObject); // Add the chunk to the dictionary
+                    chunkObject.gameObject.SetActive(true);
                 }
             }
         }
@@ -146,7 +164,7 @@ public class World : MonoBehaviour
 
         foreach (var chunkPos in chunksToUnload)
         {
-            Destroy(chunks[chunkPos].gameObject);
+            ChunkPoolManager.Instance.ReturnChunk(chunks[chunkPos]);
             chunks.Remove(chunkPos);
         }
     }

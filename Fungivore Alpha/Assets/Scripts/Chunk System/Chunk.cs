@@ -303,15 +303,19 @@ public class Chunk : MonoBehaviour
     }
 
 
-    void OnDrawGizmos()
+    public void ResetChunk()
     {
-        /*
-        if (voxels != null)
+        // Clear voxel data
+        voxels = new Voxel[chunkSize, chunkSize, chunkSize];
+
+        // Clear mesh data
+        if (meshFilter != null && meshFilter.sharedMesh != null)
         {
-            Gizmos.color = gizmoColor;
-            Gizmos.DrawCube(transform.position + new Vector3(chunkSize / 2, chunkSize / 2, chunkSize / 2), new Vector3(chunkSize, chunkSize, chunkSize));
+            meshFilter.sharedMesh.Clear();
+            vertices.Clear();
+            triangles.Clear();
+            uvs.Clear();
         }
-        */
     }
 
 
