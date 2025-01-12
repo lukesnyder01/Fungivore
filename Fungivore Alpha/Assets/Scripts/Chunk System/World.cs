@@ -23,9 +23,19 @@ public class World : MonoBehaviour
 
     private Vector3Int lastPlayerChunkCoordinates;
     private int chunksMovedCount = 0;
-    public int chunkUpdateThreshold = 5; // Update every 5 chunks
+    public int chunkUpdateThreshold = 1; // Update every 5 chunks
     private bool JustStarted = true;
 
+
+    private Queue<Vector3> chunkLoadQueue = new Queue<Vector3>();
+    private int chunksPerFrame = 4; // Number of chunks to load per frame
+    private int loadInterval = 4; // Load chunks every 4 frames
+    private int frameCounter = 0;
+
+    private Queue<Vector3> chunkUnloadQueue = new Queue<Vector3>();
+    private int unloadFrameCounter = 0;
+    private int unloadInterval = 5;
+    private int chunksPerFrameUnloading = 4;
 
 
     void Awake()
@@ -44,41 +54,26 @@ public class World : MonoBehaviour
 
     void Start()
     {
-
         playerController = FindObjectOfType<PlayerController>();
-        chunks = new Dictionary<Vector3, Chunk>();
         lastPlayerChunkCoordinates = Vector3Int.zero;
+        chunks = new Dictionary<Vector3, Chunk>();
         ChunkPoolManager.Instance.PopulateInitialPool();
-        GenerateWorld();
     }
+
 
     void Update()
     {
         playerPosition = playerController.GetPlayerPosition();
         UpdateChunks(playerPosition);
+        ProcessChunkLoadingQueue();
+        ProcessChunkUnloadingQueue();
     }
 
 
-    private void GenerateWorld()
-    {
-        for (int x = 0; x < worldSize; x++)
-        {
-            for (int y = 0; y < worldSize; y++)
-            {
-                for (int z = 0; z < worldSize; z++)
-                {
-                    Vector3 chunkPosition = new Vector3(x * chunkSize, y * chunkSize, z * chunkSize);
-                    GameObject newChunkObject = new GameObject($"Chunk_{x}_{y}_{z}");
-                    newChunkObject.transform.position = chunkPosition;
-                    newChunkObject.transform.parent = this.transform;
 
-                    Chunk newChunk = newChunkObject.AddComponent<Chunk>();
-                    newChunk.Initialize(chunkSize);
-                    chunks.Add(chunkPosition, newChunk);
-                }
-            }
-        }
-    }
+
+
+
 
 
     public Chunk GetChunkAt(Vector3 globalPosition)
@@ -99,6 +94,7 @@ public class World : MonoBehaviour
         // Return null if no chunk exists at the position
         return null;
     }
+
 
     void UpdateChunks(Vector3 playerPosition)
     {
@@ -134,6 +130,22 @@ public class World : MonoBehaviour
                 Vector3 chunkPosition = new Vector3(chunkCoordinates.x * chunkSize, 0, chunkCoordinates.z * chunkSize);
                 if (!chunks.ContainsKey(chunkPosition))
                 {
+                    chunkLoadQueue.Enqueue(chunkPosition);
+                }
+            }
+        }
+    }
+
+    void ProcessChunkLoadingQueue()
+    {
+        frameCounter++;
+        if (frameCounter % loadInterval == 0)
+        {
+            for (int i = 0; i < chunksPerFrame && chunkLoadQueue.Count > 0; i++)
+            {
+                Vector3 chunkPosition = chunkLoadQueue.Dequeue();
+                if (!chunks.ContainsKey(chunkPosition))
+                {
                     Chunk chunkObject = ChunkPoolManager.Instance.GetChunk();
                     chunkObject.transform.position = chunkPosition;
                     chunkObject.transform.parent = this.transform; // Optional, for organizational purposes
@@ -158,16 +170,35 @@ public class World : MonoBehaviour
 
             if (Vector3Int.Distance(chunkCoord, centerChunkCoordinates) > unloadRadius)
             {
-                chunksToUnload.Add(chunk.Key);
+                chunkUnloadQueue.Enqueue(chunk.Key);
             }
         }
+    }
 
-        foreach (var chunkPos in chunksToUnload)
+    void ProcessChunkUnloadingQueue()
+    {
+        // Check if there are chunks in the unload queue
+        if (chunkUnloadQueue.Count > 0)
         {
-            ChunkPoolManager.Instance.ReturnChunk(chunks[chunkPos]);
-            chunks.Remove(chunkPos);
+            unloadFrameCounter++;
+            if (unloadFrameCounter % unloadInterval == 0)
+            {
+                int chunksToProcess = Mathf.Min(chunksPerFrameUnloading, chunkUnloadQueue.Count);
+                for (int i = 0; i < chunksToProcess; i++)
+                {
+                    Vector3 chunkPosition = chunkUnloadQueue.Dequeue();
+                    Chunk chunkToUnload = GetChunkAt(chunkPosition);
+                    if (chunkToUnload != null)
+                    {
+                        ChunkPoolManager.Instance.ReturnChunk(chunkToUnload);
+                        chunks.Remove(chunkPosition); // Remove the chunk from the active chunks dictionary
+                    }
+                }
+            }
         }
     }
+
+
 
 
 }

@@ -22,51 +22,46 @@ public class Chunk : MonoBehaviour
     public LayerMask chunkLayer;
 
 
-
-    void Start()
-    {
-        // Initialize Mesh Components
-        meshFilter = gameObject.AddComponent<MeshFilter>();
-        meshRenderer = gameObject.AddComponent<MeshRenderer>();
-        meshCollider = gameObject.AddComponent<MeshCollider>();
-
-        //add the solid block layer to the chunks
-        chunkLayer = LayerMask.NameToLayer("Solid Block");
-        gameObject.layer = chunkLayer;
-
-        // Call this to generate the chunk mesh
-        GenerateMesh();
-    }
-
-    private void GenerateMesh()
-    {
-
-        IterateVoxels(); // Make sure this processes all voxels
-
-        Mesh mesh = new Mesh();
-        mesh.vertices = vertices.ToArray();
-        mesh.triangles = triangles.ToArray();
-        mesh.uv = uvs.ToArray();
-
-        mesh.RecalculateNormals(); // Important for lighting
-
-        meshFilter.mesh = mesh;
-        meshCollider.sharedMesh = mesh;
-
-        // Apply a material or texture if needed
-        // meshRenderer.material = ...;
-        meshRenderer.material = World.Instance.VoxelMaterial;
-    }
-
-
     public void Initialize(int size)
     {
         this.chunkSize = size;
         voxels = new Voxel[size, size, size];
         InitializeVoxels();
 
-        // Assign a random color for this chunk's gizmos
-        gizmoColor = new Color(Random.value, Random.value, Random.value, 0.4f); // Semi-transparent
+        meshFilter = GetComponent<MeshFilter>();
+        if (meshFilter == null) { meshFilter = gameObject.AddComponent<MeshFilter>(); }
+
+        meshRenderer = GetComponent<MeshRenderer>();
+        if (meshRenderer == null) { meshRenderer = gameObject.AddComponent<MeshRenderer>(); }
+
+        meshCollider = GetComponent<MeshCollider>();
+        if (meshCollider == null) { meshCollider = gameObject.AddComponent<MeshCollider>(); }
+
+        //add the solid block layer to the chunks
+        chunkLayer = LayerMask.NameToLayer("Solid Block");
+        gameObject.layer = chunkLayer;
+
+        GenerateMesh(); // Call after ensuring all necessary components and data are set
+    }
+
+    public void GenerateMesh()
+    {
+        IterateVoxels(); // Make sure this processes all voxels
+        if (vertices.Count > 0)
+        {
+            Mesh mesh = new Mesh();
+            mesh.vertices = vertices.ToArray();
+            mesh.triangles = triangles.ToArray();
+            mesh.uv = uvs.ToArray();
+
+            mesh.RecalculateNormals(); // Important for lighting
+
+            meshFilter.mesh = mesh;
+            meshCollider.sharedMesh = mesh;
+
+            // Apply a material or texture if needed
+            meshRenderer.material = World.Instance.VoxelMaterial;
+        }
     }
 
 
@@ -86,6 +81,7 @@ public class Chunk : MonoBehaviour
             }
         }
     }
+
 
     private Voxel.VoxelType DetermineVoxelType(float x, float y, float z)
     {
@@ -315,6 +311,8 @@ public class Chunk : MonoBehaviour
             vertices.Clear();
             triangles.Clear();
             uvs.Clear();
+            meshCollider.sharedMesh = null;
+
         }
     }
 
