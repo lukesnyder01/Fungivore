@@ -8,8 +8,6 @@ public class FogColorController : MonoBehaviour
 
     public Color defaultColor;
 
-    public Material[] fogMaterials;
-
     public Color[] colorPalette;
 
 
@@ -50,7 +48,6 @@ public class FogColorController : MonoBehaviour
         currentColor = defaultColor;
 
         SetFogColor(colorPalette[0], 5f);
-
     }
 
 
@@ -67,13 +64,8 @@ public class FogColorController : MonoBehaviour
         {
             UpdateFogColor(currentColor);
             UpdateParticleColor(currentColor);
-
         }
-
-
     }
-
-
 
 
     public void SetFogColor(Color color, float time)
@@ -124,13 +116,6 @@ public class FogColorController : MonoBehaviour
         cam.backgroundColor = color;
 
         Shader.SetGlobalColor("Color_8B4C3782", color);
-
-        /*
-        foreach (Material m in fogMaterials)
-        {
-            m.SetColor("Color_8B4C3782", color);
-        }
-        */
     }
 
 
@@ -159,11 +144,7 @@ public class FogColorController : MonoBehaviour
 
     void OnDestroy()
     {
-        foreach (Material m in fogMaterials)
-        {
-            m.SetColor("Color_8B4C3782", defaultColor);
-        }
+        Shader.SetGlobalColor("Color_8B4C3782", defaultColor);
     }
-
 }
 
