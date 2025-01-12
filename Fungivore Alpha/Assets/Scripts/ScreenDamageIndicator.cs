@@ -1,66 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Rendering;
 using UnityEngine;
 //using UnityEngine.Rendering.PostProcessing;
 
 public class ScreenDamageIndicator : MonoBehaviour
 {
-    //public PostProcessVolume postProcessVolume;
-    public Material screenDamageMaterial;
-
-    private float bloodFadeSpeed = 0.005f;
-    private float maximumOpacity = 0.5f;
-
-    //private Vignette vignette;
-    private Color targetColor;
-    private float targetOpacity;
-    private Color startColor;
+    private float currentWeight;
+    private float targetWeight;
 
 
-    void Awake()
-    {
-        startColor = screenDamageMaterial.color;
-        startColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
+    private float fadeSpeed = 0.5f;
 
-        //postProcessVolume = FindObjectOfType<PostProcessVolume>();
+    public Volume volume;
 
-       // postProcessVolume.profile.TryGetSettings(out vignette);
-    }
+    private float damagePercent;
+
 
 
     public void MakeScreenBloody(float bloodAmount)
     {
-        targetOpacity += bloodAmount;
+        currentWeight += bloodAmount;
     }
 
 
     void Update()
     {
-        float damagePercent = 1 - PlayerStats.healthPercent;
-
-        float shiftedDamagePercent = Mathf.Clamp(damagePercent - 0.3f, 0, 1);
-
-        if (targetOpacity > maximumOpacity)
+        if (PlayerStats.healthPercent > 0.5f)
         {
-            targetOpacity = maximumOpacity;
+            targetWeight = 0f;
+        }
+        else
+        {
+            targetWeight = (0.5f - PlayerStats.healthPercent) / 0.5f;
         }
 
-        if (targetOpacity > shiftedDamagePercent && targetOpacity > 0)
-        {
-            targetOpacity -= bloodFadeSpeed;
-        }
-        else if (targetOpacity < shiftedDamagePercent && targetOpacity < maximumOpacity)
-        {
-            targetOpacity += bloodFadeSpeed;
-        }
+        currentWeight = Mathf.Lerp(currentWeight, targetWeight, Time.deltaTime * fadeSpeed);
 
-        screenDamageMaterial.color = new Color(startColor.r, startColor.g, startColor.b, targetOpacity);
+        volume.weight = currentWeight;
     }
-
-
-    void OnDestroy()
-    {
-        screenDamageMaterial.color = new Color(startColor.r, startColor.g, startColor.b, 0);
-    }
-
 }
