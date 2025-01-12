@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // from https://medium.com/@adamy1558/building-a-high-performance-voxel-engine-in-unity-a-step-by-step-guide-part-1-voxels-chunks-86275c079fb8
-// Define a simple Voxel struct
+
+
 public struct Voxel
 {
     public Vector3 position;

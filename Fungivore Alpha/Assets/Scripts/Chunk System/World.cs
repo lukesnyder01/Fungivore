@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 // from https://medium.com/@adamy1558/building-a-high-performance-voxel-engine-in-unity-a-step-by-step-guide-part-1-voxels-chunks-86275c079fb8
+
 public class World : MonoBehaviour
 {
     public int worldSize = 5; // Size of the world in number of chunks
@@ -31,6 +32,7 @@ public class World : MonoBehaviour
     private int chunksPerFrame = 4; // Number of chunks to load per frame
     private int loadInterval = 4; // Load chunks every 4 frames
     private int frameCounter = 0;
+
 
     private Queue<Vector3> chunkUnloadQueue = new Queue<Vector3>();
     private int unloadFrameCounter = 0;
@@ -68,12 +70,6 @@ public class World : MonoBehaviour
         ProcessChunkLoadingQueue();
         ProcessChunkUnloadingQueue();
     }
-
-
-
-
-
-
 
 
     public Chunk GetChunkAt(Vector3 globalPosition)
@@ -126,15 +122,19 @@ public class World : MonoBehaviour
         {
             for (int z = -loadRadius; z <= loadRadius; z++)
             {
-                Vector3Int chunkCoordinates = new Vector3Int(centerChunkCoordinates.x + x, 0, centerChunkCoordinates.z + z);
-                Vector3 chunkPosition = new Vector3(chunkCoordinates.x * chunkSize, 0, chunkCoordinates.z * chunkSize);
-                if (!chunks.ContainsKey(chunkPosition))
+                for (int y = -loadRadius; y <= loadRadius; y++)
                 {
-                    chunkLoadQueue.Enqueue(chunkPosition);
+                    Vector3Int chunkCoordinates = new Vector3Int(centerChunkCoordinates.x + x, centerChunkCoordinates.y + y, centerChunkCoordinates.z + z);
+                    Vector3 chunkPosition = new Vector3(chunkCoordinates.x * chunkSize, chunkCoordinates.y * chunkSize, chunkCoordinates.z * chunkSize);
+                    if (!chunks.ContainsKey(chunkPosition))
+                    {
+                        chunkLoadQueue.Enqueue(chunkPosition);
+                    }
                 }
             }
         }
     }
+
 
     void ProcessChunkLoadingQueue()
     {
@@ -174,6 +174,7 @@ public class World : MonoBehaviour
             }
         }
     }
+
 
     void ProcessChunkUnloadingQueue()
     {

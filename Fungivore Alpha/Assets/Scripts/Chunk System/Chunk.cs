@@ -83,6 +83,8 @@ public class Chunk : MonoBehaviour
     }
 
 
+
+
     private Voxel.VoxelType DetermineVoxelType(float x, float y, float z)
     {
         float noiseValue = Random.Range(0, 100);
@@ -96,6 +98,9 @@ public class Chunk : MonoBehaviour
         else
             return Voxel.VoxelType.Air; // Air voxel
     }
+
+
+
 
 
     // New method to iterate through the voxel data
