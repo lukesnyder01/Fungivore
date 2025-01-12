@@ -123,10 +123,14 @@ public class FogColorController : MonoBehaviour
     {
         cam.backgroundColor = color;
 
+        Shader.SetGlobalColor("Color_8B4C3782", color);
+
+        /*
         foreach (Material m in fogMaterials)
         {
             m.SetColor("Color_8B4C3782", color);
         }
+        */
     }
 
 
