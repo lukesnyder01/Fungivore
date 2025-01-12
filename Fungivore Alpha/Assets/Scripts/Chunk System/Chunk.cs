@@ -91,7 +91,7 @@ public class Chunk : MonoBehaviour
     {
         float noiseValue = Random.Range(0, 100);
 
-        float threshold = 50f; // The threshold for determining solid/air
+        float threshold = 80f; // The threshold for determining solid/air
 
         //Debug.Log(noiseValue);
 

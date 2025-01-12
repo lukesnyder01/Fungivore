@@ -43,6 +43,9 @@ public class PlayerController : MonoBehaviour
     public float headCheckRadius;
     public LayerMask groundMask;
 
+    private Transform playerTransform;
+
+
 
     //------------------------------------------------------------------------------
     //Private variables
@@ -109,6 +112,8 @@ public class PlayerController : MonoBehaviour
         cameraTransform = Camera.main.transform;
         recoilScript = transform.GetComponent<Recoil>();
         currentGravity = gravity;
+
+        playerTransform = transform;
     }
 
 
@@ -159,6 +164,11 @@ public class PlayerController : MonoBehaviour
 
     }
 
+
+    public Vector3 GetPlayerPosition()
+    {
+        return playerTransform.position;
+    }
 
     void HandleGravity()
     {
