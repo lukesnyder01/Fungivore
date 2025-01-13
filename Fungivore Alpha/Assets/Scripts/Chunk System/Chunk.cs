@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -23,9 +24,13 @@ public class Chunk : MonoBehaviour
 
     public int randomNoiseDensity = 2;
 
+    public Vector3 globalChunkPos;
+
     
     public void Initialize(int size)
     {
+        globalChunkPos = transform.position;
+
         this.chunkSize = size;
         voxels = new Voxel[size, size, size];
         InitializeVoxels();
@@ -46,9 +51,16 @@ public class Chunk : MonoBehaviour
         GenerateMesh(); // Call after ensuring all necessary components and data are set
     }
 
-    public void GenerateMesh()
+    public async void GenerateMesh()
     {
-        IterateVoxels(); // Make sure this processes all voxels
+        await Task.Run(() => IterateVoxels());
+
+        ApplyMeshData();
+    }
+
+
+    private void ApplyMeshData()
+    {
         if (vertices.Count > 0)
         {
             Mesh mesh = new Mesh();
@@ -83,31 +95,35 @@ public class Chunk : MonoBehaviour
             }
         }
     }
-
+    
 
     private Voxel.VoxelType DetermineVoxelType(float x, float y, float z)
     {
         float noiseValue = Random.Range(0, 100);
 
-        if (noiseValue < randomNoiseDensity && y > 10)
+        if (noiseValue < randomNoiseDensity && y > -20)
             return Voxel.VoxelType.Grass;
         else
             return Voxel.VoxelType.Air;
     }
 
 
-    public void IterateVoxels()
+    private async Task IterateVoxels()
     {
-        for (int x = 0; x < chunkSize; x++)
+        // Use Task.Run to move IterateVoxels to a background thread
+        await Task.Run(() =>
         {
-            for (int y = 0; y < chunkSize; y++)
+            for (int x = 0; x < chunkSize; x++)
             {
-                for (int z = 0; z < chunkSize; z++)
+                for (int y = 0; y < chunkSize; y++)
                 {
-                    ProcessVoxel(x, y, z);
+                    for (int z = 0; z < chunkSize; z++)
+                    {
+                        ProcessVoxel(x, y, z);
+                    }
                 }
             }
-        }
+        });
     }
 
 
@@ -145,7 +161,7 @@ public class Chunk : MonoBehaviour
     private bool IsFaceVisible(int x, int y, int z)
     {
         // Convert local chunk coordinates to global coordinates
-        Vector3 globalPos = transform.position + new Vector3(x, y, z);
+        Vector3 globalPos = globalChunkPos + new Vector3(x, y, z);
 
         // Check if the neighboring voxel is inactive or out of bounds in the current chunk
         // and also if it's inactive or out of bounds in the world (neighboring chunks)
@@ -170,9 +186,13 @@ public class Chunk : MonoBehaviour
             // No chunk at this position, so the voxel face should be hidden
             return true;
         }
-
+        
         // Convert the global position to the local position within the neighboring chunk
-        Vector3 localPos = neighborChunk.transform.InverseTransformPoint(globalPos);
+        //Vector3 localPos = neighborChunk.transform.InverseTransformPoint(globalPos);
+
+        // The voxel's local position in the neighbor chunk
+        // is the voxel's global pos - the neighbor chunk's global pos
+        Vector3 localPos = globalPos - neighborChunk.globalChunkPos;
 
         // If the voxel at this local position is inactive, the face should be visible (not hidden)
         return !neighborChunk.IsVoxelActiveAt(localPos);
