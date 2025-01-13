@@ -21,7 +21,9 @@ public class Chunk : MonoBehaviour
 
     public LayerMask chunkLayer;
 
+    public int randomNoiseDensity = 2;
 
+    
     public void Initialize(int size)
     {
         this.chunkSize = size;
@@ -83,27 +85,17 @@ public class Chunk : MonoBehaviour
     }
 
 
-
-
     private Voxel.VoxelType DetermineVoxelType(float x, float y, float z)
     {
         float noiseValue = Random.Range(0, 100);
 
-        float threshold = 80f; // The threshold for determining solid/air
-
-        //Debug.Log(noiseValue);
-
-        if (noiseValue > threshold && y < 30)
-            return Voxel.VoxelType.Grass; // Solid voxel
+        if (noiseValue < randomNoiseDensity && y > 10)
+            return Voxel.VoxelType.Grass;
         else
-            return Voxel.VoxelType.Air; // Air voxel
+            return Voxel.VoxelType.Air;
     }
 
 
-
-
-
-    // New method to iterate through the voxel data
     public void IterateVoxels()
     {
         for (int x = 0; x < chunkSize; x++)

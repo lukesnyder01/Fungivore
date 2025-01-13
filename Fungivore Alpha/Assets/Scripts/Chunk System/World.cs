@@ -8,7 +8,7 @@ using UnityEngine;
 public class World : MonoBehaviour
 {
     public int worldSize = 5; // Size of the world in number of chunks
-    private int chunkSize = 16; // Assuming chunk size is 16x16x16
+    public int chunkSize = 16; // Assuming chunk size is 16x16x16
 
     private Dictionary<Vector3, Chunk> chunks;
     public static World Instance { get; private set; }
@@ -29,8 +29,8 @@ public class World : MonoBehaviour
 
 
     private Queue<Vector3> chunkLoadQueue = new Queue<Vector3>();
-    private int chunksPerFrame = 4; // Number of chunks to load per frame
-    private int loadInterval = 4; // Load chunks every 4 frames
+    public int chunksPerFrame = 2; // Number of chunks to load per frame
+    public int loadInterval = 1; // Load chunks every 4 frames
     private int frameCounter = 0;
 
 
@@ -118,22 +118,47 @@ public class World : MonoBehaviour
 
     void LoadChunksAround(Vector3Int centerChunkCoordinates)
     {
-        for (int x = -loadRadius; x <= loadRadius; x++)
+        // Temporary list to store chunks with their squared distances
+        List<(Vector3 chunkPosition, int distanceSquared)> chunksToLoad = new List<(Vector3, int)>();
+
+        for (int y = -loadRadius; y <= loadRadius; y++)
         {
-            for (int z = -loadRadius; z <= loadRadius; z++)
+            int maxHorizontalRadius = Mathf.FloorToInt(Mathf.Sqrt(loadRadius * loadRadius - y * y));
+
+            for (int x = -maxHorizontalRadius; x <= maxHorizontalRadius; x++)
             {
-                for (int y = -loadRadius; y <= loadRadius; y++)
+                for (int z = -maxHorizontalRadius; z <= maxHorizontalRadius; z++)
                 {
-                    Vector3Int chunkCoordinates = new Vector3Int(centerChunkCoordinates.x + x, centerChunkCoordinates.y + y, centerChunkCoordinates.z + z);
-                    Vector3 chunkPosition = new Vector3(chunkCoordinates.x * chunkSize, chunkCoordinates.y * chunkSize, chunkCoordinates.z * chunkSize);
-                    if (!chunks.ContainsKey(chunkPosition))
+                    // Calculate the squared distance
+                    int distanceSquared = x * x + y * y + z * z;
+
+                    if (distanceSquared <= loadRadius * loadRadius)
                     {
-                        chunkLoadQueue.Enqueue(chunkPosition);
+                        Vector3Int chunkCoordinates = new Vector3Int(centerChunkCoordinates.x + x, centerChunkCoordinates.y + y, centerChunkCoordinates.z + z);
+                        Vector3 chunkPosition = new Vector3(chunkCoordinates.x * chunkSize, chunkCoordinates.y * chunkSize, chunkCoordinates.z * chunkSize);
+
+                        if (!chunks.ContainsKey(chunkPosition))
+                        {
+                            // Add chunk and its distance to the list
+                            chunksToLoad.Add((chunkPosition, distanceSquared));
+                        }
                     }
                 }
             }
         }
+        
+        // Sort chunks by distance (closest first)
+        chunksToLoad.Sort((a, b) => a.distanceSquared.CompareTo(b.distanceSquared));
+
+        // Enqueue sorted chunks for loading
+        foreach (var chunk in chunksToLoad)
+        {
+            chunkLoadQueue.Enqueue(chunk.chunkPosition);
+        }
+
     }
+
+
 
 
     void ProcessChunkLoadingQueue()
