@@ -20,7 +20,7 @@ public class FogColorController : MonoBehaviour
     public ParticleSystem ps;
 
     private GameObject player;
-    public Camera cam;
+    private Camera mainCamera;
 
     float heightScale = 500f;
     float distanceScale = 1000f;
@@ -43,7 +43,8 @@ public class FogColorController : MonoBehaviour
     void Awake()
     {
         player = GameObject.Find("Player");
-        cam.clearFlags = CameraClearFlags.SolidColor;
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        mainCamera.clearFlags = CameraClearFlags.SolidColor;
         startColor = defaultColor;
         currentColor = defaultColor;
 
@@ -113,8 +114,7 @@ public class FogColorController : MonoBehaviour
 
     void UpdateFogColor(Color color)
     {
-        cam.backgroundColor = color;
-
+        mainCamera.backgroundColor = color;
         Shader.SetGlobalColor("Color_8B4C3782", color);
     }
 

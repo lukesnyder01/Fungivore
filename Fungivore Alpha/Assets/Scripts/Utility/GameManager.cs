@@ -34,9 +34,6 @@ public class GameManager : MonoBehaviour
         SetTargetFramerate(targetFrameRate);
 
         SetCameraRenderDistance(cameraRenderDistance);
-
-
-
     }
 
 
@@ -50,8 +47,6 @@ public class GameManager : MonoBehaviour
         {
             AudioManager.Instance.Play("theme03WalkBetweenTheWaters");
         }
-
-
     }
 
 
