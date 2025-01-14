@@ -517,7 +517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRunning: 0
   footStepDelay: 0.2
-  gravity: -8
+  gravity: -2
   lateralSprintSpeedPenalty: 0.75
   stepSound: {fileID: 8300000, guid: 4ac663f1304bb23458f99036bb6a6922, type: 3}
   headCheckPosition: {fileID: 4855019364738967106}
@@ -577,10 +577,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5bb45bf11815434db86d0617b2e3f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDist: 1.5
+  interactDist: 4
   mask:
     serializedVersion: 2
     m_Bits: 16641
+  testCubePrefab: {fileID: 8419981257207357708, guid: 280956aecb5999946a8b18dde49e86a2,
+    type: 3}
 --- !u!114 &4209480250165353046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -801,7 +803,7 @@ Camera:
   m_Depth: 100
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2147483647
   m_RenderingPath: 1
   m_TargetTexture: {fileID: 8400000, guid: 8fbb5f115dc609340ab747ea3427cfc9, type: 2}
   m_TargetDisplay: 0
@@ -864,7 +866,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 1
+  m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 1
@@ -1009,7 +1011,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1185582246363119379
 RectTransform:
   m_ObjectHideFlags: 0

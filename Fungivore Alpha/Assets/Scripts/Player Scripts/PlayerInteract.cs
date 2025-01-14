@@ -66,11 +66,11 @@ public class PlayerInteract : MonoBehaviour
                     hitCubePos.y = Mathf.FloorToInt(hitCubePos.y);
                     hitCubePos.z = Mathf.FloorToInt(hitCubePos.z);
 
-                    Debug.Log("Hit cube at " + hitCubePos);
-
-                    Instantiate(testCubePrefab, hitCubePos, Quaternion.identity);
-
-    
+                    Vector3 targetCubePos = hitCubePos + hitNormal;
+                    
+                    Chunk chunk = World.Instance.GetChunkAt(targetCubePos);
+                    
+                    chunk.SetBlock(targetCubePos, Voxel.VoxelType.Grass);
 
                 }
 

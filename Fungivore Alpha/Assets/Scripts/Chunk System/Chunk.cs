@@ -10,7 +10,6 @@ public class Chunk : MonoBehaviour
 {
     private Voxel[,,] voxels;
     private int chunkSize = 16;
-    private Color gizmoColor;
 
     private List<Vector3> vertices = new List<Vector3>();
     private List<int> triangles = new List<int>();
@@ -50,6 +49,18 @@ public class Chunk : MonoBehaviour
         gameObject.tag = "Solid Block";
 
         GenerateMesh(); // Call after ensuring all necessary components and data are set
+    }
+
+    public void SetBlock(Vector3 globalBlockPos, Voxel.VoxelType type)
+    {
+        Vector3 localBlockPos = globalBlockPos - globalChunkPos;
+
+        Debug.Log(localBlockPos);
+
+        voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z] = 
+            new Voxel(globalBlockPos, type, true);
+
+        GenerateMesh();
     }
 
     public async void GenerateMesh()
