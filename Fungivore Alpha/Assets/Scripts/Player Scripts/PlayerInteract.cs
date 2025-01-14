@@ -51,6 +51,11 @@ public class PlayerInteract : MonoBehaviour
             }
             else //didn't hit an interactable
             {
+                if (hitInfo.transform.CompareTag("Solid Block"))
+                {
+                    Debug.Log("Looking at a block");
+                }
+
                 if (currentTarget != null)
                 {
                     currentTarget.LoseFocus();

@@ -22,7 +22,7 @@ public class Chunk : MonoBehaviour
 
     public LayerMask chunkLayer;
 
-    public int randomNoiseDensity = 2;
+    public int randomNoiseDensity = 4;
 
     public Vector3 globalChunkPos;
 
@@ -44,9 +44,10 @@ public class Chunk : MonoBehaviour
         meshCollider = GetComponent<MeshCollider>();
         if (meshCollider == null) { meshCollider = gameObject.AddComponent<MeshCollider>(); }
 
-        //add the solid block layer to the chunks
+        //add the solid block layer and tag to the chunks
         chunkLayer = LayerMask.NameToLayer("Solid Block");
         gameObject.layer = chunkLayer;
+        gameObject.tag = "Solid Block";
 
         GenerateMesh(); // Call after ensuring all necessary components and data are set
     }
@@ -81,6 +82,11 @@ public class Chunk : MonoBehaviour
 
     private void InitializeVoxels()
     {
+        // We should check to see if the chunk has data defined for it
+        // If there is, read the data file and set the voxels
+        // IF not, go through and fill the chunk with air for now,
+        // maybe we'll do more interesting stuff later withh noise or something
+
         for (int x = 0; x < chunkSize; x++)
         {
             for (int y = 0; y < chunkSize; y++)
