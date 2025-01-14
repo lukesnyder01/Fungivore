@@ -16,6 +16,8 @@ public class PlayerInteract : MonoBehaviour
     private PlayerInput playerInput;
     private TextToSpeech textToSpeech;
 
+    public GameObject testCubePrefab;
+
 
     void Awake()
     {
@@ -51,9 +53,25 @@ public class PlayerInteract : MonoBehaviour
             }
             else //didn't hit an interactable
             {
-                if (hitInfo.transform.CompareTag("Solid Block"))
+                if (hitInfo.transform.CompareTag("Solid Block") && Input.GetKeyDown(KeyCode.F))
                 {
-                    Debug.Log("Looking at a block");
+                    var hitPoint = hitInfo.point;
+                    var hitNormal = hitInfo.normal;
+
+                    Debug.Log(hitPoint);    
+
+                    Vector3 hitCubePos = hitPoint - hitNormal * 0.5f; // Move the hit point inside the cube
+
+                    hitCubePos.x = Mathf.FloorToInt(hitCubePos.x);
+                    hitCubePos.y = Mathf.FloorToInt(hitCubePos.y);
+                    hitCubePos.z = Mathf.FloorToInt(hitCubePos.z);
+
+                    Debug.Log("Hit cube at " + hitCubePos);
+
+                    Instantiate(testCubePrefab, hitCubePos, Quaternion.identity);
+
+    
+
                 }
 
                 if (currentTarget != null)
