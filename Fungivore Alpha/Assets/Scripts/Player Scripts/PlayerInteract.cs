@@ -25,7 +25,7 @@ public class PlayerInteract : MonoBehaviour
         cameraTransform = Camera.main.transform;
         textMesh.text = null;
         playerInput = GetComponent<PlayerInput>();
-        textToSpeech = GetComponent<TextToSpeech>();
+        textToSpeech = GameObject.Find("AudioManager").GetComponent<TextToSpeech>();
     }
 
 
