@@ -14,7 +14,7 @@ public class AntManager : MonoBehaviour
     {
         timer = timeBetweenSteps;
         ant = new Ant();
-        ant.antPos = new Vector3(0, 100, 0);
+        ant.antPos = new Vector3(0, 160, 0);
     }
 
     // Update is called once per frame
@@ -37,7 +37,10 @@ public class AntManager : MonoBehaviour
         Chunk chunk = World.Instance.GetChunkAt(pos);
         if (chunk != null)
         {
-            chunk.SetBlock(pos, Voxel.VoxelType.Grass);
+            if (chunk.GetBlock(pos) == Voxel.VoxelType.Air)
+            {
+                chunk.SetBlock(pos, Voxel.VoxelType.Grass);
+            }
         }
 
     }

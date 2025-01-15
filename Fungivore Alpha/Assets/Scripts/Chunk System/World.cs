@@ -153,12 +153,16 @@ public class World : MonoBehaviour
         // Enqueue sorted chunks for loading
         foreach (var chunk in chunksToLoad)
         {
-            chunkLoadQueue.Enqueue(chunk.chunkPosition);
+            AddChunkToQueue(chunk.chunkPosition);
         }
 
     }
 
-
+    public void AddChunkToQueue(Vector3 chunkPosition)
+    {
+        chunkLoadQueue.Enqueue(chunkPosition);
+        Debug.Log("Added chunk at " + chunkPosition);
+    }
 
 
     void ProcessChunkLoadingQueue()
@@ -169,6 +173,8 @@ public class World : MonoBehaviour
             for (int i = 0; i < chunksPerFrame && chunkLoadQueue.Count > 0; i++)
             {
                 Vector3 chunkPosition = chunkLoadQueue.Dequeue();
+
+                // If there isn't already a chunk at this position, we get one from the pool an initialize it
                 if (!chunks.ContainsKey(chunkPosition))
                 {
                     Chunk chunkObject = ChunkPoolManager.Instance.GetChunk();
@@ -177,6 +183,11 @@ public class World : MonoBehaviour
                     chunkObject.Initialize(chunkSize); // Initialize the chunk with its size
                     chunks.Add(chunkPosition, chunkObject); // Add the chunk to the dictionary
                     chunkObject.gameObject.SetActive(true);
+                }
+                else // Otherwise, there's already a chunk there, we want to rebuild it
+                {
+                    Chunk chunk = chunks[chunkPosition];
+                    chunk.GenerateMesh();
                 }
             }
         }

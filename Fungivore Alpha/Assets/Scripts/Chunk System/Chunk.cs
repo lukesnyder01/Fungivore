@@ -25,7 +25,7 @@ public class Chunk : MonoBehaviour
 
     public Vector3 globalChunkPos;
 
-    
+    // 
     public void Initialize(int size)
     {
         globalChunkPos = transform.position;
@@ -55,14 +55,20 @@ public class Chunk : MonoBehaviour
     {
         Vector3 localBlockPos = globalBlockPos - globalChunkPos;
 
-        Debug.Log(localBlockPos);
+        Debug.Log(globalBlockPos);
 
         voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z] = 
             new Voxel(globalBlockPos, type, true);
 
-        GenerateMesh();
+        World.Instance.AddChunkToQueue(globalChunkPos);
     }
 
+    public Voxel.VoxelType GetBlock(Vector3 globalBlockPos)
+    {
+        Vector3 localBlockPos = globalBlockPos - globalChunkPos;
+        return voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z].type;
+    }
+    
     public async void GenerateMesh()
     {
         await Task.Run(() => IterateVoxels());
@@ -95,7 +101,7 @@ public class Chunk : MonoBehaviour
     {
         // We should check to see if the chunk has data defined for it
         // If there is, read the data file and set the voxels
-        // IF not, go through and fill the chunk with air for now,
+        // If not, go through and fill the chunk with air for now,
         // maybe we'll do more interesting stuff later withh noise or something
 
         for (int x = 0; x < chunkSize; x++)
