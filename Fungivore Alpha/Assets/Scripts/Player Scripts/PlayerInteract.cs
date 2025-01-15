@@ -58,8 +58,6 @@ public class PlayerInteract : MonoBehaviour
                     var hitPoint = hitInfo.point;
                     var hitNormal = hitInfo.normal;
 
-                    Debug.Log(hitPoint);    
-
                     Vector3 hitCubePos = hitPoint - hitNormal * 0.5f; // Move the hit point inside the cube
 
                     hitCubePos.x = Mathf.FloorToInt(hitCubePos.x);
@@ -71,7 +69,6 @@ public class PlayerInteract : MonoBehaviour
                     Chunk chunk = World.Instance.GetChunkAt(targetCubePos);
                     
                     chunk.SetBlock(targetCubePos, Voxel.VoxelType.Grass);
-
                 }
 
                 if (currentTarget != null)
