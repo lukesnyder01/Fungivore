@@ -7,8 +7,7 @@ using UnityEngine;
 
 public class World : MonoBehaviour
 {
-    public int worldSize = 5; // Size of the world in number of chunks
-    public int chunkSize = 16; // Assuming chunk size is 16x16x16
+    private int chunkSize = 16;
 
     private Dictionary<Vector3, Chunk> chunks;
     public static World Instance { get; private set; }
@@ -181,17 +180,17 @@ public class World : MonoBehaviour
                 // If there isn't already a chunk at this position, we get one from the pool an initialize it
                 if (!chunks.ContainsKey(chunkPosition))
                 {
-                    Chunk chunkObject = ChunkPoolManager.Instance.GetChunk();
+                    Chunk chunkObject = ChunkPoolManager.Instance.GetChunk(); // Get a chunk from the pool
                     chunkObject.transform.position = chunkPosition;
-                    chunkObject.transform.parent = this.transform; // Optional, for organizational purposes
-                    chunkObject.Initialize(chunkSize); // Initialize the chunk with its size
+                    chunkObject.transform.parent = this.transform; // Nests chunk GameObjects under World
+                    chunkObject.Initialize(chunkSize); // Initialize the chunk
                     chunks.Add(chunkPosition, chunkObject); // Add the chunk to the dictionary
                     chunkObject.gameObject.SetActive(true);
                 }
-                else // Otherwise, there's already a chunk there, we want to rebuild it
+                else // If there's already a chunk at this position it's in the queue because we want to regenerate it because of block updates
                 {
                     Chunk chunk = chunks[chunkPosition];
-                    chunk.GenerateMesh();
+                    chunk.RegenerateChunk();
                 }
             }
         }

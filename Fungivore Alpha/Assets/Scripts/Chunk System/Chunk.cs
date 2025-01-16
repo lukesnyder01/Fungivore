@@ -69,7 +69,8 @@ public class Chunk : MonoBehaviour
         voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z] = 
             new Voxel(globalBlockPos, type, true);
 
-        RegenerateChunk();
+        World.Instance.AddChunkToQueue(this);
+        chunkState = ChunkState.Queued;
 
     }
 
@@ -77,6 +78,7 @@ public class Chunk : MonoBehaviour
     {
         if (chunkState != ChunkState.Processing)
         {
+            chunkState = ChunkState.Processing;
             GenerateMesh();
         }
         else

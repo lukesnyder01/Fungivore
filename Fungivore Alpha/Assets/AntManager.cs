@@ -7,7 +7,7 @@ public class AntManager : MonoBehaviour
     private Ant ant;
 
     private float timer;
-    private float timeBetweenSteps = 0.01f;
+    private float timeBetweenSteps = 0.1f;
 
     // Start is called before the first frame update
     void Start()
@@ -27,17 +27,18 @@ public class AntManager : MonoBehaviour
         {
             timer = timeBetweenSteps;
 
-            // Check if ant is in a chunk that's loaded
-
-            if (AntIsInChunk(ant.antPos))
+            Chunk chunk = ChunkContainingAnt(ant.antPos);
+            // Check that the ant is in a valid chunk and the chunk is accepting block updates
+            if (chunk != null && chunk.chunkState == Chunk.ChunkState.Idle)
             {
                 AddBlock(ant.antPos);
+
+                
+                //ant.RandomizeDirection();
                 ant.MoveForward();
             }
         }
     }
-
-
 
     private void AddBlock(Vector3 pos)
     {
@@ -50,13 +51,6 @@ public class AntManager : MonoBehaviour
         }
     }
 
-    
-
-    private bool AntIsInChunk(Vector3 antPos)
-    {
-        Chunk chunk = World.Instance.GetChunkAt(antPos);
-        return chunk != null;
-    }
 
     private Chunk ChunkContainingAnt(Vector3 antPos)
     {
