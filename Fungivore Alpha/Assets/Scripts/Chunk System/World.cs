@@ -153,15 +153,15 @@ public class World : MonoBehaviour
         // Enqueue sorted chunks for loading
         foreach (var chunk in chunksToLoad)
         {
-            AddChunkToQueue(chunk.chunkPosition);
+            chunkLoadQueue.Enqueue(chunk.chunkPosition);
         }
 
     }
 
-    public void AddChunkToQueue(Vector3 chunkPosition)
+    public void AddChunkToQueue(Chunk chunk)
     {
-        chunkLoadQueue.Enqueue(chunkPosition);
-        Debug.Log("Added chunk at " + chunkPosition);
+        chunkLoadQueue.Enqueue(chunk.globalChunkPos);
+        Debug.Log("Added chunk at " + chunk.globalChunkPos + " to queue");
     }
 
 

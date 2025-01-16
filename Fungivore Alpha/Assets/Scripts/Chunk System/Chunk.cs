@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class Chunk : MonoBehaviour
 {
+    public bool chunkIsIdle;
+
     private Voxel[,,] voxels;
     private int chunkSize = 16;
 
@@ -21,7 +23,7 @@ public class Chunk : MonoBehaviour
 
     public LayerMask chunkLayer;
 
-    public int randomNoiseDensity = 4;
+    public int randomNoiseDensity = 1;
 
     public Vector3 globalChunkPos;
 
@@ -55,13 +57,21 @@ public class Chunk : MonoBehaviour
     {
         Vector3 localBlockPos = globalBlockPos - globalChunkPos;
 
-        Debug.Log(globalBlockPos);
-
         voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z] = 
             new Voxel(globalBlockPos, type, true);
 
-        World.Instance.AddChunkToQueue(globalChunkPos);
+        RegenerateChunk();
+
     }
+
+    public void RegenerateChunk()
+    {
+        if (chunkIsIdle)
+        {
+            GenerateMesh();
+        }
+    }
+
 
     public Voxel.VoxelType GetBlock(Vector3 globalBlockPos)
     {
@@ -71,9 +81,10 @@ public class Chunk : MonoBehaviour
     
     public async void GenerateMesh()
     {
+        chunkIsIdle = false;
         await Task.Run(() => IterateVoxels());
-
         ApplyMeshData();
+        chunkIsIdle = true;
     }
 
 
@@ -125,7 +136,7 @@ public class Chunk : MonoBehaviour
         float noiseValue = Random.Range(0, 100);
 
         if (noiseValue < randomNoiseDensity && y > -20)
-            return Voxel.VoxelType.Grass;
+            return Voxel.VoxelType.Stone;
         else
             return Voxel.VoxelType.Air;
     }
