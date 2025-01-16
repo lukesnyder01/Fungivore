@@ -1183,8 +1183,8 @@ MonoBehaviour:
   loadRadius: 6
   unloadRadius: 7
   chunkUpdateThreshold: 1
-  chunksPerFrame: 6
-  loadInterval: 2
+  chunksPerFrame: 4
+  loadInterval: 1
 --- !u!4 &1718919245
 Transform:
   m_ObjectHideFlags: 0
@@ -1376,7 +1376,7 @@ PrefabInstance:
     - target: {fileID: 4855019364282867773, guid: b29a6afc2a92c534ba7d0b9e201b70e6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 162.37
+      value: 166.12514
       objectReference: {fileID: 0}
     - target: {fileID: 4855019364282867773, guid: b29a6afc2a92c534ba7d0b9e201b70e6,
         type: 3}

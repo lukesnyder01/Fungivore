@@ -4,18 +4,30 @@ using UnityEngine;
 
 public class AntManager : MonoBehaviour
 {
-    private Ant ant;
+
+    public List<Ant> ants = new List<Ant>();
+
+    private int antCount = 100;
 
     private float timer;
-    private float timeBetweenSteps = 0.1f;
+    private float timeBetweenSteps = 0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
+        for (int i = 0; i < antCount; i++)
+        {
+            Ant ant = new Ant();
+            ant.RandomizeDirection();
+            ant.antPos = new Vector3(
+                (int)Random.Range(-100, 100),
+                (int)Random.Range(-100, 100),
+                (int)Random.Range(-100, 100)
+                );
+            ants.Add(new Ant());
+        }
+
         timer = timeBetweenSteps;
-        ant = new Ant();
-        ant.antDir = new Vector3(0, 0, 1);
-        ant.antPos = new Vector3(0, 160, 0);
     }
 
     // Update is called once per frame
@@ -27,15 +39,15 @@ public class AntManager : MonoBehaviour
         {
             timer = timeBetweenSteps;
 
-            Chunk chunk = ChunkContainingAnt(ant.antPos);
-            // Check that the ant is in a valid chunk and the chunk is accepting block updates
-            if (chunk != null && chunk.chunkState == Chunk.ChunkState.Idle)
+            foreach (Ant ant in ants)
             {
-                AddBlock(ant.antPos);
-
-                
-                //ant.RandomizeDirection();
-                ant.MoveForward();
+                Chunk chunk = ChunkContainingAnt(ant.antPos);
+                // Check that the ant is in a valid chunk and the chunk is accepting block updates
+                if (chunk != null && chunk.chunkState != Chunk.ChunkState.Processing)
+                {
+                    AddBlock(ant.antPos);
+                    ant.MoveForward();
+                }
             }
         }
     }
