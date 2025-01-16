@@ -1179,11 +1179,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d7347e7ad24c04da2fbc0c1e634dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalVoxelCount: 0
   VoxelMaterial: {fileID: 2100000, guid: 5ca9e57ce771de749a306cbc51a947fa, type: 2}
   loadRadius: 6
   unloadRadius: 7
   chunkUpdateThreshold: 1
-  chunksPerFrame: 4
+  chunksPerFrame: 10
   loadInterval: 1
 --- !u!4 &1718919245
 Transform:
@@ -2001,7 +2002,7 @@ PrefabInstance:
     - target: {fileID: 6178042964904352667, guid: 7439fe5f2d553184e95c085e8bd7ff5a,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6178042964904352673, guid: 7439fe5f2d553184e95c085e8bd7ff5a,
         type: 3}

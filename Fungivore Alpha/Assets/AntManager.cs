@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class AntManager : MonoBehaviour
 {
-
     public List<Ant> ants = new List<Ant>();
 
-    private int antCount = 1000;
+    private int antCount = 10000;
 
     private float timer;
     private float timeBetweenSteps = 0.01f;
+
+    private int currentAntIndex = 0; // Tracks which ant to process next
+    private int antsPerFrame = 1000; // Number of ants to process per frame
 
     // Start is called before the first frame update
     void Start()
@@ -20,12 +22,11 @@ public class AntManager : MonoBehaviour
             Ant ant = new Ant();
             ant.RandomizeDirection();
             ant.antPos = new Vector3(
-                Mathf.FloorToInt(Random.Range(-20, 20)),
-                Mathf.FloorToInt(Random.Range(80, 120)),
-                Mathf.FloorToInt(Random.Range(-20, 20))
+                Mathf.FloorToInt(Random.Range(-100, 100)),
+                Mathf.FloorToInt(Random.Range(20, 160)),
+                Mathf.FloorToInt(Random.Range(-100, 100))
             );
             ants.Add(ant);
-            Debug.Log("Added an ant");
         }
 
         timer = timeBetweenSteps;
@@ -40,9 +41,16 @@ public class AntManager : MonoBehaviour
         {
             timer = timeBetweenSteps;
 
-            foreach (Ant ant in ants)
+            // Process a batch of ants
+            for (int i = 0; i < antsPerFrame; i++)
             {
-                Debug.Log("Move ant" + ant.antPos);
+                if (currentAntIndex >= ants.Count)
+                {
+                    currentAntIndex = 0; // Reset to the start of the list
+                    break;
+                }
+
+                Ant ant = ants[currentAntIndex];
 
                 Chunk chunk = ChunkContainingAnt(ant.antPos);
                 // Check that the ant is in a valid chunk and the chunk is accepting block updates
@@ -51,6 +59,8 @@ public class AntManager : MonoBehaviour
                     AddBlock(ant.antPos);
                     ant.MoveForward();
                 }
+
+                currentAntIndex++;
             }
         }
     }
@@ -61,15 +71,12 @@ public class AntManager : MonoBehaviour
 
         if (chunk.GetBlock(pos) == Voxel.VoxelType.Air)
         {
-            Debug.Log("Adding block at " + pos);
             chunk.SetBlock(pos, Voxel.VoxelType.Stone);
         }
     }
-
 
     private Chunk ChunkContainingAnt(Vector3 antPos)
     {
         return World.Instance.GetChunkAt(antPos);
     }
-
 }

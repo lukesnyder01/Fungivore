@@ -21,7 +21,7 @@ public class Chunk : MonoBehaviour
 
     public LayerMask chunkLayer;
 
-    public int randomNoiseDensity = 1;
+    public int randomNoiseDensity = 0;
 
     public Vector3 globalChunkPos;
 
@@ -64,6 +64,8 @@ public class Chunk : MonoBehaviour
 
     public void SetBlock(Vector3 globalBlockPos, Voxel.VoxelType type)
     {
+        World.Instance.totalVoxelCount++;
+
         Vector3 localBlockPos = globalBlockPos - globalChunkPos;
 
         voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z] = 
@@ -83,6 +85,7 @@ public class Chunk : MonoBehaviour
     {
         if (chunkState != ChunkState.Processing)
         {
+            
             chunkState = ChunkState.Processing;
             GenerateMesh();
         }
@@ -103,6 +106,7 @@ public class Chunk : MonoBehaviour
     public async void GenerateMesh()
     {
         chunkState = ChunkState.Processing;
+        ClearMeshData();
         await Task.Run(() => IterateVoxels());
         ApplyMeshData();
         chunkState = ChunkState.Idle;
@@ -146,6 +150,7 @@ public class Chunk : MonoBehaviour
                     Vector3 worldPos = transform.position + new Vector3(x, y, z);
                     Voxel.VoxelType type = DetermineVoxelType(worldPos.x, worldPos.y, worldPos.z);
                     voxels[x, y, z] = new Voxel(worldPos, type, type != Voxel.VoxelType.Air);
+                    
                 }
             }
         }
@@ -157,7 +162,11 @@ public class Chunk : MonoBehaviour
         float noiseValue = Random.Range(0, 100);
 
         if (noiseValue < randomNoiseDensity && y > -20)
+        {
+            World.Instance.totalVoxelCount++;
             return Voxel.VoxelType.Stone;
+        }
+
         else
             return Voxel.VoxelType.Air;
     }
@@ -375,8 +384,12 @@ public class Chunk : MonoBehaviour
     {
         // Clear voxel data
         voxels = new Voxel[chunkSize, chunkSize, chunkSize];
+        ClearMeshData();
 
-        // Clear mesh data
+    }
+
+    public void ClearMeshData()
+    {
         if (meshFilter != null && meshFilter.sharedMesh != null)
         {
             meshFilter.sharedMesh.Clear();
@@ -387,6 +400,5 @@ public class Chunk : MonoBehaviour
 
         }
     }
-
 
 }

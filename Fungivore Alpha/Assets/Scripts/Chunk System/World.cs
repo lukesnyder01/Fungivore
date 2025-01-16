@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class World : MonoBehaviour
 {
+    public int totalVoxelCount = 0;
+
     private int chunkSize = 16;
 
     private Dictionary<Vector3, Chunk> chunks;
@@ -64,6 +66,8 @@ public class World : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(World.Instance.totalVoxelCount);
+
         playerPosition = playerController.GetPlayerPosition();
         UpdateChunks(playerPosition);
         ProcessChunkLoadingQueue();
@@ -163,7 +167,7 @@ public class World : MonoBehaviour
     public void AddChunkToQueue(Chunk chunk)
     {
         chunkLoadQueue.Enqueue(chunk.globalChunkPos);
-        Debug.Log("Added chunk at " + chunk.globalChunkPos + " to queue");
+        Debug.Log(chunkLoadQueue.Count + "Chunks in queue");
     }
 
 
