@@ -15,6 +15,7 @@ public class Chunk : MonoBehaviour
     private List<int> triangles = new List<int>();
     private List<Vector2> uvs = new List<Vector2>();
 
+
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
     private MeshCollider meshCollider;
@@ -106,7 +107,7 @@ public class Chunk : MonoBehaviour
     public async void GenerateMesh()
     {
         chunkState = ChunkState.Processing;
-        ClearMeshData();
+        ClearVoxelData();
         await Task.Run(() => IterateVoxels());
         ApplyMeshData();
         chunkState = ChunkState.Idle;
@@ -384,21 +385,23 @@ public class Chunk : MonoBehaviour
     {
         // Clear voxel data
         voxels = new Voxel[chunkSize, chunkSize, chunkSize];
-        ClearMeshData();
 
-    }
+        ClearVoxelData();
 
-    public void ClearMeshData()
-    {
         if (meshFilter != null && meshFilter.sharedMesh != null)
         {
             meshFilter.sharedMesh.Clear();
-            vertices.Clear();
-            triangles.Clear();
-            uvs.Clear();
+
             meshCollider.sharedMesh = null;
 
         }
+    }
+
+    public void ClearVoxelData()
+    {
+        vertices.Clear();
+        triangles.Clear();
+        uvs.Clear();
     }
 
 }
