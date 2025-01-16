@@ -58,4 +58,9 @@ public class AntManager : MonoBehaviour
         return chunk != null;
     }
 
+    private Chunk ChunkContainingAnt(Vector3 antPos)
+    {
+        return World.Instance.GetChunkAt(antPos);
+    }
+
 }

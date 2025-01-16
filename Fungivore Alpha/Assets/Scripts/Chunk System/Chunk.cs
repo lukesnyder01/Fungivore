@@ -8,8 +8,6 @@ using UnityEngine;
 
 public class Chunk : MonoBehaviour
 {
-    public bool chunkIsIdle;
-
     private Voxel[,,] voxels;
     private int chunkSize = 16;
 
@@ -27,9 +25,20 @@ public class Chunk : MonoBehaviour
 
     public Vector3 globalChunkPos;
 
-    // 
+    public ChunkState chunkState;
+
+    public enum ChunkState
+    { 
+        Idle, // Can accept block updates
+        Queued, // Has pending block updates and has been added to the queue
+        Processing, // Inaccesable until work on background thread is complete
+    }
+
+
     public void Initialize(int size)
     {
+        chunkState = ChunkState.Idle;
+
         globalChunkPos = transform.position;
 
         this.chunkSize = size;
@@ -66,10 +75,15 @@ public class Chunk : MonoBehaviour
 
     public void RegenerateChunk()
     {
-        if (chunkIsIdle)
+        if (chunkState != ChunkState.Processing)
         {
             GenerateMesh();
         }
+        else
+        {
+            Debug.Log("Tried to regenerate a chunk while it was processing");
+        }
+
     }
 
 
@@ -81,10 +95,10 @@ public class Chunk : MonoBehaviour
     
     public async void GenerateMesh()
     {
-        chunkIsIdle = false;
+        chunkState = ChunkState.Processing;
         await Task.Run(() => IterateVoxels());
         ApplyMeshData();
-        chunkIsIdle = true;
+        chunkState = ChunkState.Idle;
     }
 
 

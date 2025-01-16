@@ -72,6 +72,8 @@ public class World : MonoBehaviour
     }
 
 
+
+    // Returns the chunk that the given coordinates are inside
     public Chunk GetChunkAt(Vector3 globalPosition)
     {
         // Calculate the chunk's starting position based on the global position
@@ -137,6 +139,7 @@ public class World : MonoBehaviour
                         Vector3Int chunkCoordinates = new Vector3Int(centerChunkCoordinates.x + x, centerChunkCoordinates.y + y, centerChunkCoordinates.z + z);
                         Vector3 chunkPosition = new Vector3(chunkCoordinates.x * chunkSize, chunkCoordinates.y * chunkSize, chunkCoordinates.z * chunkSize);
 
+                        // Check to make sure there isn't already a chunk in that position
                         if (!chunks.ContainsKey(chunkPosition))
                         {
                             // Add chunk and its distance to the list
@@ -147,7 +150,7 @@ public class World : MonoBehaviour
             }
         }
         
-        // Sort chunks by distance (closest first)
+        // Sort chunks by distance so we load the closest first
         chunksToLoad.Sort((a, b) => a.distanceSquared.CompareTo(b.distanceSquared));
 
         // Enqueue sorted chunks for loading
@@ -168,6 +171,7 @@ public class World : MonoBehaviour
     void ProcessChunkLoadingQueue()
     {
         frameCounter++;
+
         if (frameCounter % loadInterval == 0)
         {
             for (int i = 0; i < chunksPerFrame && chunkLoadQueue.Count > 0; i++)
