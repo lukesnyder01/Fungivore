@@ -7,10 +7,10 @@ public class AntManager : MonoBehaviour
 
     public List<Ant> ants = new List<Ant>();
 
-    private int antCount = 100;
+    private int antCount = 1000;
 
     private float timer;
-    private float timeBetweenSteps = 0.5f;
+    private float timeBetweenSteps = 0.01f;
 
     // Start is called before the first frame update
     void Start()
@@ -20,11 +20,12 @@ public class AntManager : MonoBehaviour
             Ant ant = new Ant();
             ant.RandomizeDirection();
             ant.antPos = new Vector3(
-                (int)Random.Range(-100, 100),
-                (int)Random.Range(-100, 100),
-                (int)Random.Range(-100, 100)
-                );
-            ants.Add(new Ant());
+                Mathf.FloorToInt(Random.Range(-20, 20)),
+                Mathf.FloorToInt(Random.Range(80, 120)),
+                Mathf.FloorToInt(Random.Range(-20, 20))
+            );
+            ants.Add(ant);
+            Debug.Log("Added an ant");
         }
 
         timer = timeBetweenSteps;
@@ -41,6 +42,8 @@ public class AntManager : MonoBehaviour
 
             foreach (Ant ant in ants)
             {
+                Debug.Log("Move ant" + ant.antPos);
+
                 Chunk chunk = ChunkContainingAnt(ant.antPos);
                 // Check that the ant is in a valid chunk and the chunk is accepting block updates
                 if (chunk != null && chunk.chunkState != Chunk.ChunkState.Processing)

@@ -69,8 +69,13 @@ public class Chunk : MonoBehaviour
         voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z] = 
             new Voxel(globalBlockPos, type, true);
 
-        World.Instance.AddChunkToQueue(this);
-        chunkState = ChunkState.Queued;
+
+        if (chunkState == ChunkState.Idle)
+        {
+            World.Instance.AddChunkToQueue(this);
+            chunkState = ChunkState.Queued;
+        }
+
 
     }
 
