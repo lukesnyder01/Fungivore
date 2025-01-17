@@ -7,8 +7,9 @@ using UnityEngine;
 
 public class World : MonoBehaviour
 {
-    public int worldSize = 5; // Size of the world in number of chunks
-    public int chunkSize = 16; // Assuming chunk size is 16x16x16
+    public int totalVoxelCount = 0;
+
+    private int chunkSize = 16;
 
     private Dictionary<Vector3, Chunk> chunks;
     public static World Instance { get; private set; }
@@ -65,6 +66,8 @@ public class World : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(World.Instance.totalVoxelCount);
+
         playerPosition = playerController.GetPlayerPosition();
         UpdateChunks(playerPosition);
         ProcessChunkLoadingQueue();
@@ -72,6 +75,8 @@ public class World : MonoBehaviour
     }
 
 
+
+    // Returns the chunk that the given coordinates are inside
     public Chunk GetChunkAt(Vector3 globalPosition)
     {
         // Calculate the chunk's starting position based on the global position
@@ -137,6 +142,7 @@ public class World : MonoBehaviour
                         Vector3Int chunkCoordinates = new Vector3Int(centerChunkCoordinates.x + x, centerChunkCoordinates.y + y, centerChunkCoordinates.z + z);
                         Vector3 chunkPosition = new Vector3(chunkCoordinates.x * chunkSize, chunkCoordinates.y * chunkSize, chunkCoordinates.z * chunkSize);
 
+                        // Check to make sure there isn't already a chunk in that position
                         if (!chunks.ContainsKey(chunkPosition))
                         {
                             // Add chunk and its distance to the list
@@ -147,7 +153,7 @@ public class World : MonoBehaviour
             }
         }
         
-        // Sort chunks by distance (closest first)
+        // Sort chunks by distance so we load the closest first
         chunksToLoad.Sort((a, b) => a.distanceSquared.CompareTo(b.distanceSquared));
 
         // Enqueue sorted chunks for loading
@@ -158,25 +164,37 @@ public class World : MonoBehaviour
 
     }
 
-
+    public void AddChunkToQueue(Chunk chunk)
+    {
+        chunkLoadQueue.Enqueue(chunk.globalChunkPos);
+        Debug.Log(chunkLoadQueue.Count + "Chunks in queue");
+    }
 
 
     void ProcessChunkLoadingQueue()
     {
         frameCounter++;
+
         if (frameCounter % loadInterval == 0)
         {
             for (int i = 0; i < chunksPerFrame && chunkLoadQueue.Count > 0; i++)
             {
                 Vector3 chunkPosition = chunkLoadQueue.Dequeue();
+
+                // If there isn't already a chunk at this position, we get one from the pool an initialize it
                 if (!chunks.ContainsKey(chunkPosition))
                 {
-                    Chunk chunkObject = ChunkPoolManager.Instance.GetChunk();
+                    Chunk chunkObject = ChunkPoolManager.Instance.GetChunk(); // Get a chunk from the pool
                     chunkObject.transform.position = chunkPosition;
-                    chunkObject.transform.parent = this.transform; // Optional, for organizational purposes
-                    chunkObject.Initialize(chunkSize); // Initialize the chunk with its size
+                    chunkObject.transform.parent = this.transform; // Nests chunk GameObjects under World
+                    chunkObject.Initialize(chunkSize); // Initialize the chunk
                     chunks.Add(chunkPosition, chunkObject); // Add the chunk to the dictionary
                     chunkObject.gameObject.SetActive(true);
+                }
+                else // If there's already a chunk at this position it's in the queue because we want to regenerate it because of block updates
+                {
+                    Chunk chunk = chunks[chunkPosition];
+                    chunk.RegenerateChunk();
                 }
             }
         }

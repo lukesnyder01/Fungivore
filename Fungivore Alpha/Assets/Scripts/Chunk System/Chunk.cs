@@ -15,19 +15,31 @@ public class Chunk : MonoBehaviour
     private List<int> triangles = new List<int>();
     private List<Vector2> uvs = new List<Vector2>();
 
+
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
     private MeshCollider meshCollider;
 
     public LayerMask chunkLayer;
 
-    public int randomNoiseDensity = 4;
+    public int randomNoiseDensity = 0;
 
     public Vector3 globalChunkPos;
 
-    
+    public ChunkState chunkState;
+
+    public enum ChunkState
+    { 
+        Idle, // Can accept block updates
+        Queued, // Has pending block updates and has been added to the queue
+        Processing, // Inaccesable until work on background thread is complete
+    }
+
+
     public void Initialize(int size)
     {
+        chunkState = ChunkState.Idle;
+
         globalChunkPos = transform.position;
 
         this.chunkSize = size;
@@ -53,21 +65,52 @@ public class Chunk : MonoBehaviour
 
     public void SetBlock(Vector3 globalBlockPos, Voxel.VoxelType type)
     {
-        Vector3 localBlockPos = globalBlockPos - globalChunkPos;
+        World.Instance.totalVoxelCount++;
 
-        Debug.Log(localBlockPos);
+        Vector3 localBlockPos = globalBlockPos - globalChunkPos;
 
         voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z] = 
             new Voxel(globalBlockPos, type, true);
 
-        GenerateMesh();
+
+        if (chunkState == ChunkState.Idle)
+        {
+            World.Instance.AddChunkToQueue(this);
+            chunkState = ChunkState.Queued;
+        }
+
+
     }
 
+    public void RegenerateChunk()
+    {
+        if (chunkState != ChunkState.Processing)
+        {
+            
+            chunkState = ChunkState.Processing;
+            GenerateMesh();
+        }
+        else
+        {
+            Debug.Log("Tried to regenerate a chunk while it was processing");
+        }
+
+    }
+
+
+    public Voxel.VoxelType GetBlock(Vector3 globalBlockPos)
+    {
+        Vector3 localBlockPos = globalBlockPos - globalChunkPos;
+        return voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z].type;
+    }
+    
     public async void GenerateMesh()
     {
+        chunkState = ChunkState.Processing;
+        ClearVoxelData();
         await Task.Run(() => IterateVoxels());
-
         ApplyMeshData();
+        chunkState = ChunkState.Idle;
     }
 
 
@@ -95,7 +138,7 @@ public class Chunk : MonoBehaviour
     {
         // We should check to see if the chunk has data defined for it
         // If there is, read the data file and set the voxels
-        // IF not, go through and fill the chunk with air for now,
+        // If not, go through and fill the chunk with air for now,
         // maybe we'll do more interesting stuff later withh noise or something
 
         for (int x = 0; x < chunkSize; x++)
@@ -108,6 +151,7 @@ public class Chunk : MonoBehaviour
                     Vector3 worldPos = transform.position + new Vector3(x, y, z);
                     Voxel.VoxelType type = DetermineVoxelType(worldPos.x, worldPos.y, worldPos.z);
                     voxels[x, y, z] = new Voxel(worldPos, type, type != Voxel.VoxelType.Air);
+                    
                 }
             }
         }
@@ -119,7 +163,11 @@ public class Chunk : MonoBehaviour
         float noiseValue = Random.Range(0, 100);
 
         if (noiseValue < randomNoiseDensity && y > -20)
-            return Voxel.VoxelType.Grass;
+        {
+            World.Instance.totalVoxelCount++;
+            return Voxel.VoxelType.Stone;
+        }
+
         else
             return Voxel.VoxelType.Air;
     }
@@ -338,17 +386,22 @@ public class Chunk : MonoBehaviour
         // Clear voxel data
         voxels = new Voxel[chunkSize, chunkSize, chunkSize];
 
-        // Clear mesh data
+        ClearVoxelData();
+
         if (meshFilter != null && meshFilter.sharedMesh != null)
         {
             meshFilter.sharedMesh.Clear();
-            vertices.Clear();
-            triangles.Clear();
-            uvs.Clear();
+
             meshCollider.sharedMesh = null;
 
         }
     }
 
+    public void ClearVoxelData()
+    {
+        vertices.Clear();
+        triangles.Clear();
+        uvs.Clear();
+    }
 
 }
