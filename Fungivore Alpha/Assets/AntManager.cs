@@ -6,20 +6,20 @@ public class AntManager : MonoBehaviour
 {
     public List<Ant> ants = new List<Ant>();
 
-    private int antCount = 10000;
+    private int antCount = 1000;
 
     private float timer;
     private float timeBetweenSteps = 0.01f;
 
     private int currentAntIndex = 0; // Tracks which ant to process next
-    private int antsPerFrame = 1000; // Number of ants to process per frame
+    private int antsPerFrame = 100; // Number of ants to process per frame
 
     // Start is called before the first frame update
     void Start()
     {
         for (int i = 0; i < antCount; i++)
         {
-            Ant ant = new Ant();
+            Ant ant = new RibAnt();
             ant.RandomizeDirection();
             ant.antPos = new Vector3(
                 Mathf.FloorToInt(Random.Range(-100, 100)),

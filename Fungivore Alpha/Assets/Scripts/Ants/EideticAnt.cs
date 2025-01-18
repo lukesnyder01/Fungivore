@@ -14,7 +14,7 @@ public class EideticAnt : Ant
     // Start is called before the first frame update
     void Start()
     {
-        
+        // fill the moves list with random moves
     }
 
 

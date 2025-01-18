@@ -9,14 +9,16 @@ public class Ant
 
     public Vector3 antDir;
 
-    private int directionIndex;
+    public int directionIndex;
+
+    private Chunk currentChunk;
 
     // Cardinal directions winding clockwise
-    private readonly Vector3[] directions = {
-        new Vector3(0, 0, 1),  // North
-        new Vector3(1, 0, 0),  // East
-        new Vector3(0, 0, -1), // South
-        new Vector3(-1, 0, 0), // West
+    public readonly Vector3[] directions = {
+        new Vector3(0, 0, 1),  // Positive Z North
+        new Vector3(1, 0, 0),  // Positive X East
+        new Vector3(0, 0, -1), // Negative Z South
+        new Vector3(-1, 0, 0), // Negative X West
     };
 
     public enum AntMove
@@ -27,9 +29,10 @@ public class Ant
         MoveRight,
         MoveUp,
         MoveDown,
-        TurnLeft,
-        TurnRight
+        TurnLeftAndMove,
+        TurnRightAndMove
     }
+
 
 
 
@@ -37,6 +40,24 @@ public class Ant
     { 
 
     }
+
+
+    public bool BlockIsEmpty(Vector3 position)
+    {
+        currentChunk = World.Instance.GetChunkAt(position);
+        if (currentChunk.GetBlock(position) == Voxel.VoxelType.Air)
+        {
+            // Also check a overlap box here for entities
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+
 
     public void RandomizeDirection()
     {
@@ -66,13 +87,13 @@ public class Ant
         antPos += Vector3.down;
     }
 
-    public void TurnRight()
+    public void TurnRightAndMove()
     {
         directionIndex = (directionIndex + 1) % directions.Length;
         antDir = directions[directionIndex];
     }
 
-    public void TurnLeft()
+    public void TurnLeftAndMove()
     {
         directionIndex = (directionIndex - 1) % directions.Length;
         antDir = directions[directionIndex];
