@@ -16,8 +16,27 @@ public class Ant
         new Vector3(0, 0, 1),  // North
         new Vector3(1, 0, 0),  // East
         new Vector3(0, 0, -1), // South
-        new Vector3(-1, 0, 0)  // West
+        new Vector3(-1, 0, 0), // West
     };
+
+    public enum AntMove
+    { 
+        MoveForward,
+        MoveBackward,
+        MoveLeft,
+        MoveRight,
+        MoveUp,
+        MoveDown,
+        TurnLeft,
+        TurnRight
+    }
+
+
+
+    public virtual void MoveNext()
+    { 
+
+    }
 
     public void RandomizeDirection()
     {
@@ -29,6 +48,13 @@ public class Ant
     {
         antPos += antDir;
     }
+
+    public void MoveBackwards()
+    {
+        antPos -= antDir;
+    }
+
+
 
     public void MoveUp()
     {

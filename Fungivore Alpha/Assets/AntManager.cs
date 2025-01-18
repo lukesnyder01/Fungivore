@@ -57,6 +57,7 @@ public class AntManager : MonoBehaviour
                 if (chunk != null && chunk.chunkState != Chunk.ChunkState.Processing)
                 {
                     AddBlock(ant.antPos);
+                    ant.RandomizeDirection();
                     ant.MoveForward();
                 }
 
