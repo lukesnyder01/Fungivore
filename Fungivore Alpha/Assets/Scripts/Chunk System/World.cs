@@ -66,7 +66,7 @@ public class World : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(World.Instance.totalVoxelCount);
+        //Debug.Log(World.Instance.totalVoxelCount);
 
         playerPosition = playerController.GetPlayerPosition();
         UpdateChunks(playerPosition);
@@ -167,7 +167,7 @@ public class World : MonoBehaviour
     public void AddChunkToQueue(Chunk chunk)
     {
         chunkLoadQueue.Enqueue(chunk.globalChunkPos);
-        Debug.Log(chunkLoadQueue.Count + "Chunks in queue");
+        //Debug.Log(chunkLoadQueue.Count + "Chunks in queue");
     }
 
 
