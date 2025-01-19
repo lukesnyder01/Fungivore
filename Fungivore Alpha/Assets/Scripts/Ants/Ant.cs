@@ -11,7 +11,7 @@ public class Ant
 
     public int directionIndex;
 
-    private Chunk currentChunk;
+    public Chunk currentChunk;
 
     // Cardinal directions winding clockwise
     public readonly Vector3[] directions = {
@@ -45,7 +45,7 @@ public class Ant
     public bool BlockIsEmpty(Vector3 position)
     {
         currentChunk = World.Instance.GetChunkAt(position);
-        if (currentChunk.GetBlock(position) == Voxel.VoxelType.Air)
+        if (currentChunk != null && currentChunk.GetBlock(position) == Voxel.VoxelType.Air)
         {
             // Also check a overlap box here for entities
             return true;
@@ -95,7 +95,7 @@ public class Ant
 
     public void TurnLeftAndMove()
     {
-        directionIndex = (directionIndex - 1) % directions.Length;
+        directionIndex = (directionIndex + 3) % directions.Length;
         antDir = directions[directionIndex];
     }
 

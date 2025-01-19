@@ -6,13 +6,13 @@ public class AntManager : MonoBehaviour
 {
     public List<Ant> ants = new List<Ant>();
 
-    private int antCount = 1000;
+    private int antCount = 100000;
 
     private float timer;
-    private float timeBetweenSteps = 0.01f;
+    private float timeBetweenSteps = 0.1f;
 
     private int currentAntIndex = 0; // Tracks which ant to process next
-    private int antsPerFrame = 100; // Number of ants to process per frame
+    private int antsPerStep = 1000; // Number of ants to process each time
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +42,7 @@ public class AntManager : MonoBehaviour
             timer = timeBetweenSteps;
 
             // Process a batch of ants
-            for (int i = 0; i < antsPerFrame; i++)
+            for (int i = 0; i < antsPerStep; i++)
             {
                 if (currentAntIndex >= ants.Count)
                 {
@@ -52,32 +52,10 @@ public class AntManager : MonoBehaviour
 
                 Ant ant = ants[currentAntIndex];
 
-                Chunk chunk = ChunkContainingAnt(ant.antPos);
-                // Check that the ant is in a valid chunk and the chunk is accepting block updates
-                if (chunk != null && chunk.chunkState != Chunk.ChunkState.Processing)
-                {
-                    AddBlock(ant.antPos);
-                    ant.RandomizeDirection();
-                    ant.MoveForward();
-                }
+                ant.MoveNext();
 
                 currentAntIndex++;
             }
         }
-    }
-
-    private void AddBlock(Vector3 pos)
-    {
-        Chunk chunk = World.Instance.GetChunkAt(pos);
-
-        if (chunk.GetBlock(pos) == Voxel.VoxelType.Air)
-        {
-            chunk.SetBlock(pos, Voxel.VoxelType.Stone);
-        }
-    }
-
-    private Chunk ChunkContainingAnt(Vector3 antPos)
-    {
-        return World.Instance.GetChunkAt(antPos);
     }
 }

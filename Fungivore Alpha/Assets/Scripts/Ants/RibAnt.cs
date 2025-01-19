@@ -4,43 +4,94 @@ using UnityEngine;
 
 public class RibAnt : Ant
 {
-    private List<AntMove> moves = new List<AntMove>
-    {
-        AntMove.TurnLeftAndMove,
-        AntMove.MoveForward,
-        AntMove.TurnLeftAndMove
-    };
+    private List<AntMove> openMoves = new List<AntMove>();
+
+    private int movesRemaining = 100;
+
 
     public override void MoveNext()
     {
-        // Pick a random move
-        var currentMove = moves[Random.Range(0, moves.Count)];
-
-        switch (currentMove)
+        if (movesRemaining >= 0)
         {
-            case AntMove.TurnLeftAndMove:
-                Vector3 leftDir = directions[(directionIndex + 1) % directions.Length];
-                if (BlockIsEmpty(antPos + leftDir))
+            //Debug.Log("Moves remaining:" + movesRemaining);
+
+            movesRemaining--;
+
+            // Reset the open moves for the ant
+            openMoves.Clear();
+
+            CheckForOpenMoves();
+
+            if (openMoves.Count != 0)
+            {
+                // Pick a random open move
+
+                var currentMove = openMoves[Random.Range(0, openMoves.Count)];
+
+                switch (currentMove)
                 {
-                    TurnLeftAndMove();
+                    case AntMove.TurnLeftAndMove:
+                        TurnLeftAndMove();
+                        break;
+                    case AntMove.MoveForward:
+                        MoveForward();
+                        break;
+                    case AntMove.TurnRightAndMove:
+                        TurnRightAndMove();
+                        break;
                 }
-                break;
-            case AntMove.MoveForward:
-                if (BlockIsEmpty(antPos + antDir))
+
+                World.Instance.totalVoxelCount++;
+                currentChunk = World.Instance.GetChunkAt(antPos);
+                if (currentChunk == null)
                 {
-                    MoveForward();
+                    Debug.Log("Couldn't find a chunk at " + antPos);
                 }
-                break;
-            case AntMove.TurnRightAndMove:
-                Vector3 rightDir = directions[(directionIndex - 1) % directions.Length];
-                if (BlockIsEmpty(antPos + rightDir))
+                else
                 {
-                    TurnRightAndMove();
+                    currentChunk.SetBlock(antPos, Voxel.VoxelType.Stone);
                 }
-                break;
+
+
+
+                
+            }
+            else
+            {
+                if (BlockIsEmpty(antPos - Vector3.up))
+                {
+                    MoveDown();
+                }
+            }
+        }
+    }
+
+
+    private void CheckForOpenMoves()
+    {
+        // Check if left move is valid
+        var tempDirectionIndex = (directionIndex + 3) % directions.Length;
+        Vector3 leftDir = directions[tempDirectionIndex];
+        if (BlockIsEmpty(antPos + leftDir))
+        {
+            openMoves.Add(AntMove.TurnLeftAndMove);
         }
 
+        // Check if forward move is valid
+        if (BlockIsEmpty(antPos + antDir))
+        {
+            openMoves.Add(AntMove.MoveForward);
+        }
 
+        tempDirectionIndex = (directionIndex + 1) % directions.Length;
+        // Check if right move is valid
+        Vector3 rightDir = directions[tempDirectionIndex];
 
+        if (BlockIsEmpty(antPos + rightDir))
+        {
+            openMoves.Add(AntMove.TurnRightAndMove);
+        }
     }
+
+
 }
