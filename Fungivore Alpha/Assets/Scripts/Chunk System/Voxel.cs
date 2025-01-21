@@ -1,26 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-// from https://medium.com/@adamy1558/building-a-high-performance-voxel-engine-in-unity-a-step-by-step-guide-part-1-voxels-chunks-86275c079fb8
-
-[System.Serializable]
+﻿[System.Serializable]
 public struct Voxel
 {
-    //public Vector3 position;
     public bool isActive;
+    public byte type;  // Using byte instead of enum
 
-    public VoxelType type; // Using the VoxelType enum
-    public enum VoxelType
+    // Static byte constants for block types - gives us enum-like readability
+    public static class Type
     {
-        Air,    // Represents empty space
-        Stone,
+        public const byte Air = 0;
+        public const byte Stone = 1;
+        // Easy to add more:
+        // public const byte Dirt = 2;
+        // public const byte Grass = 3;
+        // public const byte Wood = 4;
+        // etc...
     }
 
-    public Voxel(VoxelType type, bool isActive = true)
+    public Voxel(byte type, bool isActive = true)
     {
-        //this.position = position;
         this.type = type;
         this.isActive = isActive;
+    }
+
+    // Convenience constructor that maintains readable code
+    public static Voxel Create(byte type, bool isActive = true)
+    {
+        return new Voxel(type, isActive);
     }
 }

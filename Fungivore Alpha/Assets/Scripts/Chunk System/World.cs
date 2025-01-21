@@ -171,7 +171,7 @@ public class World : MonoBehaviour
     }
 
 
-    private async Task ProcessChunkLoadingQueue()
+    private void ProcessChunkLoadingQueue()
     {
         frameCounter++;
 
@@ -181,13 +181,13 @@ public class World : MonoBehaviour
             {
                 Vector3 chunkPosition = chunkLoadQueue.Dequeue();
 
-                // If there isn't already a chunk at this position, we get one from the pool an initialize it
+                // If there isn't already a chunk object at this position, we get one from the pool an initialize it
                 if (!chunks.ContainsKey(chunkPosition))
                 {
                     Chunk chunkObject = ChunkPoolManager.Instance.GetChunk(); // Get a chunk from the pool
-                    chunkObject.transform.position = chunkPosition;
+                    chunkObject.transform.position = chunkPosition; // Move the chunk to the right position
                     chunkObject.transform.parent = this.transform; // Nests chunk GameObjects under World
-                    await chunkObject.Initialize(chunkSize); // Initialize the chunk
+                    chunkObject.Initialize(chunkSize); // Initialize the chunk
                     chunks.Add(chunkPosition, chunkObject); // Add the chunk to the dictionary
                     chunkObject.gameObject.SetActive(true);
                 }

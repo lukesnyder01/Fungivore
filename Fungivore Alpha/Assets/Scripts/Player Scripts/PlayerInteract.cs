@@ -68,7 +68,7 @@ public class PlayerInteract : MonoBehaviour
                     
                     Chunk chunk = World.Instance.GetChunkAt(targetCubePos);
                     
-                    chunk.SetBlock(targetCubePos, Voxel.VoxelType.Stone);
+                    chunk.SetBlock(targetCubePos, Voxel.Type.Stone);
                 }
 
                 if (currentTarget != null)

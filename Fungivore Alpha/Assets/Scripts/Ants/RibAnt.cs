@@ -49,7 +49,7 @@ public class RibAnt : Ant
                 }
                 else
                 {
-                    currentChunk.SetBlock(antPos, Voxel.VoxelType.Stone);
+                    currentChunk.SetBlock(antPos, Voxel.Type.Stone);
                 }
 
 

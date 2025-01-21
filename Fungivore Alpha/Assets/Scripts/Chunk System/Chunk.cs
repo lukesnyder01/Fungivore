@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -36,61 +37,69 @@ public class Chunk : MonoBehaviour
     }
 
 
-    public async Task Initialize(int size)
+    public void Initialize(int size)
     {
         chunkState = ChunkState.Idle;
+
+        meshFilter = GetComponent<MeshFilter>();
+        meshRenderer = GetComponent<MeshRenderer>();
+        meshCollider = GetComponent<MeshCollider>();
 
         globalChunkPos = transform.position;
 
         chunkSize = size;
+
         voxels = new Voxel[size, size, size];
-        await Task.Run(() => InitializeVoxels());
 
-        meshFilter = GetComponent<MeshFilter>();
-        if (meshFilter == null) { meshFilter = gameObject.AddComponent<MeshFilter>(); }
-
-        meshRenderer = GetComponent<MeshRenderer>();
-        if (meshRenderer == null) { meshRenderer = gameObject.AddComponent<MeshRenderer>(); }
-
-        meshCollider = GetComponent<MeshCollider>();
-        if (meshCollider == null) { meshCollider = gameObject.AddComponent<MeshCollider>(); }
-
-        //add the solid block layer and tag to the chunks
-        chunkLayer = LayerMask.NameToLayer("Solid Block");
-        gameObject.layer = chunkLayer;
-        gameObject.tag = "Solid Block";
-
-        GenerateMesh(); // Call after ensuring all necessary components and data are set
+        InitializeVoxels();
     }
 
-    private async Task InitializeVoxels()
+    private async void InitializeVoxels()
     {
-        // LoadChunkAsync returns true if a chunk data file exists
-        // and will automatically load the chunk data for us. If no chunk data exists,
-        // then we fill the chunk with randomized data.
-        if (!await ChunkSerializer.LoadChunkAsync(this))
-        {
-            for (int x = 0; x < chunkSize; x++)
-            {
-                for (int y = 0; y < chunkSize; y++)
-                {
-                    for (int z = 0; z < chunkSize; z++)
-                    {
-                        // Use world coordinates for noise sampling
-                        Vector3 worldPos = transform.position + new Vector3(x, y, z);
-                        Voxel.VoxelType type = DetermineVoxelType(worldPos.x, worldPos.y, worldPos.z);
-                        voxels[x, y, z] = new Voxel(type, type != Voxel.VoxelType.Air);
+        RandomizeVoxels();
+        GenerateMesh();
 
-                    }
+        /*
+        string filePath = ChunkSerializer.GetChunkFilePath(this.globalChunkPos);
+        if (File.Exists(filePath))
+        {
+            await Task.Run(() => LoadVoxelsAndGenerate());
+        }
+        else
+        {
+            
+        }
+        */
+    }
+
+
+    private async Task LoadVoxelsAndGenerate()
+    {
+        await ChunkSerializer.LoadChunkAsync(this);
+        GenerateMesh();
+    }
+
+
+    private void RandomizeVoxels()
+    {
+        for (int x = 0; x < chunkSize; x++)
+        {
+            for (int y = 0; y < chunkSize; y++)
+            {
+                for (int z = 0; z < chunkSize; z++)
+                {
+                    // Use world coordinates for noise sampling
+                    Vector3 worldPos = globalChunkPos + new Vector3(x, y, z);
+                    byte type = DetermineVoxelType(worldPos.x, worldPos.y, worldPos.z);
+                    voxels[x, y, z] = new Voxel(type, type != Voxel.Type.Air);
+
                 }
             }
         }
-
-
     }
 
 
-    public void SetBlock(Vector3 globalBlockPos, Voxel.VoxelType type)
+    public void SetBlock(Vector3 globalBlockPos, byte type)
     {
         World.Instance.totalVoxelCount++;
 
@@ -126,7 +135,7 @@ public class Chunk : MonoBehaviour
     }
 
 
-    public Voxel.VoxelType GetBlockGlobal(Vector3 globalBlockPos)
+    public byte GetBlockGlobal(Vector3 globalBlockPos)
     {
         Vector3 localBlockPos = globalBlockPos - globalChunkPos;
         return voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z].type;
@@ -151,12 +160,14 @@ public class Chunk : MonoBehaviour
         chunkState = ChunkState.Processing;
         ClearVoxelData();
         await Task.Run(() => IterateVoxels());
+        ApplyMeshData();
 
         // Save to disk after generating the mesh
-        await ChunkSerializer.SaveChunkAsync(this);
-        Debug.Log("Saved a chunk");
+        await Task.Run(() => ChunkSerializer.SaveChunkAsync(this));
 
-        ApplyMeshData();
+        Debug.Log("Saved chunk at " + globalChunkPos);
+
+
         chunkState = ChunkState.Idle;
     }
 
@@ -183,20 +194,18 @@ public class Chunk : MonoBehaviour
     }
 
 
-    
-
-    private Voxel.VoxelType DetermineVoxelType(float x, float y, float z)
+    private byte DetermineVoxelType(float x, float y, float z)
     {
         float noiseValue = Random.Range(0, 100);
 
         if (noiseValue < randomNoiseDensity && y > -20)
         {
             World.Instance.totalVoxelCount++;
-            return Voxel.VoxelType.Stone;
+            return Voxel.Type.Stone;
         }
 
         else
-            return Voxel.VoxelType.Air;
+            return Voxel.Type.Air;
     }
 
 

@@ -45,7 +45,7 @@ public class Ant
     public bool BlockIsEmpty(Vector3 position)
     {
         currentChunk = World.Instance.GetChunkAt(position);
-        if (currentChunk != null && currentChunk.GetBlockGlobal(position) == Voxel.VoxelType.Air)
+        if (currentChunk != null && currentChunk.GetBlockGlobal(position) == Voxel.Type.Air)
         {
             // Also check a overlap box here for entities
             return true;

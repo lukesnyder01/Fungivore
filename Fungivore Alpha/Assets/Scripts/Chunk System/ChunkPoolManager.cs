@@ -43,10 +43,19 @@ public class ChunkPoolManager : MonoBehaviour
         chunkPool.Enqueue(chunk);
     }
 
+    // Instantiate chunk objects for the pool, and give them appropriate components
     private Chunk InstantiateNewChunk()
     {
-        GameObject chunkObject = new GameObject("Chunk");
-        Chunk newChunk = chunkObject.AddComponent<Chunk>();
+        GameObject newChunkObject = new GameObject("Chunk");
+        Chunk newChunk = newChunkObject.AddComponent<Chunk>();
+
+        newChunkObject.AddComponent<MeshFilter>();
+        newChunkObject.AddComponent<MeshRenderer>();
+        newChunkObject.AddComponent<MeshCollider>();
+
+        newChunkObject.layer = LayerMask.NameToLayer("Solid Block");
+        newChunkObject.tag = "Solid Block";
+
         return newChunk;
     }
 

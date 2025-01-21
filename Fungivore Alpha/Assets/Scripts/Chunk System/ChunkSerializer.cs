@@ -18,14 +18,19 @@ public static class ChunkSerializer
     {
         string filePath = GetChunkFilePath(chunk.globalChunkPos);
 
-        // Ensure the directory exists
+        Debug.Log($"[Save] Starting save for chunk {chunk.globalChunkPos}");
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+
         Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+        Debug.Log($"[Save] Directory creation took {sw.ElapsedMilliseconds}ms");
 
-        // Serialize voxel data
+        sw.Restart();
         byte[] data = SerializeChunk(chunk);
+        Debug.Log($"[Save] Serialization took {sw.ElapsedMilliseconds}ms");
 
-        // Write to disk asynchronously
+        sw.Restart();
         await File.WriteAllBytesAsync(filePath, data);
+        Debug.Log($"[Save] File writing took {sw.ElapsedMilliseconds}ms");
     }
 
 
@@ -52,23 +57,48 @@ public static class ChunkSerializer
     private static byte[] SerializeChunk(Chunk chunk)
     {
         using (MemoryStream stream = new MemoryStream())
+        using (BinaryWriter writer = new BinaryWriter(stream))
         {
-            BinaryFormatter formatter = new BinaryFormatter();
+            int currentRun = 0;
+            byte currentType = 0;
 
-            // Create a simple object to store voxel data
-            var voxelData = new Voxel[chunk.chunkSize, chunk.chunkSize, chunk.chunkSize];
+            // Write chunk size
+            writer.Write(chunk.chunkSize);
+
+            // Iterate through all voxels
             for (int x = 0; x < chunk.chunkSize; x++)
-            {
                 for (int y = 0; y < chunk.chunkSize; y++)
-                {
                     for (int z = 0; z < chunk.chunkSize; z++)
                     {
-                        voxelData[x, y, z] = chunk.GetVoxelLocal(x, y, z);
+                        var voxel = chunk.GetVoxelLocal(x, y, z);
+                        byte voxelType = voxel.type;  // Assuming Type is a byte
+
+                        if (currentRun == 0)
+                        {
+                            currentType = voxelType;
+                            currentRun = 1;
+                        }
+                        else if (voxelType == currentType && currentRun < 255)
+                        {
+                            currentRun++;
+                        }
+                        else
+                        {
+                            // Write the run
+                            writer.Write(currentType);
+                            writer.Write((byte)currentRun);
+                            currentType = voxelType;
+                            currentRun = 1;
+                        }
                     }
-                }
+
+            // Write final run
+            if (currentRun > 0)
+            {
+                writer.Write(currentType);
+                writer.Write((byte)currentRun);
             }
 
-            formatter.Serialize(stream, voxelData);
             return stream.ToArray();
         }
     }
@@ -88,11 +118,11 @@ public static class ChunkSerializer
                 {
                     for (int z = 0; z < chunk.chunkSize; z++)
                     {
-                        Debug.Log(voxelData[x, y, z].type);
                         chunk.SetVoxelAt(x, y, z, voxelData[x, y, z]);
                     }
                 }
             }
+            Debug.Log("Loaded chunk at " + chunk.globalChunkPos);
         }
     }
 
@@ -100,7 +130,7 @@ public static class ChunkSerializer
 
 
     // Determine file path based on chunk position
-    private static string GetChunkFilePath(Vector3 globalChunkPos)
+    public static string GetChunkFilePath(Vector3 globalChunkPos)
     {
         return Path.Combine(saveDirectory, $"{(int)globalChunkPos.x}_{(int)globalChunkPos.y}_{(int)globalChunkPos.z}.chunk");
     }
