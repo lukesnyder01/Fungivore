@@ -4,10 +4,10 @@ using UnityEngine;
 
 // from https://medium.com/@adamy1558/building-a-high-performance-voxel-engine-in-unity-a-step-by-step-guide-part-1-voxels-chunks-86275c079fb8
 
-
+[System.Serializable]
 public struct Voxel
 {
-    public Vector3 position;
+    //public Vector3 position;
     public bool isActive;
 
     public VoxelType type; // Using the VoxelType enum
@@ -17,9 +17,9 @@ public struct Voxel
         Stone,
     }
 
-    public Voxel(Vector3 position, VoxelType type, bool isActive = true)
+    public Voxel(VoxelType type, bool isActive = true)
     {
-        this.position = position;
+        //this.position = position;
         this.type = type;
         this.isActive = isActive;
     }

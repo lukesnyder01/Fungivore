@@ -1182,7 +1182,7 @@ MonoBehaviour:
   totalVoxelCount: 0
   VoxelMaterial: {fileID: 2100000, guid: 5ca9e57ce771de749a306cbc51a947fa, type: 2}
   loadRadius: 6
-  unloadRadius: 50
+  unloadRadius: 7
   chunkUpdateThreshold: 1
   chunksPerFrame: 4
   loadInterval: 1
@@ -1730,6 +1730,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ant Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6467724666521238677, guid: 5b54cd5f22fdff84299bab63a7d52730,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7650074552910295417, guid: 5b54cd5f22fdff84299bab63a7d52730,
         type: 3}

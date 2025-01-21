@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 
 // from https://medium.com/@adamy1558/building-a-high-performance-voxel-engine-in-unity-a-step-by-step-guide-part-1-voxels-chunks-86275c079fb8
@@ -170,7 +171,7 @@ public class World : MonoBehaviour
     }
 
 
-    void ProcessChunkLoadingQueue()
+    private async Task ProcessChunkLoadingQueue()
     {
         frameCounter++;
 
@@ -186,7 +187,7 @@ public class World : MonoBehaviour
                     Chunk chunkObject = ChunkPoolManager.Instance.GetChunk(); // Get a chunk from the pool
                     chunkObject.transform.position = chunkPosition;
                     chunkObject.transform.parent = this.transform; // Nests chunk GameObjects under World
-                    chunkObject.Initialize(chunkSize); // Initialize the chunk
+                    await chunkObject.Initialize(chunkSize); // Initialize the chunk
                     chunks.Add(chunkPosition, chunkObject); // Add the chunk to the dictionary
                     chunkObject.gameObject.SetActive(true);
                 }

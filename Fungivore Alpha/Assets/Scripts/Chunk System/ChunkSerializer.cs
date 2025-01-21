@@ -88,6 +88,7 @@ public static class ChunkSerializer
                 {
                     for (int z = 0; z < chunk.chunkSize; z++)
                     {
+                        Debug.Log(voxelData[x, y, z].type);
                         chunk.SetVoxelAt(x, y, z, voxelData[x, y, z]);
                     }
                 }

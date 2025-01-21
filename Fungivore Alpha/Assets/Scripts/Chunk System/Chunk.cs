@@ -36,7 +36,7 @@ public class Chunk : MonoBehaviour
     }
 
 
-    public void Initialize(int size)
+    public async Task Initialize(int size)
     {
         chunkState = ChunkState.Idle;
 
@@ -44,7 +44,7 @@ public class Chunk : MonoBehaviour
 
         chunkSize = size;
         voxels = new Voxel[size, size, size];
-        InitializeVoxels();
+        await Task.Run(() => InitializeVoxels());
 
         meshFilter = GetComponent<MeshFilter>();
         if (meshFilter == null) { meshFilter = gameObject.AddComponent<MeshFilter>(); }
@@ -63,6 +63,33 @@ public class Chunk : MonoBehaviour
         GenerateMesh(); // Call after ensuring all necessary components and data are set
     }
 
+    private async Task InitializeVoxels()
+    {
+        // LoadChunkAsync returns true if a chunk data file exists
+        // and will automatically load the chunk data for us. If no chunk data exists,
+        // then we fill the chunk with randomized data.
+        if (!await ChunkSerializer.LoadChunkAsync(this))
+        {
+            for (int x = 0; x < chunkSize; x++)
+            {
+                for (int y = 0; y < chunkSize; y++)
+                {
+                    for (int z = 0; z < chunkSize; z++)
+                    {
+                        // Use world coordinates for noise sampling
+                        Vector3 worldPos = transform.position + new Vector3(x, y, z);
+                        Voxel.VoxelType type = DetermineVoxelType(worldPos.x, worldPos.y, worldPos.z);
+                        voxels[x, y, z] = new Voxel(type, type != Voxel.VoxelType.Air);
+
+                    }
+                }
+            }
+        }
+
+
+    }
+
+
     public void SetBlock(Vector3 globalBlockPos, Voxel.VoxelType type)
     {
         World.Instance.totalVoxelCount++;
@@ -70,7 +97,7 @@ public class Chunk : MonoBehaviour
         Vector3 localBlockPos = globalBlockPos - globalChunkPos;
 
         voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z] = 
-            new Voxel(globalBlockPos, type, true);
+            new Voxel(type, true);
 
 
         if (chunkState == ChunkState.Idle)
@@ -105,16 +132,16 @@ public class Chunk : MonoBehaviour
         return voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z].type;
     }
 
+
     public Voxel GetVoxelLocal(int x, int y, int z)
     {
         return voxels[x, y, z];
     }
 
+
     public void SetVoxelAt(int x, int y, int z, Voxel voxelData)
     {
-        Voxel voxel = voxels[x, y, z];
-        voxel.type = voxelData.type;
-        voxel.isActive = voxelData.isActive;
+        voxels[x, y, z] = new Voxel(voxelData.type, voxelData.isActive);
     }
 
     
@@ -124,6 +151,11 @@ public class Chunk : MonoBehaviour
         chunkState = ChunkState.Processing;
         ClearVoxelData();
         await Task.Run(() => IterateVoxels());
+
+        // Save to disk after generating the mesh
+        await ChunkSerializer.SaveChunkAsync(this);
+        Debug.Log("Saved a chunk");
+
         ApplyMeshData();
         chunkState = ChunkState.Idle;
     }
@@ -151,28 +183,6 @@ public class Chunk : MonoBehaviour
     }
 
 
-    private void InitializeVoxels()
-    {
-        // We should check to see if the chunk has data defined for it
-        // If there is, read the data file and set the voxels
-        // If not, go through and fill the chunk with air for now,
-        // maybe we'll do more interesting stuff later withh noise or something
-
-        for (int x = 0; x < chunkSize; x++)
-        {
-            for (int y = 0; y < chunkSize; y++)
-            {
-                for (int z = 0; z < chunkSize; z++)
-                {
-                    // Use world coordinates for noise sampling
-                    Vector3 worldPos = transform.position + new Vector3(x, y, z);
-                    Voxel.VoxelType type = DetermineVoxelType(worldPos.x, worldPos.y, worldPos.z);
-                    voxels[x, y, z] = new Voxel(worldPos, type, type != Voxel.VoxelType.Air);
-                    
-                }
-            }
-        }
-    }
     
 
     private Voxel.VoxelType DetermineVoxelType(float x, float y, float z)
