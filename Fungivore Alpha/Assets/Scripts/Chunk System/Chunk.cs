@@ -78,9 +78,10 @@ public class Chunk : MonoBehaviour
             World.Instance.AddChunkToQueue(this);
             chunkState = ChunkState.Queued;
         }
-
-
     }
+
+
+
 
     public void RegenerateChunk()
     {
@@ -98,11 +99,24 @@ public class Chunk : MonoBehaviour
     }
 
 
-    public Voxel.VoxelType GetBlock(Vector3 globalBlockPos)
+    public Voxel.VoxelType GetBlockGlobal(Vector3 globalBlockPos)
     {
         Vector3 localBlockPos = globalBlockPos - globalChunkPos;
         return voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z].type;
     }
+
+    public Voxel GetVoxelLocal(int x, int y, int z)
+    {
+        return voxels[x, y, z];
+    }
+
+    public void SetVoxelAt(int x, int y, int z, Voxel voxelData)
+    {
+        Voxel voxel = voxels[x, y, z];
+        voxel.type = voxelData.type;
+        voxel.isActive = voxelData.isActive;
+    }
+
     
 
     public async void GenerateMesh()

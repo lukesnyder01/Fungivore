@@ -63,7 +63,7 @@ public static class ChunkSerializer
                 {
                     for (int z = 0; z < chunk.chunkSize; z++)
                     {
-                        voxelData[x, y, z] = chunk.GetVoxelAt(x, y, z);
+                        voxelData[x, y, z] = chunk.GetVoxelLocal(x, y, z);
                     }
                 }
             }
