@@ -9,7 +9,7 @@ using UnityEngine;
 public class Chunk : MonoBehaviour
 {
     private Voxel[,,] voxels;
-    private int chunkSize = 16;
+    public int chunkSize = 16;
 
     private List<Vector3> vertices = new List<Vector3>();
     private List<int> triangles = new List<int>();
@@ -22,7 +22,7 @@ public class Chunk : MonoBehaviour
 
     public LayerMask chunkLayer;
 
-    public int randomNoiseDensity = 0;
+    public int randomNoiseDensity = 2;
 
     public Vector3 globalChunkPos;
 
@@ -32,7 +32,7 @@ public class Chunk : MonoBehaviour
     { 
         Idle, // Can accept block updates
         Queued, // Has pending block updates and has been added to the queue
-        Processing, // Inaccesable until work on background thread is complete
+        Processing, // Inaccessible until work on background thread is complete
     }
 
 
@@ -42,7 +42,7 @@ public class Chunk : MonoBehaviour
 
         globalChunkPos = transform.position;
 
-        this.chunkSize = size;
+        chunkSize = size;
         voxels = new Voxel[size, size, size];
         InitializeVoxels();
 
@@ -104,6 +104,7 @@ public class Chunk : MonoBehaviour
         return voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z].type;
     }
     
+
     public async void GenerateMesh()
     {
         chunkState = ChunkState.Processing;
@@ -126,7 +127,9 @@ public class Chunk : MonoBehaviour
             mesh.RecalculateNormals(); // Important for lighting
 
             meshFilter.mesh = mesh;
+            meshCollider.enabled = false;
             meshCollider.sharedMesh = mesh;
+            meshCollider.enabled = true;
 
             // Apply a material or texture if needed
             meshRenderer.material = World.Instance.VoxelMaterial;

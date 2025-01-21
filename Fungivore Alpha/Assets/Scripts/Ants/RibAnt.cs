@@ -6,7 +6,7 @@ public class RibAnt : Ant
 {
     private List<AntMove> openMoves = new List<AntMove>();
 
-    private int movesRemaining = 100;
+    private int movesRemaining = 10000;
 
 
     public override void MoveNext()

@@ -1182,9 +1182,9 @@ MonoBehaviour:
   totalVoxelCount: 0
   VoxelMaterial: {fileID: 2100000, guid: 5ca9e57ce771de749a306cbc51a947fa, type: 2}
   loadRadius: 6
-  unloadRadius: 7
+  unloadRadius: 50
   chunkUpdateThreshold: 1
-  chunksPerFrame: 8
+  chunksPerFrame: 4
   loadInterval: 1
 --- !u!4 &1718919245
 Transform:
@@ -1785,6 +1785,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152728870058964499, guid: 5b54cd5f22fdff84299bab63a7d52730,
+        type: 3}
+      propertyPath: antCount
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b54cd5f22fdff84299bab63a7d52730, type: 3}

@@ -46,7 +46,6 @@ public class World : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Optional: if you want this to persist across scenes
         }
         else
         {
