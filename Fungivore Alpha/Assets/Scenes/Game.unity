@@ -1184,7 +1184,7 @@ MonoBehaviour:
   loadRadius: 6
   unloadRadius: 7
   chunkUpdateThreshold: 1
-  chunksPerFrame: 16
+  chunksPerFrame: 4
   loadInterval: 1
 --- !u!4 &1718919245
 Transform:

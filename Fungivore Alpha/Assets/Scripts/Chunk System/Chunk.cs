@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class Chunk : MonoBehaviour
 {
-    private Voxel[,,] voxels;
+    public Voxel[,,] voxels;
     public int chunkSize = 16;
 
     private List<Vector3> vertices = new List<Vector3>();
@@ -28,6 +28,7 @@ public class Chunk : MonoBehaviour
     public Vector3 globalChunkPos;
 
     public ChunkState chunkState;
+    public bool ChunkSavedToDisk = false;
 
     public enum ChunkState
     { 
@@ -56,27 +57,24 @@ public class Chunk : MonoBehaviour
 
     private async void InitializeVoxels()
     {
-        RandomizeVoxels();
-        GenerateMesh();
-
-        /*
         string filePath = ChunkSerializer.GetChunkFilePath(this.globalChunkPos);
         if (File.Exists(filePath))
         {
             await Task.Run(() => LoadVoxelsAndGenerate());
+            GenerateMesh();
         }
         else
         {
-            
+            RandomizeVoxels();
+            ChunkSavedToDisk = true;
+            GenerateMesh();
         }
-        */
     }
 
 
     private async Task LoadVoxelsAndGenerate()
     {
         await ChunkSerializer.LoadChunkAsync(this);
-        GenerateMesh();
     }
 
 
@@ -122,8 +120,7 @@ public class Chunk : MonoBehaviour
     public void RegenerateChunk()
     {
         if (chunkState != ChunkState.Processing)
-        {
-            
+        {           
             chunkState = ChunkState.Processing;
             GenerateMesh();
         }
@@ -158,15 +155,14 @@ public class Chunk : MonoBehaviour
     public async void GenerateMesh()
     {
         chunkState = ChunkState.Processing;
-        ClearVoxelData();
+        ClearMeshArrays();
         await Task.Run(() => IterateVoxels());
         ApplyMeshData();
 
         // Save to disk after generating the mesh
         await Task.Run(() => ChunkSerializer.SaveChunkAsync(this));
 
-        Debug.Log("Saved chunk at " + globalChunkPos);
-
+        //Debug.Log("Saved chunk at " + globalChunkPos);
 
         chunkState = ChunkState.Idle;
     }
@@ -422,7 +418,7 @@ public class Chunk : MonoBehaviour
         // Clear voxel data
         voxels = new Voxel[chunkSize, chunkSize, chunkSize];
 
-        ClearVoxelData();
+        ClearMeshArrays();
 
         if (meshFilter != null && meshFilter.sharedMesh != null)
         {
@@ -433,7 +429,7 @@ public class Chunk : MonoBehaviour
         }
     }
 
-    public void ClearVoxelData()
+    public void ClearMeshArrays()
     {
         vertices.Clear();
         triangles.Clear();
