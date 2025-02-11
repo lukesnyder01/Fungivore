@@ -23,7 +23,7 @@ public class Chunk : MonoBehaviour
 
     public LayerMask chunkLayer;
 
-    public int randomNoiseDensity = 3;
+    public int randomNoiseDensity = 2;
 
     public Vector3 globalChunkPos;
 
