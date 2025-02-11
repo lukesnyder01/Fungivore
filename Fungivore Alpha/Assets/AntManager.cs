@@ -22,9 +22,9 @@ public class AntManager : MonoBehaviour
             Ant ant = new RibAnt();
             ant.RandomizeDirection();
             ant.antPos = new Vector3(
-                Mathf.FloorToInt(Random.Range(-100, 100)),
+                Mathf.FloorToInt(Random.Range(-200, 200)),
                 Mathf.FloorToInt(Random.Range(120, 150)),
-                Mathf.FloorToInt(Random.Range(-100, 100))
+                Mathf.FloorToInt(Random.Range(-200, 200))
             );
             ants.Add(ant);
         }

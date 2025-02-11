@@ -1734,7 +1734,7 @@ PrefabInstance:
     - target: {fileID: 6467724666521238677, guid: 5b54cd5f22fdff84299bab63a7d52730,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7650074552910295417, guid: 5b54cd5f22fdff84299bab63a7d52730,
         type: 3}
@@ -1795,6 +1795,16 @@ PrefabInstance:
         type: 3}
       propertyPath: antCount
       value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152728870058964499, guid: 5b54cd5f22fdff84299bab63a7d52730,
+        type: 3}
+      propertyPath: antsPerStep
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152728870058964499, guid: 5b54cd5f22fdff84299bab63a7d52730,
+        type: 3}
+      propertyPath: timeBetweenSteps
+      value: 0.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b54cd5f22fdff84299bab63a7d52730, type: 3}
