@@ -129,16 +129,16 @@ Material:
     m_Ints: []
     m_Floats:
     - Boolean_27D26E50: 0
-    - Boolean_31FA216C: 1
+    - Boolean_31FA216C: 0
     - Boolean_DABCC400: 0
     - Vector1_142B5F65: 11.4
     - Vector1_1E39BCEC: 1.15
     - Vector1_4823166C: 0
-    - Vector1_539961AE: 0.06
+    - Vector1_539961AE: 1
     - Vector1_564F483B: 0.99
     - Vector1_5E3FFB4E: 0
     - Vector1_6389CC5: 0
-    - Vector1_8230601B: 0.1
+    - Vector1_8230601B: 1
     - Vector1_8352F051: -0.1
     - Vector1_92FE3620: 0.184
     - Vector1_98A2B192: 0
