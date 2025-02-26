@@ -1,6 +1,9 @@
 # Fungivore
 A dark and chaotic open world to explore.
 
+![Image](https://github.com/user-attachments/assets/2e5a30cd-cb49-4084-b23f-f2943657a3d1)
+![Image](https://github.com/user-attachments/assets/31cad8e1-1164-4b00-9dd9-4648ca56ad93)
+![Image](https://github.com/user-attachments/assets/5151dbd7-ed57-47c2-b24d-2e345379e2c2)
 ![Image](https://github.com/user-attachments/assets/2da16c86-7f72-4a8d-a359-870816ce59fd)
 
 This is a game in early development.
