@@ -249,7 +249,7 @@ public class Chunk : MonoBehaviour
             for (int i = 0; i < facesVisible.Length; i++)
             {
                 if (facesVisible[i])
-                    AddFaceData(x, y, z, i); // Method to add mesh data for the visible face
+                    AddFaceData(x, y, z, i, voxel.type); // Method to add mesh data for the visible face
             }
         }
     }
@@ -315,7 +315,7 @@ public class Chunk : MonoBehaviour
     }
 
 
-    private void AddFaceData(int x, int y, int z, int faceIndex)
+    private void AddFaceData(int x, int y, int z, int faceIndex, int voxelType)
     {
         // Based on faceIndex, determine vertices and triangles
         // Add vertices and triangles for the visible face
@@ -327,7 +327,7 @@ public class Chunk : MonoBehaviour
             vertices.Add(new Vector3(x, y + 1, z + 1));
             vertices.Add(new Vector3(x + 1, y + 1, z + 1));
             vertices.Add(new Vector3(x + 1, y + 1, z));
-            AddFaceUVs();
+            uvs.AddRange(UVHelper.GetFaceUVs(voxelType));
         }
 
         if (faceIndex == 1) // Bottom Face
@@ -336,7 +336,7 @@ public class Chunk : MonoBehaviour
             vertices.Add(new Vector3(x + 1, y, z));
             vertices.Add(new Vector3(x + 1, y, z + 1));
             vertices.Add(new Vector3(x, y, z + 1));
-            AddFaceUVs();
+            uvs.AddRange(UVHelper.GetFaceUVs(voxelType));
         }
 
         if (faceIndex == 2) // Left Face
@@ -345,7 +345,7 @@ public class Chunk : MonoBehaviour
             vertices.Add(new Vector3(x, y, z + 1));
             vertices.Add(new Vector3(x, y + 1, z + 1));
             vertices.Add(new Vector3(x, y + 1, z));
-            AddFaceUVs();
+            uvs.AddRange(UVHelper.GetFaceUVs(voxelType));
         }
 
         if (faceIndex == 3) // Right Face
@@ -354,7 +354,7 @@ public class Chunk : MonoBehaviour
             vertices.Add(new Vector3(x + 1, y, z));
             vertices.Add(new Vector3(x + 1, y + 1, z));
             vertices.Add(new Vector3(x + 1, y + 1, z + 1));
-            AddFaceUVs();
+            uvs.AddRange(UVHelper.GetFaceUVs(voxelType));
         }
 
         if (faceIndex == 4) // Front Face
@@ -363,7 +363,7 @@ public class Chunk : MonoBehaviour
             vertices.Add(new Vector3(x + 1, y, z + 1));
             vertices.Add(new Vector3(x + 1, y + 1, z + 1));
             vertices.Add(new Vector3(x, y + 1, z + 1));
-            AddFaceUVs();
+            uvs.AddRange(UVHelper.GetFaceUVs(voxelType));
         }
 
         if (faceIndex == 5) // Back Face
@@ -372,17 +372,9 @@ public class Chunk : MonoBehaviour
             vertices.Add(new Vector3(x, y, z));
             vertices.Add(new Vector3(x, y + 1, z));
             vertices.Add(new Vector3(x + 1, y + 1, z));
-            AddFaceUVs();
+            uvs.AddRange(UVHelper.GetFaceUVs(voxelType));
         }
         AddTriangleIndices();
-    }
-
-    private void AddFaceUVs()
-    {
-        uvs.Add(new Vector2(0, 0)); // Bottom-left
-        uvs.Add(new Vector2(1, 0)); // Bottom-right
-        uvs.Add(new Vector2(1, 1)); // Top-right
-        uvs.Add(new Vector2(0, 1)); // Top-left
     }
 
 
