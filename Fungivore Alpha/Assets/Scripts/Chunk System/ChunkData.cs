@@ -7,16 +7,16 @@ using UnityEngine;
 
 // from https://medium.com/@adamy1558/building-a-high-performance-voxel-engine-in-unity-a-step-by-step-guide-part-1-voxels-chunks-86275c079fb8
 
-public class ChunkData : MonoBehaviour
+public class ChunkData
 {
     public Voxel[,,] voxels;
-    public int chunkSize = 16;
+    private int chunkSize;
 
     private List<Vector3> vertices = new List<Vector3>();
     private List<int> triangles = new List<int>();
     private List<Vector2> uvs = new List<Vector2>();
 
-
+    public GameObject chunkObject;
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
     private MeshCollider meshCollider;
@@ -38,19 +38,18 @@ public class ChunkData : MonoBehaviour
     }
 
 
-    public void Initialize(int size)
+    public void Initialize(GameObject pooledChunk)
     {
+        chunkSize = World.Instance.chunkSize;
+
         chunkState = ChunkState.Idle;
 
-        meshFilter = GetComponent<MeshFilter>();
-        meshRenderer = GetComponent<MeshRenderer>();
-        meshCollider = GetComponent<MeshCollider>();
+        chunkObject = pooledChunk;
+        meshFilter = pooledChunk.GetComponent<MeshFilter>();
+        meshRenderer = pooledChunk.GetComponent<MeshRenderer>();
+        meshCollider = pooledChunk.GetComponent<MeshCollider>();
 
-        globalChunkPos = transform.position;
-
-        chunkSize = size;
-
-        voxels = new Voxel[size, size, size];
+        voxels = new Voxel[chunkSize, chunkSize, chunkSize];
 
         InitializeVoxels();
     }
