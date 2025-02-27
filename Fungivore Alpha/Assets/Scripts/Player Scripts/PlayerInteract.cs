@@ -66,7 +66,7 @@ public class PlayerInteract : MonoBehaviour
 
                     Vector3 targetCubePos = hitCubePos + hitNormal;
                     
-                    Chunk chunk = World.Instance.GetChunkAt(targetCubePos);
+                    ChunkData chunk = World.Instance.GetChunkAt(targetCubePos);
                     
                     chunk.SetBlock(targetCubePos, Voxel.Type.Stone);
                 }

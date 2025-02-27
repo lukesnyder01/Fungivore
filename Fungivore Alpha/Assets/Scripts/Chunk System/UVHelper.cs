@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,8 +10,8 @@ public static class UVHelper
     // (column, row) starting from bottom left
     private static Dictionary<int, Vector2Int> voxelTypeToAtlasCoords = new Dictionary<int, Vector2Int>
     {
-        {  Voxel.Type.Stone, new Vector2Int(3, 5) },
-        {  Voxel.Type.Stone02, new Vector2Int(1, 0) },
+        {  Voxel.Type.Stone, new Vector2Int(3, 4) },
+        {  Voxel.Type.Stone02, new Vector2Int(4, 5) },
     };
 
     // Return UV coordinates for a face based on the voxel type
@@ -41,5 +40,4 @@ public static class UVHelper
             new Vector2(uStart, vEnd),      // Top left corner
         };
     }
-
 }

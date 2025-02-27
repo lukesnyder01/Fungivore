@@ -5,7 +5,7 @@ public class ChunkPoolManager : MonoBehaviour
 {
     public static ChunkPoolManager Instance { get; private set; }
 
-    private Queue<Chunk> chunkPool = new Queue<Chunk>();
+    private Queue<ChunkData> chunkPool = new Queue<ChunkData>();
     public int initialPoolSize = 10; // Number of chunks to add to the pool at start
 
     void Awake()
@@ -17,14 +17,14 @@ public class ChunkPoolManager : MonoBehaviour
     {
         for (int i = 0; i < initialPoolSize; i++)
         {
-            Chunk newChunk = InstantiateNewChunk();
+            ChunkData newChunk = InstantiateNewChunk();
             chunkPool.Enqueue(newChunk);
         }
     }
 
-    public Chunk GetChunk()
+    public ChunkData GetChunk()
     {
-        Chunk chunk;
+        ChunkData chunk;
         if (chunkPool.Count > 0)
         {
             chunk = chunkPool.Dequeue();
@@ -36,7 +36,7 @@ public class ChunkPoolManager : MonoBehaviour
         return chunk;
     }
 
-    public void ReturnChunk(Chunk chunk)
+    public void ReturnChunk(ChunkData chunk)
     {
         chunk.ResetChunk();
         chunk.gameObject.SetActive(false);
@@ -44,10 +44,10 @@ public class ChunkPoolManager : MonoBehaviour
     }
 
     // Instantiate chunk objects for the pool, and give them appropriate components
-    private Chunk InstantiateNewChunk()
+    private ChunkData InstantiateNewChunk()
     {
         GameObject newChunkObject = new GameObject("Chunk");
-        Chunk newChunk = newChunkObject.AddComponent<Chunk>();
+        ChunkData newChunk = newChunkObject.AddComponent<ChunkData>();
 
         newChunkObject.AddComponent<MeshFilter>();
         newChunkObject.AddComponent<MeshRenderer>();

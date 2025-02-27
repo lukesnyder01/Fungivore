@@ -14,7 +14,7 @@ public static class ChunkSerializer
 
 
     // Save a chunk's voxel data to disk
-    public static async Task SaveChunkAsync(Chunk chunk)
+    public static async Task SaveChunkAsync(ChunkData chunk)
     {
         string filePath = GetChunkFilePath(chunk.globalChunkPos);
 
@@ -27,7 +27,7 @@ public static class ChunkSerializer
 
 
     // Load a chunk's voxel data from disk
-    public static async Task LoadChunkAsync(Chunk chunk)
+    public static async Task LoadChunkAsync(ChunkData chunk)
     {
         string filePath = GetChunkFilePath(chunk.globalChunkPos);
 
@@ -47,7 +47,7 @@ public static class ChunkSerializer
 
 
     // Serialize the chunk's voxel data into a byte array
-    private static byte[] SerializeChunk(Chunk chunk)
+    private static byte[] SerializeChunk(ChunkData chunk)
     {
         using (MemoryStream stream = new MemoryStream())
         using (BinaryWriter writer = new BinaryWriter(stream))
@@ -73,7 +73,7 @@ public static class ChunkSerializer
     }
 
 
-    private static void DeserializeChunk(Chunk chunk, byte[] data)
+    private static void DeserializeChunk(ChunkData chunk, byte[] data)
     {
         using (MemoryStream stream = new MemoryStream(data))
         using (BinaryReader reader = new BinaryReader(stream))

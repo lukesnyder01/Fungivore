@@ -7,7 +7,7 @@ using UnityEngine;
 
 // from https://medium.com/@adamy1558/building-a-high-performance-voxel-engine-in-unity-a-step-by-step-guide-part-1-voxels-chunks-86275c079fb8
 
-public class Chunk : MonoBehaviour
+public class ChunkData : MonoBehaviour
 {
     public Voxel[,,] voxels;
     public int chunkSize = 16;
@@ -277,7 +277,7 @@ public class Chunk : MonoBehaviour
     private bool IsVoxelHiddenInWorld(Vector3 globalPos)
     {
         // Check if there is a chunk at the global position
-        Chunk neighborChunk = World.Instance.GetChunkAt(globalPos);
+        ChunkData neighborChunk = World.Instance.GetChunkAt(globalPos);
         if (neighborChunk == null)
         {
             // No chunk at this position, so the voxel face should be hidden

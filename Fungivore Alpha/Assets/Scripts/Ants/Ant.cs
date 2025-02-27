@@ -11,7 +11,7 @@ public class Ant
 
     public int directionIndex;
 
-    public Chunk currentChunk;
+    public ChunkData currentChunk;
 
     // Cardinal directions winding clockwise
     public readonly Vector3[] directions = {

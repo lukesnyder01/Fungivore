@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 
 
-// from https://medium.com/@adamy1558/building-a-high-performance-voxel-engine-in-unity-a-step-by-step-guide-part-1-voxels-chunks-86275c079fb8
+// Initial system built based on https://medium.com/@adamy1558/building-a-high-performance-voxel-engine-in-unity-a-step-by-step-guide-part-1-voxels-chunks-86275c079fb8
 
 public class World : MonoBehaviour
 {
@@ -12,7 +12,9 @@ public class World : MonoBehaviour
 
     private int chunkSize = 16;
 
-    private Dictionary<Vector3, Chunk> chunks;
+    private Dictionary<Vector3, ChunkData> chunks;
+
+
     public static World Instance { get; private set; }
 
     public Material VoxelMaterial;
@@ -59,7 +61,7 @@ public class World : MonoBehaviour
     {
         playerController = FindObjectOfType<PlayerController>();
         lastPlayerChunkCoordinates = Vector3Int.zero;
-        chunks = new Dictionary<Vector3, Chunk>();
+        chunks = new Dictionary<Vector3, ChunkData>();
         ChunkPoolManager.Instance.PopulateInitialPool();
     }
 
@@ -73,29 +75,6 @@ public class World : MonoBehaviour
         ProcessChunkLoadingQueue();
         ProcessChunkUnloadingQueue();
     }
-
-
-
-    // Returns the chunk that the given coordinates are inside
-    public Chunk GetChunkAt(Vector3 globalPosition)
-    {
-        // Calculate the chunk's starting position based on the global position
-        Vector3Int chunkCoordinates = new Vector3Int(
-            Mathf.FloorToInt(globalPosition.x / chunkSize) * chunkSize,
-            Mathf.FloorToInt(globalPosition.y / chunkSize) * chunkSize,
-            Mathf.FloorToInt(globalPosition.z / chunkSize) * chunkSize
-        );
-
-        // Retrieve and return the chunk at the calculated position
-        if (chunks.TryGetValue(chunkCoordinates, out Chunk chunk))
-        {
-            return chunk;
-        }
-
-        // Return null if no chunk exists at the position
-        return null;
-    }
-
 
     void UpdateChunks(Vector3 playerPosition)
     {
@@ -118,6 +97,27 @@ public class World : MonoBehaviour
             lastPlayerChunkCoordinates = playerChunkCoordinates;
             chunksMovedCount++;
         }
+    }
+
+
+    // Returns the chunk that the given coordinates are inside
+    public ChunkData GetChunkAt(Vector3 globalPosition)
+    {
+        // Calculate the chunk's starting position based on the global position
+        Vector3Int chunkCoordinates = new Vector3Int(
+            Mathf.FloorToInt(globalPosition.x / chunkSize) * chunkSize,
+            Mathf.FloorToInt(globalPosition.y / chunkSize) * chunkSize,
+            Mathf.FloorToInt(globalPosition.z / chunkSize) * chunkSize
+        );
+
+        // Retrieve and return the chunk at the calculated position
+        if (chunks.TryGetValue(chunkCoordinates, out ChunkData chunk))
+        {
+            return chunk;
+        }
+
+        // Return null if no chunk exists at the position
+        return null;
     }
 
 
@@ -164,7 +164,7 @@ public class World : MonoBehaviour
 
     }
 
-    public void AddChunkToQueue(Chunk chunk)
+    public void AddChunkToQueue(ChunkData chunk)
     {
         chunkLoadQueue.Enqueue(chunk.globalChunkPos);
         //Debug.Log(chunkLoadQueue.Count + "Chunks in queue");
@@ -184,7 +184,7 @@ public class World : MonoBehaviour
                 // If there isn't already a chunk object at this position, we get one from the pool an initialize it
                 if (!chunks.ContainsKey(chunkPosition))
                 {
-                    Chunk chunkObject = ChunkPoolManager.Instance.GetChunk(); // Get a chunk from the pool
+                    ChunkData chunkObject = ChunkPoolManager.Instance.GetChunk(); // Get a chunk from the pool
                     chunkObject.transform.position = chunkPosition; // Move the chunk to the right position
                     chunkObject.transform.parent = this.transform; // Nests chunk GameObjects under World
                     chunkObject.Initialize(chunkSize); // Initialize the chunk
@@ -193,7 +193,7 @@ public class World : MonoBehaviour
                 }
                 else // If there's already a chunk at this position it's in the queue because we want to regenerate it because of block updates
                 {
-                    Chunk chunk = chunks[chunkPosition];
+                    ChunkData chunk = chunks[chunkPosition];
                     chunk.RegenerateChunk();
                 }
             }
@@ -231,7 +231,7 @@ public class World : MonoBehaviour
                 for (int i = 0; i < chunksToProcess; i++)
                 {
                     Vector3 chunkPosition = chunkUnloadQueue.Dequeue();
-                    Chunk chunkToUnload = GetChunkAt(chunkPosition);
+                    ChunkData chunkToUnload = GetChunkAt(chunkPosition);
                     if (chunkToUnload != null)
                     {
                         ChunkPoolManager.Instance.ReturnChunk(chunkToUnload);
