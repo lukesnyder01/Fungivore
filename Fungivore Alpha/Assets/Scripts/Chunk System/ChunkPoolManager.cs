@@ -5,8 +5,9 @@ public class ChunkPoolManager : MonoBehaviour
 {
     public static ChunkPoolManager Instance { get; private set; }
 
-    private Queue<ChunkData> chunkPool = new Queue<ChunkData>();
-    public int initialPoolSize = 10; // Number of chunks to add to the pool at start
+    private Queue<GameObject> chunkPool = new Queue<GameObject>();
+
+    private int initialPoolSize = 4000; // Number of chunks to add to the pool at start
 
     void Awake()
     {
@@ -17,14 +18,31 @@ public class ChunkPoolManager : MonoBehaviour
     {
         for (int i = 0; i < initialPoolSize; i++)
         {
-            ChunkData newChunk = InstantiateNewChunk();
+            GameObject newChunk = InstantiateNewChunk();
             chunkPool.Enqueue(newChunk);
         }
     }
 
-    public ChunkData GetChunk()
+        // Instantiate chunk objects for the pool, and give them appropriate components
+    private GameObject InstantiateNewChunk()
     {
-        ChunkData chunk;
+        GameObject newChunk = new GameObject("Chunk");
+
+        newChunk.AddComponent<MeshFilter>();
+        newChunk.AddComponent<MeshRenderer>();
+        newChunk.AddComponent<MeshCollider>();
+
+        newChunk.layer = LayerMask.NameToLayer("Solid Block");
+        newChunk.tag = "Solid Block";
+
+        return newChunk;
+    }
+
+
+    public GameObject GetChunk()
+    {
+        GameObject chunk;
+
         if (chunkPool.Count > 0)
         {
             chunk = chunkPool.Dequeue();
@@ -36,28 +54,14 @@ public class ChunkPoolManager : MonoBehaviour
         return chunk;
     }
 
-    public void ReturnChunk(ChunkData chunk)
+    public void ReturnChunk(GameObject chunk)
     {
-        chunk.ResetChunk();
+        //chunk.ResetChunk();
         chunk.gameObject.SetActive(false);
         chunkPool.Enqueue(chunk);
     }
 
-    // Instantiate chunk objects for the pool, and give them appropriate components
-    private ChunkData InstantiateNewChunk()
-    {
-        GameObject newChunkObject = new GameObject("Chunk");
-        ChunkData newChunk = newChunkObject.AddComponent<ChunkData>();
 
-        newChunkObject.AddComponent<MeshFilter>();
-        newChunkObject.AddComponent<MeshRenderer>();
-        newChunkObject.AddComponent<MeshCollider>();
-
-        newChunkObject.layer = LayerMask.NameToLayer("Solid Block");
-        newChunkObject.tag = "Solid Block";
-
-        return newChunk;
-    }
 
 
 }
