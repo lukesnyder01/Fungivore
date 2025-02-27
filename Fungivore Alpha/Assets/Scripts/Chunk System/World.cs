@@ -245,7 +245,8 @@ public class World : MonoBehaviour
                 {
                     Vector3 chunkPosition = chunkUnloadQueue.Dequeue();
 
-                    GameObject chunkToUnload = GetChunkAt(chunkPosition).chunkObject;
+                    // Null-conditional operator is super cool
+                    GameObject chunkToUnload = GetChunkAt(chunkPosition)?.chunkObject;
 
                     if (chunkToUnload != null)
                     {
