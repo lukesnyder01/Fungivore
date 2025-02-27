@@ -23,7 +23,7 @@ public class ChunkData
 
     public LayerMask chunkLayer;
 
-    public int randomNoiseDensity = 2;
+    private int randomNoiseDensity = 1;
 
     public Vector3 globalChunkPos;
 
@@ -177,6 +177,7 @@ public class ChunkData
             mesh.uv = uvs.ToArray();
 
             mesh.RecalculateNormals(); // Important for lighting
+            mesh.RecalculateTangents();
 
             meshFilter.mesh = mesh;
             meshCollider.enabled = false;
