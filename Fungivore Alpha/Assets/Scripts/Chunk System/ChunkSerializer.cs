@@ -11,7 +11,7 @@ using UnityEngine;
 public static class ChunkSerializer
 {
     private static string saveDirectory = "Chunks";
-
+    private static int chunkSize;
 
     // Save a chunk's voxel data to disk
     public static async Task SaveChunkAsync(ChunkData chunk)
@@ -49,18 +49,20 @@ public static class ChunkSerializer
     // Serialize the chunk's voxel data into a byte array
     private static byte[] SerializeChunk(ChunkData chunk)
     {
+        chunkSize = World.Instance.chunkSize;
+
         using (MemoryStream stream = new MemoryStream())
         using (BinaryWriter writer = new BinaryWriter(stream))
         {
             // Write the chunk size
-            writer.Write(chunk.chunkSize);
+            writer.Write(chunkSize);
 
             // Write each voxel's type directly
-            for (int x = 0; x < chunk.chunkSize; x++)
+            for (int x = 0; x < chunkSize; x++)
             {
-                for (int y = 0; y < chunk.chunkSize; y++)
+                for (int y = 0; y < chunkSize; y++)
                 {
-                    for (int z = 0; z < chunk.chunkSize; z++)
+                    for (int z = 0; z < chunkSize; z++)
                     {
                         Voxel voxel = chunk.GetVoxelLocal(x, y, z);
                         writer.Write(voxel.type); // Directly write voxel type (byte)
@@ -75,26 +77,28 @@ public static class ChunkSerializer
 
     private static void DeserializeChunk(ChunkData chunk, byte[] data)
     {
+        chunkSize = World.Instance.chunkSize;
+
         using (MemoryStream stream = new MemoryStream(data))
         using (BinaryReader reader = new BinaryReader(stream))
         {
             // Read the chunk size
-            int chunkSize = reader.ReadInt32();
+            int _chunkSize = reader.ReadInt32();
 
             int solidBlockCount = 0;
 
-            if (chunkSize != chunk.chunkSize)
+            if (_chunkSize != chunkSize)
             {
-                Debug.LogError($"Chunk size mismatch: expected {chunk.chunkSize}, got {chunkSize}");
+                Debug.LogError($"Chunk size mismatch: expected {chunkSize}, got {_chunkSize}");
                 return;
             }
 
             // Read each voxel's type directly
-            for (int x = 0; x < chunk.chunkSize; x++)
+            for (int x = 0; x < chunkSize; x++)
             {
-                for (int y = 0; y < chunk.chunkSize; y++)
+                for (int y = 0; y < chunkSize; y++)
                 {
-                    for (int z = 0; z < chunk.chunkSize; z++)
+                    for (int z = 0; z < chunkSize; z++)
                     {
                         byte voxelType = reader.ReadByte(); // Read voxel type (byte)
 
