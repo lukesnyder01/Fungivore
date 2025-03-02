@@ -23,7 +23,7 @@ public class ChunkData
 
     public LayerMask chunkLayer;
 
-    private int randomNoiseDensity = 1;
+    private int randomNoiseDensity = 0;
 
     public Vector3 globalChunkPos;
 
@@ -399,13 +399,16 @@ public class ChunkData
     }
 
 
-    public void ResetChunk()
+    public void ResetChunkData()
     {
         // Clear voxel data
         voxels = new Voxel[chunkSize, chunkSize, chunkSize];
 
         ClearMeshArrays();
+    }
 
+    public void ClearChunkMesh()
+    {
         if (meshFilter != null && meshFilter.sharedMesh != null)
         {
             meshFilter.sharedMesh.Clear();
