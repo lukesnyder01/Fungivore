@@ -113,7 +113,7 @@ public static class ChunkSerializer
                 }
             }
 
-            Debug.Log("Loaded chunk at " + chunk.globalChunkPos + "with " + solidBlockCount + " blocks");
+            //Debug.Log("Loaded chunk at " + chunk.globalChunkPos + "with " + solidBlockCount + " blocks");
         }
     }
 

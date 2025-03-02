@@ -41,24 +41,23 @@ public class ChunkPoolManager : MonoBehaviour
 
     public GameObject GetChunk()
     {
-        GameObject chunk;
+        GameObject chunkObject;
 
         if (chunkPool.Count > 0)
         {
-            chunk = chunkPool.Dequeue();
+            chunkObject = chunkPool.Dequeue();
         }
         else
         {
-            chunk = InstantiateNewChunk();
+            chunkObject = InstantiateNewChunk();
         }
-        return chunk;
+        return chunkObject;
     }
 
-    public void ReturnChunk(GameObject chunk)
+    public void ReturnChunk(GameObject chunkObject)
     {
-        //chunk.ResetChunk();
-        chunk.gameObject.SetActive(false);
-        chunkPool.Enqueue(chunk);
+        chunkObject.gameObject.SetActive(false);
+        chunkPool.Enqueue(chunkObject);
     }
 
 
