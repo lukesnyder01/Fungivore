@@ -30,7 +30,7 @@ public class World : MonoBehaviour
 
     private Vector3Int lastPlayerChunkCoordinates;
     private int chunksMovedCount = 0;
-    public int chunkUpdateThreshold = 1; // Update every 5 chunks
+    public int chunkUpdateThreshold = 1; // How many chunks the player has to move before updating
     private bool JustStarted = true;
 
 
@@ -42,8 +42,8 @@ public class World : MonoBehaviour
 
     private Queue<Vector3> chunkUnloadQueue = new Queue<Vector3>();
     private int unloadFrameCounter = 0;
-    private int unloadInterval = 5;
-    private int chunksPerFrameUnloading = 4;
+    private int unloadInterval = 2;
+    private int chunksPerFrameUnloading = 10;
 
 
     void Awake()
@@ -195,12 +195,27 @@ public class World : MonoBehaviour
                     newChunkObject.transform.position = chunkPosition; // Move the chunk to the right position
                     newChunkObject.transform.parent = this.transform; // Nests chunk GameObjects under World
 
-                    // Create a new ChunkData and pass it newChunkObject and add to the global chunk dictionary
-                    ChunkData newChunkData = new ChunkData();
-                    newChunkData.globalChunkPos = chunkPosition;
-                    newChunkData.Initialize(newChunkObject);
-                    activeChunks.Add(chunkPosition, newChunkData);
+                    ChunkData newChunkData;
 
+                    // If the chunk data exists in the global chunk list
+                    // get that chunk data
+                    if (globalChunkData.ContainsKey(chunkPosition))
+                    {
+                        newChunkData = globalChunkData[chunkPosition];
+                        newChunkData.Initialize(newChunkObject);
+                    }
+                    else 
+                    {
+                        // If the global chunk list doesn't have a chunk defined there
+                        // create a new ChunkData and pass it newChunkObject and add to the global chunk dictionary
+                        newChunkData = new ChunkData();
+                        newChunkData.globalChunkPos = chunkPosition;
+                        newChunkData.Initialize(newChunkObject);
+                        globalChunkData.Add(chunkPosition, newChunkData);
+                    }
+
+
+                    activeChunks.Add(chunkPosition, newChunkData);
                     newChunkObject.gameObject.SetActive(true);
 
                     
@@ -208,8 +223,7 @@ public class World : MonoBehaviour
                 }
                 else // If there's already a chunk at this position it's in the queue because we want to regenerate it because of block updates
                 {
-                    ChunkData chunk = activeChunks[chunkPosition];
-                    chunk.RegenerateChunk();
+                    activeChunks[chunkPosition].RegenerateChunk();
                 }
             }
         }
@@ -255,7 +269,9 @@ public class World : MonoBehaviour
 
                     if (chunkToUnload != null)
                     {
+                        activeChunks[chunkPosition].ClearChunkMesh();
                         ChunkPoolManager.Instance.ReturnChunk(chunkToUnload);
+                        globalChunkData[chunkPosition] = activeChunks[chunkPosition];
                         activeChunks.Remove(chunkPosition); // Remove the chunk from the active chunks dictionary
                     }
                 }
