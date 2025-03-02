@@ -177,7 +177,7 @@ public class ChunkData
             mesh.uv = uvs.ToArray();
 
             mesh.RecalculateNormals(); // Important for lighting
-            mesh.RecalculateTangents();
+            mesh.RecalculateTangents(); // Fixes x axis aligned faces not displaying bump maps correctly
 
             meshFilter.mesh = mesh;
             meshCollider.enabled = false;
@@ -192,9 +192,14 @@ public class ChunkData
 
     private byte DetermineVoxelType(float x, float y, float z)
     {
-        float noiseValue = Random.Range(0, 100);
+        float noiseValue = Random.Range(0, 1000);
 
-        if (noiseValue < randomNoiseDensity && y > -20)
+        if (y == 0)
+        {
+            return Voxel.Type.Stone;
+        }
+
+        if (noiseValue < randomNoiseDensity && y > 0)
         {
             World.Instance.totalVoxelCount++;
             return Voxel.Type.Stone;

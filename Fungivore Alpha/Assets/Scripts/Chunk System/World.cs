@@ -64,7 +64,12 @@ public class World : MonoBehaviour
         playerController = FindObjectOfType<PlayerController>();
         lastPlayerChunkCoordinates = Vector3Int.zero;
         activeChunks = new Dictionary<Vector3, ChunkData>();
+
+
         globalChunkData = new Dictionary<Vector3, ChunkData>();
+        // Load global chunk data from world file on disk
+
+
         ChunkPoolManager.Instance.PopulateInitialPool();
     }
 
