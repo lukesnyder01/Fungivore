@@ -23,7 +23,7 @@ public class ChunkData
 
     public LayerMask chunkLayer;
 
-    private int randomNoiseDensity = 0;
+    private int randomNoiseDensity = 15;
 
     public Vector3 globalChunkPos;
 
@@ -196,13 +196,27 @@ public class ChunkData
 
         if (y == 0)
         {
-            return Voxel.Type.Stone;
+            if (ThreadSafeRandom.Next(0, 100) < 50)
+            {
+                return Voxel.Type.Stone;
+            }
+            else
+            {
+                return Voxel.Type.Stone02;
+            }
         }
 
         if (noiseValue < randomNoiseDensity && y > 0)
         {
             World.Instance.totalVoxelCount++;
-            return Voxel.Type.Stone;
+            if (ThreadSafeRandom.Next(0, 100) < 50)
+            {
+                return Voxel.Type.Stone;
+            }
+            else
+            {
+                return Voxel.Type.Stone02;
+            }
         }
 
         else
