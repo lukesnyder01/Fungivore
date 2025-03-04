@@ -65,10 +65,13 @@ public class PlayerInteract : MonoBehaviour
                     hitCubePos.z = Mathf.FloorToInt(hitCubePos.z);
 
                     Vector3 targetCubePos = hitCubePos + hitNormal;
-                    
-                    ChunkData chunk = World.Instance.GetChunkAt(targetCubePos);
-                    
+
+                    AntManager.Instance.AddAntAtLocation(targetCubePos);
+
+                    /*
+                    ChunkData chunk = World.Instance.GetChunkAt(targetCubePos); 
                     chunk.SetBlock(targetCubePos, Voxel.Type.Stone);
+                    */
                 }
 
                 if (currentTarget != null)

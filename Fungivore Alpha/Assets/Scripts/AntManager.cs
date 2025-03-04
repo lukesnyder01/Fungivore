@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class AntManager : MonoBehaviour
 {
+    public static AntManager Instance { get; private set; }
+
     public List<Ant> ants = new List<Ant>();
 
-    public int antCount = 10;
+    public int startingAntCount = 10;
 
     private float timer;
     public float timeBetweenSteps = 0.01f;
@@ -14,10 +16,16 @@ public class AntManager : MonoBehaviour
     private int currentAntIndex = 0; // Tracks which ant to process next
     public int antsPerStep = 100; // Number of ants to process each time
 
+    void Awake()
+    {
+        Instance = this;
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < antCount; i++)
+        for (int i = 0; i < startingAntCount; i++)
         {
             Ant ant = new RibAnt();
             ant.RandomizeDirection();
@@ -31,6 +39,16 @@ public class AntManager : MonoBehaviour
 
         timer = timeBetweenSteps;
     }
+
+    public void AddAntAtLocation(Vector3 position)
+    {
+        Ant ant = new RibAnt();
+        ant.RandomizeDirection();
+        ant.antPos = position;
+        ants.Add(ant);
+    }
+
+
 
     // Update is called once per frame
     void Update()
