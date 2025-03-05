@@ -13,6 +13,8 @@ public class Ant
 
     public ChunkData currentChunk;
 
+    public int movesRemaining = 100;
+
     // Cardinal directions winding clockwise
     public readonly Vector3[] directions = {
         new Vector3(0, 0, 1),  // Positive Z North

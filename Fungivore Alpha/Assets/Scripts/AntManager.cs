@@ -40,6 +40,7 @@ public class AntManager : MonoBehaviour
         timer = timeBetweenSteps;
     }
 
+
     public void AddAntAtLocation(Vector3 position)
     {
         Ant ant = new RibAnt();
@@ -70,7 +71,17 @@ public class AntManager : MonoBehaviour
 
                 Ant ant = ants[currentAntIndex];
 
-                ant.MoveNext();
+                // Check to see if the ant has any remaining moves
+                // and remove from the ant list if not
+                if (ant.movesRemaining <= 0)
+                {
+                    ants.RemoveAt(currentAntIndex);
+                    Debug.Log(ants.Count + " ants in AntManager");
+                }
+                else
+                {
+                    ant.MoveNext();
+                }
 
                 currentAntIndex++;
             }
