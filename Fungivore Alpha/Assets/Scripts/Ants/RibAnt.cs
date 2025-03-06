@@ -6,6 +6,14 @@ public class RibAnt : Ant
 {
     private List<AntMove> openMoves = new List<AntMove>();
 
+
+    // Set the ant's starting moves in its constructor
+    public RibAnt()
+    {
+        movesRemaining = 100;
+    }
+
+
     public override void MoveNext()
     {
         movesRemaining--;
@@ -45,11 +53,15 @@ public class RibAnt : Ant
                 currentChunk.SetBlock(antPos, Voxel.Type.Stone);
             }
         }
-        else
+        else // If there are no flat moves, try moving downward
         {
             if (BlockIsEmpty(antPos - Vector3.up))
             {
                 MoveDown();
+            }
+            else // If down isn't available, the ant is stuck and should be removed
+            {
+                movesRemaining = 0;
             }
         }
     }
@@ -57,22 +69,23 @@ public class RibAnt : Ant
 
     private void CheckForOpenMoves()
     {
-        // Check if left move is valid
-        var tempDirectionIndex = (directionIndex + 3) % directions.Length;
-        Vector3 leftDir = directions[tempDirectionIndex];
-        if (BlockIsEmpty(antPos + leftDir))
-        {
-            openMoves.Add(AntMove.TurnLeftAndMove);
-        }
-
         // Check if forward move is valid
         if (BlockIsEmpty(antPos + antDir))
         {
             openMoves.Add(AntMove.MoveForward);
         }
 
-        tempDirectionIndex = (directionIndex + 1) % directions.Length;
+        // Check if left move is valid
+        var tempDirectionIndex = (directionIndex + 3) % directions.Length;
+        Vector3 leftDir = directions[tempDirectionIndex];
+
+        if (BlockIsEmpty(antPos + leftDir))
+        {
+            openMoves.Add(AntMove.TurnLeftAndMove);
+        }
+
         // Check if right move is valid
+        tempDirectionIndex = (directionIndex + 1) % directions.Length;
         Vector3 rightDir = directions[tempDirectionIndex];
 
         if (BlockIsEmpty(antPos + rightDir))
@@ -80,6 +93,5 @@ public class RibAnt : Ant
             openMoves.Add(AntMove.TurnRightAndMove);
         }
     }
-
 
 }

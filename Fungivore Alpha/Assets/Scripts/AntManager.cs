@@ -41,13 +41,22 @@ public class AntManager : MonoBehaviour
     }
 
 
-    public void AddAntAtLocation(Vector3 position)
+    public void AddRibAnt(Vector3 position)
     {
         Ant ant = new RibAnt();
         ant.RandomizeDirection();
         ant.antPos = position;
         ants.Add(ant);
     }
+
+    public void AddDropperAnt(Vector3 position)
+    {
+        Ant ant = new DropperAnt();
+        ant.RandomizeDirection();
+        ant.antPos = position;
+        ants.Add(ant);
+    }
+
 
 
 
