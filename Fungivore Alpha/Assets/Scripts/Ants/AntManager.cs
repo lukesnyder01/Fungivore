@@ -57,7 +57,13 @@ public class AntManager : MonoBehaviour
         ants.Add(ant);
     }
 
-
+    public void AddClimberAnt(Vector3 position)
+    {
+        Ant ant = new ClimberAnt();
+        ant.RandomizeDirection();
+        ant.antPos = position;
+        ants.Add(ant);
+    }
 
 
     // Update is called once per frame
