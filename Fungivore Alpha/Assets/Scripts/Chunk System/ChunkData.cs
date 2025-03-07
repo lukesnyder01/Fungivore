@@ -23,7 +23,7 @@ public class ChunkData
 
     public LayerMask chunkLayer;
 
-    private int randomNoiseDensity = 15;
+    private int randomNoiseDensity = 1;
 
     public Vector3 globalChunkPos;
 

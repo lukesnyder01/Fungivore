@@ -66,7 +66,7 @@ public class PlayerInteract : MonoBehaviour
 
                     Vector3 targetCubePos = hitCubePos + hitNormal;
 
-                    AntManager.Instance.AddDropperAnt(targetCubePos);
+                    AntManager.Instance.AddClimberAnt(targetCubePos);
 
                     /*
                     ChunkData chunk = World.Instance.GetChunkAt(targetCubePos); 
