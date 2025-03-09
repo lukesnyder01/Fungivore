@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
+//using System.Diagnostics;
 
 
 // Initial system built based on https://medium.com/@adamy1558/building-a-high-performance-voxel-engine-in-unity-a-step-by-step-guide-part-1-voxels-chunks-86275c079fb8
@@ -125,6 +126,22 @@ public class World : MonoBehaviour
         // Return null if no chunk exists at the position
         return null;
     }
+
+    public void SetBlockGlobal(Vector3 globalBlockPos, byte blockType)
+    {
+        ChunkData selectedChunk = World.Instance.GetChunkAt(globalBlockPos);
+        if (selectedChunk != null)
+        {
+            World.Instance.totalVoxelCount++;
+            Vector3 localChunkPosition = globalBlockPos - selectedChunk.globalChunkPos;
+            selectedChunk.SetBlockLocal(localChunkPosition, blockType);
+        }
+        else
+        {
+            Debug.Log("Couldn't find a chunk at " + globalBlockPos);
+        }
+    }
+
 
 
     void LoadChunksAround(Vector3Int centerChunkCoordinates)
