@@ -96,15 +96,9 @@ public class ChunkData
     }
 
 
-    public void SetBlock(Vector3 globalBlockPos, byte type)
+    public void SetBlockLocal(Vector3 localBlockPos, byte type)
     {
-        World.Instance.totalVoxelCount++;
-
-        Vector3 localBlockPos = globalBlockPos - globalChunkPos;
-
-        voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z] = 
-            new Voxel(type, true);
-
+        voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z] = new Voxel(type, true);
 
         if (chunkState == ChunkState.Idle)
         {
@@ -112,8 +106,6 @@ public class ChunkData
             chunkState = ChunkState.Queued;
         }
     }
-
-
 
 
     public void RegenerateChunk()
