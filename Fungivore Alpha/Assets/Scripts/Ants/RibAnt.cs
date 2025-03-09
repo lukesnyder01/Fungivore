@@ -29,6 +29,8 @@ public class RibAnt : Ant
 
             var currentMove = openMoves[Random.Range(0, openMoves.Count)];
 
+            World.Instance.SetBlockGlobal(antPos, Voxel.Type.Stone02);
+
             switch (currentMove)
             {
                 case AntMove.TurnLeftAndMove:
@@ -40,17 +42,6 @@ public class RibAnt : Ant
                 case AntMove.TurnRightAndMove:
                     TurnRightAndMove();
                     break;
-            }
-
-            World.Instance.totalVoxelCount++;
-            currentChunk = World.Instance.GetChunkAt(antPos);
-            if (currentChunk == null)
-            {
-                Debug.Log("Couldn't find a chunk at " + antPos);
-            }
-            else
-            {
-                currentChunk.SetBlock(antPos, Voxel.Type.Stone);
             }
         }
         else // If there are no flat moves, try moving downward

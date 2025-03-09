@@ -23,6 +23,8 @@ public class ClimberAnt : Ant
 
         CheckForOpenMoves();
 
+        World.Instance.SetBlockGlobal(antPos, Voxel.Type.Stone02);
+
         if (openMoves.Count != 0)
         {
             // Pick a random open move
@@ -42,17 +44,6 @@ public class ClimberAnt : Ant
                 case AntMove.TurnRightAndMove:
                     TurnRightAndMove();
                     break;
-            }
-
-            World.Instance.totalVoxelCount++;
-            currentChunk = World.Instance.GetChunkAt(antPos);
-            if (currentChunk == null)
-            {
-                Debug.Log("Couldn't find a chunk at " + antPos);
-            }
-            else
-            {
-                currentChunk.SetBlock(antPos, Voxel.Type.Stone);
             }
         }
         else

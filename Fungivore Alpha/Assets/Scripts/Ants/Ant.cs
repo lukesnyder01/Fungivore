@@ -59,8 +59,6 @@ public class Ant
     }
 
 
-
-
     public void RandomizeDirection()
     {
         directionIndex = Random.Range(0, directions.Length);
