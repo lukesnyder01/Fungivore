@@ -1183,7 +1183,7 @@ MonoBehaviour:
   loadRadius: 6
   unloadRadius: 7
   chunkUpdateThreshold: 1
-  chunksPerFrame: 4
+  chunksPerFrame: 24
   loadInterval: 1
 --- !u!4 &1718919245
 Transform:
@@ -1376,7 +1376,7 @@ PrefabInstance:
     - target: {fileID: 4855019364282867773, guid: b29a6afc2a92c534ba7d0b9e201b70e6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4855019364282867773, guid: b29a6afc2a92c534ba7d0b9e201b70e6,
         type: 3}
@@ -2496,6 +2496,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Post Processing Default
+      objectReference: {fileID: 0}
+    - target: {fileID: 2009501424553764952, guid: 22211fee91bca1445be3935d8e226503,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6385205258815519300, guid: 22211fee91bca1445be3935d8e226503,
         type: 3}

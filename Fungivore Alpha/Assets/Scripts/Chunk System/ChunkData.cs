@@ -23,7 +23,7 @@ public class ChunkData
 
     public LayerMask chunkLayer;
 
-    private int randomNoiseDensity = 1;
+    private int randomNoiseDensity = 0;
 
     public Vector3 globalChunkPos;
 
@@ -98,12 +98,19 @@ public class ChunkData
 
     public void SetBlockLocal(Vector3 localBlockPos, byte type)
     {
-        voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z] = new Voxel(type, true);
-
-        if (chunkState == ChunkState.Idle)
+        if (chunkState != ChunkState.Processing)
         {
-            World.Instance.AddChunkToQueue(this);
-            chunkState = ChunkState.Queued;
+            voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z] = new Voxel(type, true);
+
+            if (chunkState == ChunkState.Idle)
+            {
+                World.Instance.AddChunkToQueue(this);
+                chunkState = ChunkState.Queued;
+            }
+        }
+        else
+        {
+            Debug.Log("Can't add chunk " + globalChunkPos + " to queue because it's processing");
         }
     }
 
