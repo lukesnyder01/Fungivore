@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ViperWraithBodySegment : Enemy
+public class TailSegment : Enemy
 {
     public Transform followTransform;
 
@@ -17,7 +17,7 @@ public class ViperWraithBodySegment : Enemy
 
     public override void FixedUpdate()
     {
-        Spin(Random.Range(-rotationSpeed, rotationSpeed));
+        //Spin(Random.Range(-rotationSpeed, rotationSpeed));
 
         if (followTransform != null)
         {

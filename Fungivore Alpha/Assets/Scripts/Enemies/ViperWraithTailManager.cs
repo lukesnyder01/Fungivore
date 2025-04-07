@@ -12,7 +12,7 @@ public class ViperWraithTailManager : MonoBehaviour
     public float spawnSeparation = 0.4f;
 
     public List<GameObject> tailSegmentPrefabs = new List<GameObject>();
-    public List<ViperWraithBodySegment> tailSegments = new List<ViperWraithBodySegment>();
+    public List<TailSegment> tailSegments = new List<TailSegment>();
 
 
     // Start is called before the first frame update
@@ -22,7 +22,7 @@ public class ViperWraithTailManager : MonoBehaviour
         {
             var targetLocation = transform.position + new Vector3(0, 0, spawnSeparation * i + spawnSeparation);
             var prefab = Instantiate(segmentPrefab, targetLocation, Quaternion.identity);
-            var segment = prefab.GetComponent<ViperWraithBodySegment>();
+            var segment = prefab.GetComponent<TailSegment>();
 
             tailSegments.Add(segment);
 
