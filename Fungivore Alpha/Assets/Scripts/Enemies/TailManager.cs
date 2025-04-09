@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ViperWraithTailManager : MonoBehaviour
+public class TailManager : MonoBehaviour
 {
+    public bool generateSegments = true;
+
     public GameObject segmentPrefab;
     public Transform tailStart;
 
@@ -11,12 +13,23 @@ public class ViperWraithTailManager : MonoBehaviour
 
     public float spawnSeparation = 0.4f;
 
-    public List<GameObject> tailSegmentPrefabs = new List<GameObject>();
     public List<TailSegment> tailSegments = new List<TailSegment>();
 
 
     // Start is called before the first frame update
     void Start()
+    {
+        if (generateSegments)
+        {
+            GenerateSegments();
+        }
+        else
+        {
+         // unparent tail segments
+        }
+    }
+
+    private void GenerateSegments()
     {
         for (int i = 0; i < numberOfSegments; i++)
         {
@@ -28,7 +41,7 @@ public class ViperWraithTailManager : MonoBehaviour
 
             //tailSegmentPrefabs.Add(prefab);
 
-            
+
 
             segment.listPosition = i;
             segment.tailManager = this;
@@ -36,15 +49,14 @@ public class ViperWraithTailManager : MonoBehaviour
             if (i == 0)
             {
                 segment.followTransform = tailStart;
-                segment.minFollowDistance = 0.5f;
-                
+                segment.followDistance = 0.5f;
+
             }
             else
             {
                 segment.followTransform = tailSegments[i - 1].gameObject.transform;
             }
         }
-
     }
 
 
@@ -78,10 +90,4 @@ public class ViperWraithTailManager : MonoBehaviour
         }
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

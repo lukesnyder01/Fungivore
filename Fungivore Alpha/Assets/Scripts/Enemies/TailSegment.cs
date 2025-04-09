@@ -6,30 +6,41 @@ public class TailSegment : Enemy
 {
     public Transform followTransform;
 
-    public float minFollowDistance;
+    public float followDistance;
 
     private Vector3 followPosition;
     private float currentDistance;
 
     public int listPosition = 0;
-    public ViperWraithTailManager tailManager;
+    public TailManager tailManager;
+
+
+    void Start()
+    {
+        transform.SetParent(null);
+    }
 
 
     public override void FixedUpdate()
     {
-        //Spin(Random.Range(-rotationSpeed, rotationSpeed));
 
         if (followTransform != null)
         {
-            followPosition = followTransform.position;
+            // A point in space behind the follow target
+            Vector3 targetPos = followTransform.position - followTransform.forward * followDistance;
 
-            currentDistance = Vector3.Distance(transform.position, followTransform.position);
+            currentDistance = Vector3.Distance(transform.position, targetPos);
 
-            transform.LookAt(followPosition, transform.up);
+            //transform.LookAt(targetPos, transform.up);
 
-            if (currentDistance > minFollowDistance)
+            Vector3 directionToTarget = (targetPos - transform.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, transform.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
+
+
+            if (currentDistance > 0)
             {
-                var moveForce = 3 * currentDistance * thrust;
+                var moveForce = currentDistance * thrust;
 
                 if (moveForce > thrust * 4f)
                 {
@@ -37,7 +48,7 @@ public class TailSegment : Enemy
                 }
 
                 rb.AddForce(transform.forward * moveForce);
-                rb.AddForce(transform.right * Random.Range(-0.3f, 0.3f));
+                //rb.AddForce(transform.right * Random.Range(-0.3f, 0.3f));
             }
         }
         else 
