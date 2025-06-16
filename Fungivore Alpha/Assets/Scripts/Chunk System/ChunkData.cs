@@ -10,6 +10,9 @@ using UnityEngine;
 public class ChunkData
 {
     public Voxel[,,] voxels;
+
+    private Voxel[,,] voxelBuffer;
+
     private int chunkSize;
 
     private List<Vector3> vertices = new List<Vector3>();
@@ -98,20 +101,32 @@ public class ChunkData
 
     public void SetBlockLocal(Vector3 localBlockPos, byte type)
     {
-        if (chunkState != ChunkState.Processing)
-        {
-            voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z] = new Voxel(type, true);
+        // Adds a new voxel to the voxels array. We can always do this, because the
+        // mesh generation uses the voxelBuffer array, so we can't get broken meshes
+        voxels[(int)localBlockPos.x, (int)localBlockPos.y, (int)localBlockPos.z] = new Voxel(type, true);
 
-            if (chunkState == ChunkState.Idle)
-            {
-                World.Instance.AddChunkToQueue(this);
-                chunkState = ChunkState.Queued;
-            }
-        }
-        else
+        // If the chunk state is "queued", that means it hasn't started generating yet
+        // so the newly added voxel will automatically get copied to the voxelBuffer
+        // once it starts generating. So, we don't need to do anything else.
+
+
+        // If the chunk is "idle" we should move it to the queue
+        if (chunkState == ChunkState.Idle)
         {
-            Debug.Log("Can't add chunk " + globalChunkPos + " to queue because it's processing");
+            World.Instance.AddChunkToQueue(this);
+            chunkState = ChunkState.Queued;
         }
+
+        // If the chunk state is "processing" then we have a potential issue, since
+        // newly added voxels won't reflect in the final chunk. However, I don't think we can
+        // just add the chunk to the queue again, since we could have a messed up chunk state
+        // if the chunk comes off the queue and gets marked as idle, while it's still queued up again.
+        // Have to think about this more.
+        else if (chunkState == ChunkState.Processing)
+        { 
+            Debug.Log("Can't add chunk " + globalChunkPos + " to queue because it's processing"); 
+        }
+
     }
 
 
@@ -153,6 +168,11 @@ public class ChunkData
     public async void GenerateMesh()
     {
         chunkState = ChunkState.Processing;
+
+        // Put the current voxel data array into the buffer
+        // The buffer won't change while we're generating the chunk that way
+        voxelBuffer = voxels;
+
         ClearMeshArrays();
         await Task.Run(() => IterateVoxels());
         ApplyMeshData();
@@ -245,12 +265,12 @@ public class ChunkData
     private void ProcessVoxel(int x, int y, int z)
     {
         // Check if the voxels array is initialized and the indices are within bounds
-        if (voxels == null || x < 0 || x >= voxels.GetLength(0) ||
-            y < 0 || y >= voxels.GetLength(1) || z < 0 || z >= voxels.GetLength(2))
+        if (voxelBuffer == null || x < 0 || x >= voxelBuffer.GetLength(0) ||
+            y < 0 || y >= voxelBuffer.GetLength(1) || z < 0 || z >= voxelBuffer.GetLength(2))
         {
             return; // Skip processing if the array is not initialized or indices are out of bounds
         }
-        Voxel voxel = voxels[x, y, z];
+        Voxel voxel = voxelBuffer[x, y, z];
         if (voxel.isActive)
         {
             // Check each face of the voxel for visibility
@@ -288,7 +308,7 @@ public class ChunkData
     {
         if (x < 0 || x >= chunkSize || y < 0 || y >= chunkSize || z < 0 || z >= chunkSize)
             return true; // Face is at the boundary of the chunk
-        return !voxels[x, y, z].isActive;
+        return !voxelBuffer[x, y, z].isActive;
     }
 
 
@@ -301,9 +321,7 @@ public class ChunkData
             // No chunk at this position, so the voxel face should be hidden
             return true;
         }
-        
-        // Convert the global position to the local position within the neighboring chunk
-        //Vector3 localPos = neighborChunk.transform.InverseTransformPoint(globalPos);
+
 
         // The voxel's local position in the neighbor chunk
         // is the voxel's global pos - the neighbor chunk's global pos
