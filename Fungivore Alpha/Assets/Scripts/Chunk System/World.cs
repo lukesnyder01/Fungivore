@@ -242,7 +242,20 @@ public class World : MonoBehaviour
                 {
                     activeChunks[chunkPosition].RegenerateChunk();
                 }
+
+                // If the chunk had blocks added to it while it was processing, it'll get marked dirty.
+                // So, we want to add it right back to the queue
+                if (activeChunks[chunkPosition].dirty == true)
+                {
+                    AddChunkToQueue(activeChunks[chunkPosition]);
+                    activeChunks[chunkPosition].dirty = false;
+
+                    Debug.Log("Added dirty chunk back into queue");
+                }
+
+
             }
+
         }
     }
 

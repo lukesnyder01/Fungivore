@@ -33,6 +33,8 @@ public class ChunkData
     public ChunkState chunkState;
     public bool ChunkSavedToDisk = false;
 
+    public bool dirty = false;
+
     public enum ChunkState
     { 
         Idle, // Can accept block updates
@@ -123,8 +125,9 @@ public class ChunkData
         // if the chunk comes off the queue and gets marked as idle, while it's still queued up again.
         // Have to think about this more.
         else if (chunkState == ChunkState.Processing)
-        { 
-            Debug.Log("Can't add chunk " + globalChunkPos + " to queue because it's processing"); 
+        {
+            dirty = true;
+            Debug.Log("Chunk at " + globalChunkPos + " marked as dirty"); 
         }
 
     }
