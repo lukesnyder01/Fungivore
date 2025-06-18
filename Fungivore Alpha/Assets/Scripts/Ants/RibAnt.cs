@@ -10,12 +10,19 @@ public class RibAnt : Ant
     // Set the ant's starting moves in its constructor
     public RibAnt()
     {
-        movesRemaining = 100;
+        movesRemaining = 10000;
     }
 
 
     public override void MoveNext()
     {
+        // if the ant is in an unloaded chunk, don't do anything
+        if (World.Instance.GetChunkAt(antPos) == null)
+        {
+            return;
+        }
+
+
         movesRemaining--;
 
         // Reset the open moves for the ant
