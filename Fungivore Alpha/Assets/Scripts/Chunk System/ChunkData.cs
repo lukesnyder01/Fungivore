@@ -115,10 +115,14 @@ public class ChunkData
         // If the chunk is "idle" we should move it to the queue
         if (chunkState == ChunkState.Idle)
         {
+            Debug.Log("Chunk " + globalChunkPos + " had block added while idle, and is added to queue");
             World.Instance.AddChunkToQueue(this);
             chunkState = ChunkState.Queued;
         }
-
+        else if (chunkState == ChunkState.Queued)
+        {
+            Debug.Log("Chunk " + globalChunkPos + " had block added while queued");
+        }
         // If the chunk state is "processing" then we have a potential issue, since
         // newly added voxels won't reflect in the final chunk. However, I don't think we can
         // just add the chunk to the queue again, since we could have a messed up chunk state
@@ -127,7 +131,7 @@ public class ChunkData
         else if (chunkState == ChunkState.Processing)
         {
             dirty = true;
-            Debug.Log("Chunk at " + globalChunkPos + " marked as dirty"); 
+            Debug.Log("Chunk " + globalChunkPos + " had block added while processing so is marked as dirty");
         }
 
     }
@@ -135,16 +139,16 @@ public class ChunkData
 
     public void RegenerateChunk()
     {
-        if (chunkState != ChunkState.Processing)
-        {           
-            chunkState = ChunkState.Processing;
-            GenerateMesh();
+        if (chunkState == ChunkState.Processing)
+        {
+            Debug.Log("Chunk " + globalChunkPos + " tried to regenerate a chunk while it was processing");
         }
         else
         {
-            Debug.Log("Tried to regenerate a chunk while it was processing");
+            Debug.Log("Chunk " + globalChunkPos + " is regnerating properly");
+            chunkState = ChunkState.Processing;
+            GenerateMesh();
         }
-
     }
 
 
@@ -172,6 +176,8 @@ public class ChunkData
     {
         chunkState = ChunkState.Processing;
 
+        Debug.Log("Chunk " + globalChunkPos + " started generating and is marked as processing");
+
         // Put the current voxel data array into the buffer
         // The buffer won't change while we're generating the chunk that way
         voxelBuffer = voxels;
@@ -186,6 +192,16 @@ public class ChunkData
         //Debug.Log("Saved chunk at " + globalChunkPos);
 
         chunkState = ChunkState.Idle;
+
+        Debug.Log("Chunk " + globalChunkPos + " stopped generating and is marked as idle");
+
+        if (dirty == true)
+        {
+            World.Instance.AddChunkToQueue(this);
+            chunkState = ChunkState.Queued;
+            dirty = false;
+            Debug.Log("Chunk " + globalChunkPos + " added to queue from GenerateMesh() method");
+        }
     }
 
 

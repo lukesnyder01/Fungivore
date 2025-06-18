@@ -10,7 +10,7 @@ public class ClimberAnt : Ant
     // Set the ant's starting moves in its constructor
     public ClimberAnt()
     {
-        movesRemaining = 50;
+        movesRemaining = 500;
     }
 
 
@@ -60,7 +60,6 @@ public class ClimberAnt : Ant
         // so we add it multiple times
         if (BlockIsEmpty(antPos + Vector3.up))
         {
-            openMoves.Add(AntMove.MoveUp);
             openMoves.Add(AntMove.MoveUp);
             openMoves.Add(AntMove.MoveUp);
         }

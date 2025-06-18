@@ -11,7 +11,7 @@ public class AntManager : MonoBehaviour
     public int startingAntCount = 10;
 
     private float timer;
-    public float timeBetweenSteps = 0.01f;
+    public float timeBetweenSteps = 0.05f;
 
     private int currentAntIndex = 0; // Tracks which ant to process next
     public int antsPerStep = 100; // Number of ants to process each time
@@ -31,7 +31,7 @@ public class AntManager : MonoBehaviour
             ant.RandomizeDirection();
             ant.antPos = new Vector3(
                 Mathf.FloorToInt(Random.Range(-100, 100)),
-                Mathf.FloorToInt(Random.Range(120, 150)),
+                Mathf.FloorToInt(Random.Range(0, 150)),
                 Mathf.FloorToInt(Random.Range(-100, 100))
             );
             ants.Add(ant);
